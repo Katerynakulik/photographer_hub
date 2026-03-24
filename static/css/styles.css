@@ -1,0 +1,27 @@
+:root {
+    --bg: #F8F5F2;
+    --text: #3A3A3A;
+    --primary: #E8CFCB;
+    --primary-hover: #D6A5A1;
+    --accent-dark: #4F6F5C;
+    --border: #E9E1DC;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.btn-primary {
+    background-color: var(--accent-dark);
+    color: white;
+    border-radius: 20px;
+    padding: 10px 20px;
+    border: none;
+}
+
+.card {
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
