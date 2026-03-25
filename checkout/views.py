@@ -1,8 +1,8 @@
-import stripe
+# import stripe
 from django.conf import settings
 from django.shortcuts import redirect
 
-stripe.api_key = settings.STRIPE_SECRET_KEY
+# stripe.api_key = settings.STRIPE_SECRET_KEY
 
 def create_checkout_session(request):
     cart = request.session.get("cart", {})
@@ -14,7 +14,7 @@ def create_checkout_session(request):
             "price_data": {
                 "currency": "eur",
                 "product_data": {"name": product.title},
-                "unit_amount": int(product.price * 100), # в центах
+                "unit_amount": int(product.price * 100),
             },
             "quantity": 1,
         })

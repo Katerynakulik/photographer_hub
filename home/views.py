@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from marketing.forms import NewsletterForm
 from home.forms import ContactForm
 
 def home(request):
