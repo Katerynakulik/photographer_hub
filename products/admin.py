@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import PhotoProduct
 
-# Register your models here.
+@admin.register(PhotoProduct)
+class PhotoProductAdmin(admin.ModelAdmin):
+    list_display = ('title', 'price', 'is_active', 'created_at')
+    prepopulated_fields = {'slug': ('title',)}
