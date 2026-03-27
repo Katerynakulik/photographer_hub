@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 from products.models import PhotoProduct
 
 def view_cart(request):
@@ -8,7 +9,16 @@ def view_cart(request):
     return render(request, "cart/cart.html", {"products": products, "total": total})
 
 def add_to_cart(request, product_id):
-    cart = request.session.get("cart", {})
-    cart[str(product_id)] = 1
-    request.session["cart"] = cart
-    return redirect("view_cart")
+    """ Додає товар у сесію кошика """
+    product = get_object_or_404(PhotoProduct, id=product_id)
+    cart = request.session.get('cart', {})
+
+    # Додаємо товар (або збільшуємо кількість, хоча для фото зазвичай 1)
+    if product_id in list(cart.keys()):
+        messages.info(request, f"{product.title} вже у вашому кошику.")
+    else:
+        cart[product_id] = 1
+        messages.success(request, f"Додано {product.title} у кошик!")
+
+    request.session['cart'] = cart
+    return redirect(request.META.get('HTTP_REFERER', 'home'))

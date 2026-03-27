@@ -1,6 +1,54 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Вітаю на Photographer Hub!</h1>
-    <p>Це твоя головна сторінка, яка працює.</p>
+<section class="hero card">
+    <h1>Soft, timeless photography</h1>
+    <p class="small">Capturing gentle moments in city streets and nature.</p>
+</section>
+
+<section class="featured-photos">
+    <div class="section-header">
+        <h2>Featured Photos</h2>
+        <div class="scroll-instructions small">Swipe or scroll horizontally →</div>
+    </div>
+
+    <div class="scroll-container">
+        {% for product in products %}
+        <article class="card card-flex">
+            <a href="https://res.cloudinary.com/drscildms/image/upload/c_scale,w_1200/l_text:Verdana_60_bold:Photographer%20Hub,co_rgb:FFFFFF,o_30/fl_layer_apply,g_south_east,x_20,y_20/v1/{{ product.preview_image }}"
+                class="glightbox card-image-wrapper"
+                data-glightbox="type: image; title: {{ product.title }}; description: {{ product.description|truncatechars:100 }}">
+
+                <img src="{{ product.preview_image.url }}" alt="{{ product.title }}" class="product-img">
+
+                <div class="zoom-overlay">
+                    <span>View Fullscreen</span>
+                </div>
+            </a>
+
+            <div class="card-body">
+                <h3 class="card-title">{{ product.title }}</h3>
+                <p class="card-text small">{{ product.description|truncatechars:80 }}</p>
+            </div>
+
+            <div class="card-footer">
+                <p class="price"><strong>€ {{ product.price }}</strong></p>
+                <form action="{% url 'add_to_cart' product.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-secondary w-100">Add to Cart</button>
+                </form>
+            </div>
+        </article>
+        {% empty %}
+        <p>No photos available yet. Check back soon!</p>
+        {% endfor %}
+    </div>
+</section>
+<!-- 
+<div id="fullscreen-modal" class="modal" onclick="closeFullscreen()">
+    <span class="close-btn">&times;</span>
+    <img class="modal-content" id="modal-img">
+    <div id="modal-caption"></div>
+</div> -->
+
 {% endblock %}

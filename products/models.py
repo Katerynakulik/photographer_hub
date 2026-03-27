@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+from cloudinary.models import CloudinaryField 
 
 class PhotoProduct(models.Model):
     title = models.CharField(max_length=120)
