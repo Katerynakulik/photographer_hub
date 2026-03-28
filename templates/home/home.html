@@ -6,11 +6,12 @@
         <div class="hero-content">
             <div class="photographer-bio">
                 <div class="avatar-wrapper">
-                    <img src="https://res.cloudinary.com/drscildms/image/upload/v1/avatar.jpg" alt="Kateryna Poloz" class="round-avatar">
+                    <img src="https://res.cloudinary.com/drscildms/image/upload/v1/avatar.jpg" alt="Kateryna"
+                        class="round-avatar">
                 </div>
                 <div class="bio-text">
                     <h1>Kateryna Poloz</h1>
-                    <p class="tagline">Family, Children & Wedding Photographer</p>
+                    <p class="tagline tagline-accent">Family, Children & Wedding Photographer</p>
                     <p class="description small">Capturing soft, timeless stories in nature and city streets.</p>
                 </div>
             </div>
@@ -21,70 +22,71 @@
         <h2 class="section-title">Upcoming Photoshoots</h2>
         <div class="sessions-grid">
             <article class="session-card card">
-                <div class="session-img-placeholder">
-                    <span>Session Preview</span>
-                </div>
+                <div class="session-img-placeholder"><span>Session Preview</span></div>
                 <div class="session-body">
                     <h3>Spring Family Session</h3>
-                    <p class="price-info">Deposit: <strong>€10.00</strong></p>
+                    <p class="small">Deposit: <strong>€10.00</strong></p>
                     <a href="#" class="btn btn-primary">View Details & Book</a>
                 </div>
             </article>
         </div>
     </section>
 
-    <section class="shop-container">
-        <div class="shop-grid">
-            <aside class="shop-sidebar">
-                <h2 class="display-title">My Photo Shop</h2>
-                <p class="small text-muted">Purchase digital copies of my work. High resolution, instant download.</p>
-                <ul class="check-list">
-                    <li>Rural Session</li>
-                    <li>Forest Photoshoot</li>
-                    <li>Wedding Stories</li>
-                    <li>Couples & Love</li>
-                </ul>
-                <a href="#" class="btn btn-primary shop-btn">Contact Me</a>
-            </aside>
+  <section class="shop-section">
+    <div class="shop-header">
+        <div class="shop-info">
+            <h2 class="serif-title">My Photo Shop</h2>
+            <p class="small text-muted">Purchase digital copies of my work. High resolution, instant download.</p>
+        </div>
+        <div class="shop-action">
+            <a href="#" class="btn btn-outline">See all photos</a>
+        </div>
+    </div>
 
-            <div class="slider-column">
-                <div class="slider-wrapper">
-                    <button id="slide-left" class="nav-btn" aria-label="Previous slide">&#10094;</button>
+    <div class="shop-products-grid">
+        {% for product in products|slice:":4" %}
+        <article class="card product-card">
+            <div class="card-image-top">
+                <a href="https://res.cloudinary.com/drscildms/image/upload/c_scale,w_1200/l_text:Arial_60_bold:Photographer%20Hub,co_rgb:FFFFFF,o_30/fl_layer_apply,g_south_east,x_20,y_20/v1/{{ product.preview_image }}.jpg"
+                   class="glightbox card-image-wrapper"
+                   data-glightbox="type: image; title: {{ product.title }};">
                     
-                    <div class="scroll-container" id="photo-slider">
-                        {% for product in products %}
-                        <article class="product-card card">
-                            <a href="{{ product.preview_image.url }}" class="glightbox">
-                                <img src="{{ product.preview_image.url }}" alt="{{ product.title }}" class="product-img">
-                            </a>
-                            <div class="product-info">
-                                <h3 class="product-title">{{ product.title }}</h3>
-                                <p class="price">€ {{ product.price }}</p>
-                                <form action="{% url 'add_to_cart' product.id %}" method="POST">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn btn-primary">Add to Cart</button>
-                                </form>
-                            </div>
-                        </article>
-                        {% endfor %}
-                    </div>
+                    <img src="{{ product.preview_image.url }}" alt="{{ product.title }}" class="product-img">
 
-                    <button id="slide-right" class="nav-btn" aria-label="Next slide">&#10095;</button>
+                    <div class="zoom-overlay">
+                        <span class="overlay-text serif-title">View fullsize</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="card-body-bottom">
+                <div class="product-details">
+                    <h3 class="card-title">{{ product.title }}</h3>
+                    <p class="price"><strong>€ {{ product.price }}</strong></p>
+                </div>
+                <div class="product-action">
+                    <form action="{% url 'add_to_cart' product.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary w-100">Add to Cart</button>
+                    </form>
                 </div>
             </div>
-        </div>
+        </article>
+        {% empty %}
+        <p>No photos available yet.</p>
+        {% endfor %}
+    </div>
+</section>
+
+    <section class="newsletter-section card text-center">
+        <h2>Join the Journey</h2>
+        <p class="small">Get updates on new sessions and special offers.</p>
+        <form action="#" method="POST" class="newsletter-form">
+            {% csrf_token %}
+            <input type="email" name="email" placeholder="Your email address" required>
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+        </form>
     </section>
 
-    <section class="newsletter-section card">
-        <div class="newsletter-inner">
-            <h2>Join the Journey</h2>
-            <p class="small">Get updates on new sessions and special offers.</p>
-            <form action="#" method="POST" class="newsletter-form">
-                {% csrf_token %}
-                <input type="email" name="email" placeholder="Your email address" required>
-                <button type="submit" class="btn btn-primary">Subscribe</button>
-            </form>
-        </div>
-    </section>
 </div>
 {% endblock %}
