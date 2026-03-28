@@ -1,54 +1,90 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section class="hero card">
-    <h1>Soft, timeless photography</h1>
-    <p class="small">Capturing gentle moments in city streets and nature.</p>
-</section>
-
-<section class="featured-photos">
-    <div class="section-header">
-        <h2>Featured Photos</h2>
-        <div class="scroll-instructions small">Swipe or scroll horizontally →</div>
-    </div>
-
-    <div class="scroll-container">
-        {% for product in products %}
-        <article class="card card-flex">
-            <a href="https://res.cloudinary.com/drscildms/image/upload/c_scale,w_1200/l_text:Verdana_60_bold:Photographer%20Hub,co_rgb:FFFFFF,o_30/fl_layer_apply,g_south_east,x_20,y_20/v1/{{ product.preview_image }}"
-                class="glightbox card-image-wrapper"
-                data-glightbox="type: image; title: {{ product.title }}; description: {{ product.description|truncatechars:100 }}">
-
-                <img src="{{ product.preview_image.url }}" alt="{{ product.title }}" class="product-img">
-
-                <div class="zoom-overlay">
-                    <span>View Fullscreen</span>
+<div class="page-container">
+    <section class="hero-section card">
+        <div class="hero-content">
+            <div class="photographer-bio">
+                <div class="avatar-wrapper">
+                    <img src="https://res.cloudinary.com/drscildms/image/upload/v1/avatar.jpg" alt="Kateryna Poloz" class="round-avatar">
                 </div>
-            </a>
-
-            <div class="card-body">
-                <h3 class="card-title">{{ product.title }}</h3>
-                <p class="card-text small">{{ product.description|truncatechars:80 }}</p>
+                <div class="bio-text">
+                    <h1>Kateryna Poloz</h1>
+                    <p class="tagline">Family, Children & Wedding Photographer</p>
+                    <p class="description small">Capturing soft, timeless stories in nature and city streets.</p>
+                </div>
             </div>
+        </div>
+    </section>
 
-            <div class="card-footer">
-                <p class="price"><strong>€ {{ product.price }}</strong></p>
-                <form action="{% url 'add_to_cart' product.id %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-secondary w-100">Add to Cart</button>
-                </form>
+    <section class="sessions-section">
+        <h2 class="section-title">Upcoming Photoshoots</h2>
+        <div class="sessions-grid">
+            <article class="session-card card">
+                <div class="session-img-placeholder">
+                    <span>Session Preview</span>
+                </div>
+                <div class="session-body">
+                    <h3>Spring Family Session</h3>
+                    <p class="price-info">Deposit: <strong>€10.00</strong></p>
+                    <a href="#" class="btn btn-primary">View Details & Book</a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="shop-container">
+        <div class="shop-grid">
+            <aside class="shop-sidebar">
+                <h2 class="display-title">My Photo Shop</h2>
+                <p class="small text-muted">Purchase digital copies of my work. High resolution, instant download.</p>
+                <ul class="check-list">
+                    <li>Rural Session</li>
+                    <li>Forest Photoshoot</li>
+                    <li>Wedding Stories</li>
+                    <li>Couples & Love</li>
+                </ul>
+                <a href="#" class="btn btn-primary shop-btn">Contact Me</a>
+            </aside>
+
+            <div class="slider-column">
+                <div class="slider-wrapper">
+                    <button id="slide-left" class="nav-btn" aria-label="Previous slide">&#10094;</button>
+                    
+                    <div class="scroll-container" id="photo-slider">
+                        {% for product in products %}
+                        <article class="product-card card">
+                            <a href="{{ product.preview_image.url }}" class="glightbox">
+                                <img src="{{ product.preview_image.url }}" alt="{{ product.title }}" class="product-img">
+                            </a>
+                            <div class="product-info">
+                                <h3 class="product-title">{{ product.title }}</h3>
+                                <p class="price">€ {{ product.price }}</p>
+                                <form action="{% url 'add_to_cart' product.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary">Add to Cart</button>
+                                </form>
+                            </div>
+                        </article>
+                        {% endfor %}
+                    </div>
+
+                    <button id="slide-right" class="nav-btn" aria-label="Next slide">&#10095;</button>
+                </div>
             </div>
-        </article>
-        {% empty %}
-        <p>No photos available yet. Check back soon!</p>
-        {% endfor %}
-    </div>
-</section>
-<!-- 
-<div id="fullscreen-modal" class="modal" onclick="closeFullscreen()">
-    <span class="close-btn">&times;</span>
-    <img class="modal-content" id="modal-img">
-    <div id="modal-caption"></div>
-</div> -->
+        </div>
+    </section>
 
+    <section class="newsletter-section card">
+        <div class="newsletter-inner">
+            <h2>Join the Journey</h2>
+            <p class="small">Get updates on new sessions and special offers.</p>
+            <form action="#" method="POST" class="newsletter-form">
+                {% csrf_token %}
+                <input type="email" name="email" placeholder="Your email address" required>
+                <button type="submit" class="btn btn-primary">Subscribe</button>
+            </form>
+        </div>
+    </section>
+</div>
 {% endblock %}

@@ -30,26 +30,11 @@
     </main>
 
     {% include "includes/footer.html" %}
-    <script>
-    // Ініціалізація лайтбоксу
-    const lightbox = GLightbox({
-        selector: '.glightbox',
-        touchNavigation: true,
-        loop: true,
-        zoomable: true
-    });
+    {% load static %}
 
-    // Виправлення попередження aria-hidden
-    lightbox.on('open', () => {
-        const container = document.querySelector('main.container');
-        if (container) container.setAttribute('aria-hidden', 'true');
-    });
+    <script src="{% static 'js/script.js' %}"></script>
 
-    lightbox.on('close', () => {
-        const container = document.querySelector('main.container');
-        if (container) container.removeAttribute('aria-hidden');
-    });
-</script>
+    {% block postloadjs %}{% endblock %}
 </body>
 
 </html>
