@@ -172,4 +172,16 @@ STORAGES = {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
-# MEDIA_URL = '/media/'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+# Allauth конфігурація
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_SIGNUP_EMAIL_ENTER_ONCE = True
+ACCOUNT_EMAIL_VERIFICATION = 'none' # Для розробки ставимо 'none'
+LOGIN_REDIRECT_URL = '/'  # Тут можна змінити на /profile/ пізніше
+LOGOUT_REDIRECT_URL = '/'

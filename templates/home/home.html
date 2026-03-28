@@ -1,21 +1,31 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
 <div class="page-container">
     <section class="hero-section card">
-        <div class="hero-content">
-            <div class="photographer-bio">
-                <div class="avatar-wrapper">
-                    <img src="https://res.cloudinary.com/drscildms/image/upload/v1/avatar.jpg" alt="Kateryna"
-                        class="round-avatar">
-                </div>
-                <div class="bio-text">
-                    <h1>Kateryna Poloz</h1>
-                    <p class="tagline tagline-accent">Family, Children & Wedding Photographer</p>
-                    <p class="description small">Capturing soft, timeless stories in nature and city streets.</p>
+        {% if photographer %}
+            <div class="hero-content">
+                <div class="photographer-bio-centered">
+                    <div class="avatar-wrapper">
+                        {% if photographer.profile_image %}
+                            <img src="{{ photographer.profile_image.url }}" alt="{{ photographer.user.get_full_name }}" class="oval-avatar">
+                        {% endif %}
+                    </div>
+                    <div class="bio-text-centered">
+                        <h1 class="serif-title h1-large">{{ photographer.user.get_full_name|default:photographer.user.username }}</h1>
+                        <p class="tagline-accent">{{ photographer.tagline }}</p>
+                        <p class="description small muted">{{ photographer.bio }}</p>
+                    </div>
                 </div>
             </div>
-        </div>
+        {% else %}
+            <div class="hero-content text-center">
+                <p>Welcome! Login to admin to set up your profile.</p>
+            </div>
+        {% endif %}
     </section>
 
     <section class="sessions-section">
@@ -32,51 +42,50 @@
         </div>
     </section>
 
-  <section class="shop-section">
-    <div class="shop-header">
-        <div class="shop-info">
-            <h2 class="serif-title">My Photo Shop</h2>
-            <p class="small text-muted">Purchase digital copies of my work. High resolution, instant download.</p>
+    <section class="shop-section">
+        <div class="shop-header">
+            <div class="shop-info">
+                <h2 class="serif-title">My Photo Shop</h2>
+                <p class="small text-muted">Purchase digital copies of my work. High resolution, instant download.</p>
+            </div>
+            <div class="shop-action">
+                <a href="#" class="btn btn-outline">See all photos</a>
+            </div>
         </div>
-        <div class="shop-action">
-            <a href="#" class="btn btn-outline">See all photos</a>
-        </div>
-    </div>
 
-    <div class="shop-products-grid">
-        {% for product in products|slice:":4" %}
-        <article class="card product-card">
-            <div class="card-image-top">
-                <a href="https://res.cloudinary.com/drscildms/image/upload/c_scale,w_1200/l_text:Arial_60_bold:Photographer%20Hub,co_rgb:FFFFFF,o_30/fl_layer_apply,g_south_east,x_20,y_20/v1/{{ product.preview_image }}.jpg"
-                   class="glightbox card-image-wrapper"
-                   data-glightbox="type: image; title: {{ product.title }};">
-                    
-                    <img src="{{ product.preview_image.url }}" alt="{{ product.title }}" class="product-img">
+        <div class="shop-products-grid">
+            {% for product in products|slice:":4" %}
+            <article class="card product-card">
+                <div class="card-image-top">
+                    <a href="https://res.cloudinary.com/drscildms/image/upload/c_scale,w_1200/l_text:Arial_60_bold:Photographer%20Hub,co_rgb:FFFFFF,o_30/fl_layer_apply,g_south_east,x_20,y_20/v1/{{ product.preview_image }}.jpg"
+                        class="glightbox card-image-wrapper" data-glightbox="type: image; title: {{ product.title }};">
 
-                    <div class="zoom-overlay">
-                        <span class="overlay-text serif-title">View fullsize</span>
+                        <img src="{{ product.preview_image.url }}" alt="{{ product.title }}" class="product-img">
+
+                        <div class="zoom-overlay">
+                            <span class="overlay-text serif-title">View fullsize</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="card-body-bottom">
+                    <div class="product-details">
+                        <h3 class="card-title">{{ product.title }}</h3>
+                        <p class="price"><strong>€ {{ product.price }}</strong></p>
                     </div>
-                </a>
-            </div>
-
-            <div class="card-body-bottom">
-                <div class="product-details">
-                    <h3 class="card-title">{{ product.title }}</h3>
-                    <p class="price"><strong>€ {{ product.price }}</strong></p>
+                    <div class="product-action">
+                        <form action="{% url 'add_to_cart' product.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary w-100">Add to Cart</button>
+                        </form>
+                    </div>
                 </div>
-                <div class="product-action">
-                    <form action="{% url 'add_to_cart' product.id %}" method="POST">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-primary w-100">Add to Cart</button>
-                    </form>
-                </div>
-            </div>
-        </article>
-        {% empty %}
-        <p>No photos available yet.</p>
-        {% endfor %}
-    </div>
-</section>
+            </article>
+            {% empty %}
+            <p>No photos available yet.</p>
+            {% endfor %}
+        </div>
+    </section>
 
     <section class="newsletter-section card text-center">
         <h2>Join the Journey</h2>

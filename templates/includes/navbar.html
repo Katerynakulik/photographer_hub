@@ -1,5 +1,19 @@
 <nav>
-    <a href="{% url 'home' %}">Головна</a> |
-    <a href="/admin/">Адмінка</a>
+    <div class="nav-links">
+        <a href="{% url 'home' %}">Home</a>
+        
+        {# Поки сторінки Shop немає, ховаємо її, щоб не було помилки #}
+        {# <a href="{% url 'photo_shop' %}">Shop</a> #}
+
+        {% if user.is_authenticated %}
+            {# Додаємо перевірку, чи існує профіль взагалі, щоб не було помилок #}
+            {% if user.userprofile and user.userprofile.is_photographer %}
+                <a href="/admin/">Admin Panel</a>
+            {% endif %}
+            <a href="{% url 'account_logout' %}">Logout</a>
+        {% else %}
+            <a href="{% url 'account_login' %}">Login</a>
+            <a href="{% url 'account_signup' %}">Register</a>
+        {% endif %}
+    </div>
 </nav>
-<hr>
