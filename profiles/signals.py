@@ -7,16 +7,17 @@ from marketing.models import NewsletterSubscriber
 
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
-    """Створює профіль користувача автоматично при створенні User"""
+    """Створює профіль автоматично"""
     if created:
         UserProfile.objects.create(user=instance)
     instance.userprofile.save()
 
 @receiver(user_signed_up)
 def handle_newsletter_subscription(request, user, **kwargs):
-    """Додає в розсилку тільки якщо стоїть галочка при реєстрації"""
-    # Перевіряємо дані з POST запиту форми реєстрації
+    """Обробляє підписку на розсилку при реєстрації"""
+    # Ми беремо дані прямо з нашої нової форми
     subscribe = request.POST.get('subscribe_newsletter')
     
     if subscribe:
+        # Додаємо імейл в список маркетингу
         NewsletterSubscriber.objects.get_or_create(email=user.email)

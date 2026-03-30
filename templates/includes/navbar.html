@@ -1,19 +1,25 @@
-<nav>
-    <div class="nav-links">
-        <a href="{% url 'home' %}">Home</a>
+<nav class="main-navbar">
+    <div class="nav-container">
+        <a href="{% url 'home' %}" class="nav-logo serif-title">Kateryna Poloz</a>
         
-        {# Поки сторінки Shop немає, ховаємо її, щоб не було помилки #}
-        {# <a href="{% url 'photo_shop' %}">Shop</a> #}
+        <input type="checkbox" id="nav-toggle" class="nav-toggle">
+        <label for="nav-toggle" class="nav-toggle-label">
+            <span></span>
+        </label>
 
-        {% if user.is_authenticated %}
-            {# Додаємо перевірку, чи існує профіль взагалі, щоб не було помилок #}
-            {% if user.userprofile and user.userprofile.is_photographer %}
-                <a href="/admin/">Admin Panel</a>
+        <ul class="nav-menu">
+            <li><a href="{% url 'home' %}" class="nav-link">Home</a></li>
+            {# <li><a href="{% url 'photo_shop' %}" class="nav-link">Shop</a></li> #}
+
+            {% if user.is_authenticated %}
+                {% if user.userprofile.is_photographer %}
+                    <li><a href="/admin/" class="nav-link admin-tag">Admin Panel</a></li>
+                {% endif %}
+                <li><a href="{% url 'account_logout' %}" class="nav-link">Logout</a></li>
+            {% else %}
+                <li><a href="{% url 'account_login' %}" class="nav-link">Login</a></li>
+                <li><a href="{% url 'account_signup' %}" class="nav-link signup-cta">Register</a></li>
             {% endif %}
-            <a href="{% url 'account_logout' %}">Logout</a>
-        {% else %}
-            <a href="{% url 'account_login' %}">Login</a>
-            <a href="{% url 'account_signup' %}">Register</a>
-        {% endif %}
+        </ul>
     </div>
 </nav>

@@ -185,3 +185,9 @@ ACCOUNT_SIGNUP_EMAIL_ENTER_ONCE = True
 ACCOUNT_EMAIL_VERIFICATION = 'none' # Для розробки ставимо 'none'
 LOGIN_REDIRECT_URL = '/'  # Тут можна змінити на /profile/ пізніше
 LOGOUT_REDIRECT_URL = '/'
+
+ACCOUNT_FORMS = {
+    'signup': 'profiles.forms.CustomSignupForm',
+}
+# Skip logout confirmation page
+ACCOUNT_LOGOUT_ON_GET = True
