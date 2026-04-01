@@ -2,50 +2,47 @@
 {% load static %}
 
 {% block content %}
-<div class="page-container auth-wrapper" style="max-width: 900px;">
-    <h1 class="serif-title mb-4">Your Photo Cart</h1>
+<div class="page-container">
+    <div class="card" style="margin-top: 60px;">
+        <h1 class="serif-title mb-4">Your Photo Cart</h1>
 
-    {% if cart_items %}
-    <div class="cart-items-container">
-        {% for item in cart_items %}
-        <div class="cart-card card mb-3">
-            <div class="cart-item-layout">
-                <div class="cart-img-wrapper">
-                    <img src="{{ item.product.preview_image.url }}" alt="{{ item.product.title }}" class="cart-img">
+        {% if cart_items %}
+        <div class="cart-items-container">
+            {% for item in cart_items %}
+            <div class="cart-card mb-3" style="border-bottom: 1px solid var(--border-color); padding: 15px 0;">
+                <div class="cart-item-layout">
+                    <img src="{{ item.product.preview_image.url }}" alt="{{ item.product.title }}" class="cart-img" style="width: 100px; height: 75px; object-fit: cover; border-radius: 8px;">
+                    
+                    <div class="cart-details">
+                        <h3 class="card-title" style="margin: 0; font-family: inherit;">{{ item.product.title }}</h3>
+                        <p class="text-muted small">Digital License</p>
+                    </div>
+
+                    <div class="cart-price-block">
+                        <span class="price">€{{ item.product.price }}</span>
+                    </div>
+
+                    <div class="cart-action">
+                        <a href="{% url 'remove_from_cart' item.item_id %}" class="remove-link nav-link admin-tag" style="text-decoration: underline;">Remove</a>
+                    </div>
                 </div>
+            </div>
+            {% endfor %}
 
-                <div class="cart-details">
-                    <h3 class="small-title">{{ item.product.title }}</h3>
-                    <p class="text-muted small">Digital License</p>
-                </div>
-
-                <div class="cart-price-block">
-                    <span class="price-tag">€{{ item.product.price }}</span>
-                </div>
-
-                <div class="cart-action">
-                    <a href="{% url 'remove_from_cart' item.item_id %}" class="remove-link">Remove</a>
+            <div class="cart-summary mt-5 text-right" style="padding: 20px 0; border-top: 2px solid var(--border-color);">
+                <h2 class="serif-title mb-3">Total Amount: €{{ total }}</h2>
+                <div class="cart-buttons" style="display: flex; gap: 15px; justify-content: flex-end;">
+                    <a href="{% url 'home' %}" class="btn btn-outline">Back to Gallery</a>
+                    <a href="#" class="btn btn-primary">Proceed to Checkout</a>
                 </div>
             </div>
         </div>
-        {% endfor %}
-
-        <div class="cart-summary mt-5">
-            <div class="summary-line">
-                <span>Total Amount:</span>
-                <span class="total-price">€{{ total }}</span>
-            </div>
-            <div class="cart-buttons mt-4">
-                <a href="{% url 'home' %}" class="btn btn-outline">Back to Gallery</a>
-                <a href="#" class="btn btn-primary">Go to Checkout</a>
-            </div>
+        {% else %}
+        <div class="empty-cart text-center py-5">
+            <p>Your cart is empty.</p>
+            <a href="{% url 'home' %}" class="btn btn-primary mt-3">Browse Photos</a>
         </div>
+        {% endif %}
     </div>
-    {% else %}
-    <div class="empty-cart text-center py-5">
-        <p>Your cart is empty.</p>
-        <a href="{% url 'home' %}" class="btn btn-primary mt-3">Browse Photos</a>
-    </div>
-    {% endif %}
 </div>
 {% endblock %}

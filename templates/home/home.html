@@ -2,112 +2,74 @@
 {% load static %}
 
 {% block content %}
-<link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap"
-    rel="stylesheet">
-
 <div class="page-container">
     <section class="hero-section card">
         {% if photographer %}
         <div class="hero-content">
             <div class="photographer-bio-centered">
-                <div class="avatar-wrapper">
-                    {% if photographer.profile_image %}
-                    <img src="{{ photographer.profile_image.url }}" alt="{{ photographer.user.get_full_name }}"
-                        class="oval-avatar">
-                    {% endif %}
-                </div>
+
+                {% if photographer.profile_image %}
+                <img src="{{ photographer.profile_image.url }}" alt="{{ photographer.user.get_full_name }}"
+                    class="oval-avatar">
+                {% endif %}
+
                 <div class="bio-text-centered">
-                    <h1 class="serif-title h1-large">
-                        {{ photographer.user.get_full_name|default:photographer.user.username }}
-                    </h1>
+                    <h1 class="h1-large">{{ photographer.user.get_full_name|default:photographer.user.username }}</h1>
                     <p class="tagline-accent">{{ photographer.tagline }}</p>
-                    <p class="description small muted">{{ photographer.bio }}</p>
+                    <p class="description text-muted small">{{ photographer.bio }}</p>
                 </div>
             </div>
         </div>
-        {% else %}
-        <div class="hero-content text-center">
-            <p>Welcome! Login to admin to set up your profile.</p>
-        </div>
         {% endif %}
-    </section>
-
-    <section class="sessions-section">
-        <h2 class="section-title">Upcoming Photoshoots</h2>
-        <div class="sessions-grid">
-            <article class="session-card card">
-                <div class="session-img-placeholder"><span>Session Preview</span></div>
-                <div class="session-body">
-                    <h3>Spring Family Session</h3>
-                    <p class="small">Deposit: <strong>€10.00</strong></p>
-                    <a href="#" class="btn btn-primary">View Details & Book</a>
-                </div>
-            </article>
-        </div>
     </section>
 
     <section class="shop-section">
         <div class="shop-header">
             <div class="shop-info">
                 <h2 class="serif-title">My Photo Shop</h2>
-                <p class="small text-muted">Purchase digital copies of my work. High resolution, instant download.</p>
+                <p class="small text-muted">Purchase high-resolution digital copies.</p>
             </div>
-            <div class="shop-action">
-                <a href="#" class="btn btn-outline">See all photos</a>
-            </div>
+            <a href="#" class="btn btn-outline">See all photos</a>
         </div>
 
         <div class="shop-products-grid">
             {% for product in products|slice:":4" %}
             <article class="card product-card">
                 <div class="card-image-top">
-                    <a href="https://res.cloudinary.com/drscildms/image/upload/c_scale,w_1200/l_text:Arial_60_bold:Photographer%20Hub,co_rgb:FFFFFF,o_30/fl_layer_apply,g_south_east,x_20,y_20/v1/{{ product.preview_image }}.jpg"
-                        class="glightbox card-image-wrapper" data-glightbox="type: image; title: {{ product.title }};">
-
+                    <a href="{{ product.preview_image.url }}" class="glightbox card-image-wrapper">
                         <img src="{{ product.preview_image.url }}" alt="{{ product.title }}" class="product-img">
-
-                        <div class="zoom-overlay">
-                            <span class="overlay-text serif-title">View fullsize</span>
-                        </div>
                     </a>
                 </div>
 
                 <div class="card-body-bottom">
                     <div class="product-details">
                         <h3 class="card-title">{{ product.title }}</h3>
-                        <p class="price"><strong>€ {{ product.price }}</strong></p>
+                        <p class="price">€ {{ product.price }}</p>
                     </div>
+
                     {% if product.id|stringformat:"s" in request.session.cart %}
-                    <button class="btn btn-disabled w-100" disabled>
-                        In Cart ✓
-                    </button>
+                    <button class="btn btn-disabled w-100" disabled>In Cart ✓</button>
                     {% else %}
                     <form action="{% url 'add_to_cart' product.id %}" method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="redirect_url" value="{{ request.path }}">
-                        <button type="submit" class="btn btn-primary w-100">
-                            Add to Cart
-                        </button>
+                        <button type="submit" class="btn btn-primary w-100">Add to Cart</button>
                     </form>
                     {% endif %}
                 </div>
             </article>
-            {% empty %}
-            <p>No photos available yet.</p>
             {% endfor %}
         </div>
     </section>
 
     <section class="newsletter-section card text-center">
         <h2>Join the Journey</h2>
-        <p class="small">Get updates on new sessions and special offers.</p>
-        <form action="#" method="POST" class="newsletter-form">
+        <p class="small text-muted">Get updates on new sessions and special offers.</p>
+        <form action="#" method="POST" class="newsletter-form" style="max-width: 400px; margin: 24px auto 0;">
             {% csrf_token %}
-            <input type="email" name="email" placeholder="Your email address" required>
-            <button type="submit" class="btn btn-primary">Subscribe</button>
+            <input type="email" name="email" placeholder="Email address" required>
+            <button type="submit" class="btn btn-primary w-100" style="margin-top: 16px;">Subscribe</button>
         </form>
     </section>
-
 </div>
 {% endblock %}
