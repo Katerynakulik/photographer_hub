@@ -21,3 +21,17 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const toasts = document.querySelectorAll('.toast-box');
+    
+    toasts.forEach(toast => {
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(20px)';
+            setTimeout(() => {
+                toast.remove();
+            }, 500); 
+        }, 5000);
+    });
+});

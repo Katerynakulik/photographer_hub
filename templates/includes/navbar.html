@@ -1,7 +1,7 @@
 <nav class="main-navbar">
     <div class="nav-container">
         <a href="{% url 'home' %}" class="nav-logo serif-title">Kateryna Poloz</a>
-        
+
         <input type="checkbox" id="nav-toggle" class="nav-toggle">
         <label for="nav-toggle" class="nav-toggle-label">
             <span></span>
@@ -11,14 +11,23 @@
             <li><a href="{% url 'home' %}" class="nav-link">Home</a></li>
             {# <li><a href="{% url 'photo_shop' %}" class="nav-link">Shop</a></li> #}
 
+            <li>
+                <a href="{% url 'view_cart' %}" class="nav-link cart-icon-wrapper">
+                    Cart
+                    {% if product_count > 0 %}
+                    <span class="cart-badge">{{ product_count }}</span>
+                    {% endif %}
+                </a>
+            </li>
+
             {% if user.is_authenticated %}
-                {% if user.userprofile.is_photographer %}
-                    <li><a href="/admin/" class="nav-link admin-tag">Admin Panel</a></li>
-                {% endif %}
-                <li><a href="{% url 'account_logout' %}" class="nav-link">Logout</a></li>
+            {% if user.userprofile.is_photographer %}
+            <li><a href="/admin/" class="nav-link admin-tag">Admin Panel</a></li>
+            {% endif %}
+            <li><a href="{% url 'account_logout' %}" class="nav-link">Logout</a></li>
             {% else %}
-                <li><a href="{% url 'account_login' %}" class="nav-link">Login</a></li>
-                <li><a href="{% url 'account_signup' %}" class="nav-link signup-cta">Register</a></li>
+            <li><a href="{% url 'account_login' %}" class="nav-link">Login</a></li>
+            <li><a href="{% url 'account_signup' %}" class="nav-link signup-cta">Register</a></li>
             {% endif %}
         </ul>
     </div>

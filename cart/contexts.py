@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_processor
+from django.shortcuts import get_object_or_404
 from products.models import PhotoProduct
 
 def cart_contents(request):
@@ -22,5 +22,4 @@ def cart_contents(request):
         'total': total,
         'product_count': product_count,
     }
-
     return context
