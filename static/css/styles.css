@@ -11,6 +11,15 @@
     --border-radius: 12px;
 }
 
+* {
+    box-sizing: border-box;
+}
+
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 /* --- ЗАГАЛЬНІ НАЛАШТУВАННЯ СТОРІНКИ --- */
 body {
     background-color: var(--bg-color);
@@ -347,31 +356,133 @@ body {
         display: none; /* На мобілці потім додамо розгортання */
     }
 }
-/* --- AUTH PAGES STYLING --- */
+/* --- AUTH PAGES STYLING (Sign In / Sign Up) --- */
 .auth-wrapper {
-    max-width: 450px;
-    margin: 80px auto;
-    padding: 40px;
-    background: white;
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 50px 40px;
+    background: var(--card-bg);
     border-radius: var(--border-radius);
     border: 1px solid var(--border-color);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+    text-align: center;
 }
 
-.auth-wrapper h2 { text-align: center; margin-bottom: 30px; }
+.auth-wrapper h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
 
-/* Стилізація полів вводу для Allauth */
-.auth-wrapper form p { margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; }
+.auth-wrapper p {
+    margin-bottom: 25px;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
 
+.auth-wrapper a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-wrapper a:hover {
+    color: var(--hover-color);
+}
+
+/* Прибираємо крапку біля Google та стилізуємо соціальний вхід */
+.socialaccount_providers {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.socialaccount_providers a {
+    display: inline-block;
+    padding: 10px 25px;
+    border: 1px solid var(--border-color);
+    border-radius: 50px;
+    background: var(--bg-color);
+    transition: 0.3s;
+}
+
+.socialaccount_providers a:hover {
+    background: white;
+    border-color: var(--primary-color);
+}
+
+.login-or {
+    margin: 15px 0;
+    font-weight: 600;
+    position: relative;
+    color: var(--text-muted);
+}
+
+/* Стилізація полів форми (Django as_p) */
+.auth-wrapper form p {
+    text-align: left; /* Текст міток (Labels) зліва */
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-wrapper label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+/* Самі інпути */
 .auth-wrapper input:not([type="checkbox"]) {
     width: 100%;
-    padding: 12px;
+    padding: 14px 16px;
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    background: var(--bg-color);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    transition: all 0.3s ease;
 }
 
-.auth-wrapper button {
-    width: 100%;
-    margin-top: 20px;
+.auth-wrapper input:focus {
+    border-color: var(--primary-color);
+    background-color: white;
+    box-shadow: 0 0 0 4px rgba(168, 187, 163, 0.1);
+}
+
+/* Спеціальний стиль для чекбоксів (Remember Me / Newsletter) */
+.auth-wrapper form p:has(input[type="checkbox"]) {
+    flex-direction: row; /* Чекбокс в один рядок з текстом */
+    align-items: center;
+    gap: 10px;
+}
+
+.auth-wrapper input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--primary-color); /* Колір Sage для галочки */
+}
+
+/* Блок дій (Forgot Password) */
+.auth-actions {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.secondaryAction {
+    font-size: 0.85rem;
+    color: var(--text-muted) !important;
+    font-weight: 400 !important;
+}
+
+.secondaryAction:hover {
+    color: var(--primary-color) !important;
 }
