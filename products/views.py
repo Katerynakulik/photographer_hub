@@ -62,3 +62,29 @@ def add_session(request):
         'form': form, 
         'title': 'Add New Photoshoot'
     })
+
+def photoshoot_detail(request, pk):
+    """Сторінка детального перегляду конкретної фотосесії"""
+    session = get_object_or_404(Photoshoot, pk=pk)
+    return render(request, 'products/photoshoot_detail.html', {
+        'session': session
+    })
+
+@user_passes_test(is_photographer)
+def add_session(request):
+    """View for the photographer to create a new photoshoot session"""
+    if request.method == 'POST':
+        form = PhotoshootForm(request.POST, request.FILES)
+        if form.is_valid():
+            new_session = form.save()
+            messages.success(request, f"Success! {new_session.title} has been created.")
+            # Redirect straight to the new detail page
+            return redirect('photoshoot_detail', pk=new_session.pk)
+    else:
+        form = PhotoshootForm()
+    
+    # Mentor Note: Pointing to the new specific form template
+    return render(request, 'products/photoshoot_form.html', {
+        'form': form, 
+        'title': 'Create New Photoshoot'
+    })

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="back-btn-wrapper">
+        <a href="{% url 'home' %}" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i> Back to Home
+        </a>
+    </div>
+
+    <div class="card form-card">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% for field in form %}
+            {% if field.name == 'is_active' %}
+            <div class="form-group u-mb-4 checkbox-inline-group">
+                {{ field }}
+                <label class="form-label-inline" for="{{ field.id_for_label }}">{{ field.label }}</label>
+            </div>
+
+            {% elif field.name == 'image' %}
+            <div class="form-group u-mb-4">
+                <label class="form-label">{{ field.label }}</label>
+                <div class="file-upload-wrapper">
+                    <div class="file-upload-trigger">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <span id="file-upload-text">Choose Session Image</span>
+                    </div>
+                    {{ field }}
+                </div>
+            </div>
+
+            {% else %}
+            <div class="form-group u-mb-4">
+                <label class="form-label">{{ field.label }}</label>
+                {{ field }}
+            </div>
+            {% endif %}
+
+            {% if field.help_text and field.name != 'is_active' %}
+            <p class="form-help">{{ field.help_text }}</p>
+            {% endif %}
+            {% for error in field.errors %}
+            <p class="text-error" style="color: var(--hover-color); font-size: 0.8rem;">{{ error }}</p>
+            {% endfor %}
+            {% endfor %}
+
+            <div class="form-actions u-mt-5">
+                <button type="submit" class="btn btn-primary w-100">
+                    Create Photoshoot
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

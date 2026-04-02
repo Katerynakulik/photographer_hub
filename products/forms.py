@@ -19,8 +19,16 @@ class PhotoshootForm(forms.ModelForm):
     class Meta:
         model = Photoshoot
         fields = ['title', 'description', 'image', 'expected_dates', 'deposit_price', 'total_price', 'is_active']
+        
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
-            'expected_dates': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'e.g. Late June 2026'}),
+            'image': forms.FileInput(attrs={
+                'class': 'custom-file-input',
+                'id': 'file-upload'
+                # Mentor Note: removed 'multiple': True to fix the ValueError
+            }),
+            'title': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Session Title'}),
+            'description': forms.Textarea(attrs={'class': 'form-input', 'rows': 4, 'placeholder': 'Describe the mood...'}),
+            'expected_dates': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'e.g., December 2026'}),
+            'deposit_price': forms.NumberInput(attrs={'class': 'form-input'}),
+            'total_price': forms.NumberInput(attrs={'class': 'form-input'}),
         }

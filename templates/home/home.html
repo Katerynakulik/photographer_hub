@@ -34,18 +34,24 @@
                 {% for session in sessions %}
                 <article class="session-card card">
                     <div class="session-image-wrapper">
-                        <img src="{{ session.image.url }}" alt="{{ session.title }}" class="product-img">
+                        <a href="{% url 'photoshoot_detail' session.pk %}">
+                            <img src="https://res.cloudinary.com/drscildms/image/upload/f_auto,q_auto,w_800/v1/{{ session.image }}"
+                                class="session-img" alt="{{ session.title }}">
+                        </a>
                     </div>
                     <div class="session-body">
                         <h3>{{ session.title }}</h3>
-                        <p class="small text-muted">{{ session.description|truncatechars:80 }}</p>
-                        <p class="small">Expected: {{ session.expected_dates }}</p>
-                        <p class="small">Full Price: €{{ session.total_price }}</p>
+                        <p class="small text-muted u-mb-4">{{ session.description|truncatechars:120 }}</p>
 
-                        <form action="{% url 'add_to_cart' 's_'|add:session.id|stringformat:'s' %}" method="POST">
-                            {% csrf_token %}
-                            <button class="btn btn-primary w-100">Join Waitlist — €10</button>
-                        </form>
+                        <div class="u-flex-between">
+                            <a href="{% url 'photoshoot_detail' session.pk %}" class="btn btn-outline small">Деталі</a>
+                            <form action="{% url 'add_to_cart' session.id %}" method="POST"
+                                style="flex-grow: 1; margin-left: 10px;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary w-100"
+                                    style="padding: 10px;">Бронювати</button>
+                            </form>
+                        </div>
                     </div>
                 </article>
                 {% empty %}

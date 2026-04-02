@@ -24,14 +24,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     const toasts = document.querySelectorAll('.toast-box');
-    
+
     toasts.forEach(toast => {
         setTimeout(() => {
             toast.style.opacity = '0';
             toast.style.transform = 'translateX(20px)';
             setTimeout(() => {
                 toast.remove();
-            }, 500); 
+            }, 500);
         }, 5000);
     });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const fileInput = document.getElementById('file-upload');
+    const uploadText = document.getElementById('file-upload-text');
+
+    if (fileInput && uploadText) {
+        fileInput.addEventListener('change', function() {
+            if (this.files && this.files.length > 0) {
+                // Показуємо назву файлу та міняємо іконку на "чек"
+                const fileName = this.files[0].name;
+                uploadText.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${fileName}`;
+            } else {
+                uploadText.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> Choose Session Image`;
+            }
+        });
+    }
 });
