@@ -31,6 +31,53 @@
 * {
     box-sizing: border-box;
 }
+/* --- CUSTOM UTILITIES (Replacing Bootstrap) --- */
+.u-flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.u-mb-4 { margin-bottom: 30px; }
+.u-mb-5 { margin-bottom: 50px; }
+.u-mt-5 { margin-top: 50px; }
+
+/* --- DASHBOARD REFINEMENTS --- */
+.dashboard-container {
+    padding: 60px 20px; /* Твій запит на падінги */
+}
+
+/* Custom Table Styling without Bootstrap */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.admin-table th {
+    text-align: left;
+    padding: 15px;
+    border-bottom: 2px solid var(--border-color);
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.admin-table td {
+    padding: 20px 15px;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+}
+
+/* --- PRODUCT CARD: DISABLE FOR PHOTOGRAPHER --- */
+/* Mentor: Specific style for the management mode button */
+.btn-management {
+    background-color: #f1f1f1 !important;
+    color: #999 !important;
+    cursor: default !important;
+    border: 1px solid var(--border-color);
+}
 
 body {
     background-color: var(--bg-color);
@@ -644,4 +691,89 @@ section {
         transform: translateX(0);
         opacity: 1;
     }
+}
+
+/* --- DASHBOARD & UTILITY CLASSES --- */
+
+/* Padding for the whole management area */
+.dashboard-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+/* Flexbox utilities */
+.u-flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Spacing utilities */
+.u-mb-4 { margin-bottom: 30px; }
+.u-mb-5 { margin-bottom: 50px; }
+
+/* Table Styling */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table th {
+    text-align: left;
+    padding: 15px;
+    border-bottom: 2px solid var(--border-color);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.admin-table td {
+    padding: 15px;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+}
+
+/* Thumbnails in Dashboard */
+.admin-thumb {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 6px;
+    display: block;
+}
+
+.admin-thumb-placeholder {
+    width: 50px;
+    height: 50px;
+    background: var(--bg-color);
+    font-size: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+}
+
+/* Status Tags */
+.status-tag {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.status-tag.active {
+    color: var(--primary-color);
+}
+
+/* Edit Icon */
+.admin-action-btn {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    transition: 0.3s;
+}
+
+.admin-action-btn:hover {
+    color: var(--hover-color);
 }
