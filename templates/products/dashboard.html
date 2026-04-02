@@ -27,7 +27,7 @@
                 <tr>
                     <td>
                         {% if session.image %}
-                            <img src="{{ session.image.url }}" class="admin-thumb">
+                            <img src="https://res.cloudinary.com/drscildms/image/upload/f_auto,q_auto,w_100,c_fill/v1/{{ session.image }}" class="admin-thumb">
                         {% else %}
                             <div class="admin-thumb-placeholder">No Image</div>
                         {% endif %}
@@ -40,14 +40,10 @@
                             {% if session.is_active %}Active{% else %}Draft{% endif %}
                         </span>
                     </td>
-                    <td>
-                        <a href="#" class="admin-action-btn"><i class="fa-solid fa-pen-to-square"></i></a>
-                    </td>
+                    <td><a href="#" class="admin-action-btn"><i class="fa-solid fa-pen-to-square"></i></a></td>
                 </tr>
                 {% empty %}
-                <tr>
-                    <td colspan="6" class="text-center py-4 text-muted">No photoshoots created yet.</td>
-                </tr>
+                <tr><td colspan="6" class="text-center py-4 text-muted">No photoshoots created yet.</td></tr>
                 {% endfor %}
             </tbody>
         </table>
@@ -69,7 +65,7 @@
                 {% for product in products %}
                 <tr>
                     <td>
-                        <img src="{{ product.preview_image.url }}" class="admin-thumb">
+                        <img src="https://res.cloudinary.com/drscildms/image/upload/f_auto,q_auto,w_100,c_fill/v1/{{ product.preview_image }}" class="admin-thumb">
                     </td>
                     <td>{{ product.title }}</td>
                     <td>€{{ product.price }}</td>
@@ -78,9 +74,7 @@
                             {% if product.is_active %}Active{% else %}Hidden{% endif %}
                         </span>
                     </td>
-                    <td>
-                        <a href="#" class="admin-action-btn"><i class="fa-solid fa-pen-to-square"></i></a>
-                    </td>
+                    <td><a href="#" class="admin-action-btn"><i class="fa-solid fa-pen-to-square"></i></a></td>
                 </tr>
                 {% endfor %}
             </tbody>

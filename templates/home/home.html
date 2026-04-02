@@ -10,7 +10,7 @@
 
                 {% if photographer.profile_image %}
                 <img src="{{ photographer.profile_image.url }}" alt="{{ photographer.user.get_full_name }}"
-                    class="oval-avatar">
+                    class="oval-avatar" fetchpriority="high">
                 {% endif %}
 
                 <div class="bio-text-centered">

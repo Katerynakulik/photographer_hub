@@ -6,25 +6,27 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Photographer Hub{% endblock %}</title>
-    <meta name="description"
-        content="{% block meta_description %}Soft family, children and women photography sessions and digital photo shop.{% endblock %}">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="description" content="{% block meta_description %}Soft family, children and women photography sessions and digital photo shop.{% endblock %}">
     
+    <link rel="preconnect" href="https://res.cloudinary.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
     {% include "includes/navbar.html" %}
+
     <div id="toast-container" class="toast-container">
         {% if messages %}
         {% for message in messages %}
         <div class="toast-box {{ message.tags }}">
-            <div class="toast-content">
-                {{ message }}
-            </div>
+            <div class="toast-content">{{ message }}</div>
             <button class="toast-close" onclick="this.parentElement.remove()">×</button>
         </div>
         {% endfor %}
@@ -36,11 +38,10 @@
     </main>
 
     {% include "includes/footer.html" %}
-    {% load static %}
 
-    <script src="{% static 'js/script.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js" defer></script>
+    <script src="{% static 'js/script.js' %}" defer></script>
 
     {% block postloadjs %}{% endblock %}
 </body>
-
 </html>
