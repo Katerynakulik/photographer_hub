@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="page-container u-mt-5 dashboard-container">
-    <div class="u-mb-5">
-        <a href="{% url 'home' %}" class="text-muted small" style="text-decoration: none;">
-            <i class="fa-solid fa-arrow-left"></i> Back to Home
+    <div class="back-link-wrapper u-mb-4">
+        <a href="{% url 'home' %}" class="back-btn-modern">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>Back to Home</span>
         </a>
     </div>
 
@@ -25,7 +26,7 @@
                 </p>
             </div>
 
-            <div class="price-box card u-mb-4" style="background-color: var(--white); padding: 25px;">
+            <div class="price-box card u-mb-4" style="padding: 25px;">
                 <div class="u-flex-between">
                     <span style="font-weight: 600;">Waitlist Deposit:</span>
                     <strong class="serif-title" style="font-size: 1.4rem; color: var(--primary-color);">
@@ -39,21 +40,29 @@
                 </div>
             </div>
 
+            {% if user.is_authenticated and user.userprofile.is_photographer %}
+            <button class="btn btn-management w-100" disabled style="opacity: 0.6; padding: 18px;">
+                <i class="fa-solid fa-id-card-clip"></i> Management Mode
+            </button>
+            {% else %}
             <form action="{% url 'add_to_cart' session.id %}" method="POST">
                 {% csrf_token %}
-                <input type="hidden" name="item_type" value="session"> <input type="hidden" name="redirect_url" value="{{ request.path }}">
-                
+                <input type="hidden" name="item_type" value="session"> <input type="hidden" name="redirect_url"
+                    value="{{ request.path }}">
+
                 {% with 's_'|add:session.id|stringformat:'s' as item_key %}
-                    {% if item_key in request.session.cart %}
-                        <button class="btn btn-disabled w-100" disabled>Already in Cart ✓</button>
-                    {% else %}
-                        <button type="submit" class="btn btn-primary w-100" style="padding: 18px;">
-                            Join Waitlist — €{{ session.deposit_price }}
-                        </button>
-                    {% endif %}
+                {% if item_key in request.session.cart %}
+                <button class="btn btn-disabled w-100" disabled style="padding: 18px;">
+                    <i class="fa-solid fa-check"></i> Already in Cart
+                </button>
+                {% else %}
+                <button type="submit" class="btn btn-primary w-100" style="padding: 18px;">
+                    Join Waitlist — €{{ session.deposit_price }}
+                </button>
+                {% endif %}
                 {% endwith %}
             </form>
-
+            {% endif %}
             <p class="text-center u-mt-5 small text-muted" style="font-style: italic;">
                 * By paying the deposit, you are automatically added to the priority waitlist for this session.
             </p>

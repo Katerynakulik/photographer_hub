@@ -32,3 +32,10 @@ class PhotoshootForm(forms.ModelForm):
             'deposit_price': forms.NumberInput(attrs={'class': 'form-input'}),
             'total_price': forms.NumberInput(attrs={'class': 'form-input'}),
         }
+    def clean_image(self):
+        image = self.cleaned_data.get('image')
+        if image:
+            # 10485760 байт = 10 МБ
+            if image.size > 10 * 1024 * 1024:
+                raise ValidationError("File is too large. Max size is 10MB.")
+        return image

@@ -200,15 +200,171 @@ input[type="checkbox"] {
     background-color: var(--hover-color);
     transform: translateY(-2px);
 }
+/* --- Photoshoot --- */
+.section-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 20px;
+}
 
+.scroller-controls {
+    display: flex;
+    gap: 12px;
+}
+
+.scroller-arrow {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    background: var(--white);
+    color: var(--text-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.scroller-arrow:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--white);
+}
+
+/* --- THE SCROLLER TRACK --- */
+.sessions-view-viewport {
+    width: 100%;
+    overflow: hidden;
+    padding: 20px 0;
+}
+
+.sessions-horizontal-track {
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Firefox */
+}
+
+.sessions-horizontal-track::-webkit-scrollbar {
+    display: none; 
+}
+
+/* --- THE HORIZONTAL CARD (WIDE) --- */
+.session-wide-card {
+    flex: 0 0 550px; 
+    display: flex;
+    background: var(--white);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    height: 260px; 
+    transition: transform 0.3s ease;
+    
+}
+
+.session-wide-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.session-card-visual {
+    flex: 0 0 220px;
+    background-color: var(--bg-color);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.session-card-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+}
+
+.session-card-details {
+    flex: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.session-date-tag {
+    color: var(--primary-color);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin: 8px 0;
+    text-transform: uppercase;
+}
+
+.session-excerpt {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.btn-details-link {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.3s;
+}
+
+.btn-details-link:hover {
+    color: var(--hover-color);
+    gap: 15px; /* Ефект руху стрілочки */
+}
 .back-btn i {
     font-size: 0.8rem;
 }
+/* --- MODERN BACK BUTTON --- */
 
+.back-link-wrapper {
+    margin-bottom: 30px; /* Відступ від кнопки до заголовка форми/деталей */
+}
+
+.back-btn-modern {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px; /* Відстань між стрілкою та текстом */
+    padding: 10px 20px;
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 50px; /* Округла форма "пігулка" */
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.back-btn-modern:hover {
+    background-color: var(--bg-color); /* Ivory */
+    color: var(--primary-color); /* Sage */
+    border-color: var(--primary-color);
+    transform: translateX(-5px); /* Легкий рух вліво, що підкреслює повернення */
+    box-shadow: var(--shadow-sm);
+}
+
+.back-btn-modern i {
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+}
 /* --- DASHBOARD REFINEMENTS --- */
 .dashboard-container {
     padding: 60px 20px;
-    /* Твій запит на падінги */
+
 }
 
 /* Custom Table Styling without Bootstrap */

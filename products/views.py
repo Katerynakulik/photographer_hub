@@ -88,3 +88,24 @@ def add_session(request):
         'form': form, 
         'title': 'Create New Photoshoot'
     })
+
+@user_passes_test(is_photographer)
+def edit_session(request, pk):
+    """Редагування існуючої фотосесії"""
+    session = get_object_or_404(Photoshoot, pk=pk)
+    
+    if request.method == 'POST':
+        # instance=session каже Django оновити існуючий запис, а не створювати новий
+        form = PhotoshootForm(request.POST, request.FILES, instance=session)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"Changes to '{session.title}' saved!")
+            return redirect('dashboard')
+    else:
+        form = PhotoshootForm(instance=session)
+    
+    return render(request, 'products/photoshoot_form.html', {
+        'form': form,
+        'title': f'Edit: {session.title}',
+        'edit_mode': True # Допоможе нам змінити текст на кнопці
+    })

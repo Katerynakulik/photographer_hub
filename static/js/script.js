@@ -36,12 +36,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const fileInput = document.getElementById('file-upload');
     const uploadText = document.getElementById('file-upload-text');
 
     if (fileInput && uploadText) {
-        fileInput.addEventListener('change', function() {
+        fileInput.addEventListener('change', function () {
             if (this.files && this.files.length > 0) {
                 // Показуємо назву файлу та міняємо іконку на "чек"
                 const fileName = this.files[0].name;
@@ -52,3 +52,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+function scrollSessions(direction) {
+    const scroller = document.getElementById('sessionsScroller');
+    const scrollAmount = 470; // Ширина картки + gap
+    scroller.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+}

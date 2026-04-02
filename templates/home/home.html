@@ -23,70 +23,80 @@
         {% endif %}
     </section>
 
-    <section class="sessions-section">
-        <div class="section-header">
-            <h2 class="serif-title">Upcoming Photoshoots</h2>
+    <section class="page-container u-mb-5">
+        <div class="section-header-flex u-mb-4">
+            <div class="section-title-group">
+                <p class="tagline-accent">Limited Offers</p>
+                <h2 class="serif-title">Upcoming Photoshoots</h2>
+            </div>
+
+            <div class="scroller-controls">
+                <button class="scroller-arrow prev" id="slidePrev" aria-label="Previous">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <button class="scroller-arrow next" id="slideNext" aria-label="Next">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
         </div>
 
-        <section class="sessions-section">
-            <h2 class="serif-title">Upcoming Photoshoots</h2>
-            <div class="sessions-grid">
+        <div class="sessions-view-viewport">
+            <div class="sessions-horizontal-track" id="sessionsTrack">
                 {% for session in sessions %}
-                <article class="session-card card">
-                    <div class="session-image-wrapper">
-                        <a href="{% url 'photoshoot_detail' session.pk %}">
-                            <img src="https://res.cloudinary.com/drscildms/image/upload/f_auto,q_auto,w_800/v1/{{ session.image }}"
-                                class="session-img" alt="{{ session.title }}">
-                        </a>
+                <div class="session-wide-card">
+                    <div class="session-card-visual">
+                        {% if session.image %}
+                        <img src="{{ session.image.url }}" alt="{{ session.title }}">
+                        {% else %}
+                        <div class="placeholder-bg">Fine Art</div>
+                        {% endif %}
                     </div>
-                    <div class="session-body">
-                        <h3>{{ session.title }}</h3>
-                        <p class="small text-muted u-mb-4">{{ session.description|truncatechars:120 }}</p>
 
-                        <div class="u-flex-between">
-                            <a href="{% url 'photoshoot_detail' session.pk %}" class="btn btn-outline small">Деталі</a>
-                            <form action="{% url 'add_to_cart' session.id %}" method="POST"
-                                style="flex-grow: 1; margin-left: 10px;">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-primary w-100"
-                                    style="padding: 10px;">Бронювати</button>
-                            </form>
+                    <div class="session-card-details">
+                        <div class="details-top">
+                            <h3 class="serif-title">{{ session.title }}</h3>
+                            <p class="session-date-tag">
+                                <i class="fa-regular fa-calendar"></i> {{ session.expected_dates }}
+                            </p>
+                            <p class="session-excerpt">{{ session.description|truncatechars:120 }}</p>
+                            <a href="{% url 'photoshoot_detail' session.pk %}" class="btn-details-link">
+                                View Details <i class="fa-solid fa-arrow-right"></i>
+                            </a>
                         </div>
                     </div>
-                </article>
+                </div>
                 {% empty %}
-                <div class="card text-center py-5 w-100" style="background: var(--bg-color);">
-                    <p class="serif-title">New artistic journeys are coming soon.</p>
-                    <p class="text-muted small">Stay tuned for new location announcements.</p>
-                </div>
+                <p class="text-muted">New sessions coming soon...</p>
                 {% endfor %}
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="shop-section">
-            <div class="shop-header">
-                <div class="shop-info">
-                    <h2 class="serif-title">My Photo Shop</h2>
-                    <p class="small text-muted">Purchase high-resolution digital copies.</p>
-                </div>
-                <a href="{% url 'all_products' %}" class="btn btn-outline">See all photos</a>
+
+    <section class="shop-section">
+        <div class="shop-header">
+            <div class="shop-info">
+                <h2 class="serif-title">My Photo Shop</h2>
+                <p class="small text-muted">Purchase high-resolution digital copies.</p>
             </div>
+            <a href="{% url 'all_products' %}" class="btn btn-outline">See all photos</a>
+        </div>
 
-            <div class="shop-products-grid">
-                {% for product in products|slice:":4" %}
-                {% include "includes/product_card.html" %}
-                {% endfor %}
-            </div>
-        </section>
+        <div class="shop-products-grid">
+            {% for product in products|slice:":4" %}
+            {% include "includes/product_card.html" %}
+            {% endfor %}
+        </div>
+    </section>
 
-        <section class="newsletter-section card text-center">
-            <h2>Join the Journey</h2>
-            <p class="small text-muted">Get updates on new sessions and special offers.</p>
-            <form action="#" method="POST" class="newsletter-form" style="max-width: 400px; margin: 24px auto 0;">
-                {% csrf_token %}
-                <input type="email" name="email" placeholder="Email address" required>
-                <button type="submit" class="btn btn-primary w-100" style="margin-top: 16px;">Subscribe</button>
-            </form>
-        </section>
+    <section class="newsletter-section card text-center">
+        <h2>Join the Journey</h2>
+        <p class="small text-muted">Get updates on new sessions and special offers.</p>
+        <form action="#" method="POST" class="newsletter-form" style="max-width: 400px; margin: 24px auto 0;">
+            {% csrf_token %}
+            <input type="email" name="email" placeholder="Email address" required>
+            <button type="submit" class="btn btn-primary w-100" style="margin-top: 16px;">Subscribe</button>
+        </form>
+    </section>
 </div>
 {% endblock %}

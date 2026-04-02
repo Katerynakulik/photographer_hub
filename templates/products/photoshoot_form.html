@@ -2,11 +2,12 @@
 
 {% block content %}
 <div class="dashboard-container">
-    <div class="back-btn-wrapper">
-        <a href="{% url 'home' %}" class="back-btn">
-            <i class="fa-solid fa-arrow-left"></i> Back to Home
-        </a>
-    </div>
+    <div class="back-link-wrapper u-mb-4">
+    <a href="{% url 'home' %}" class="back-btn-modern">
+        <i class="fa-solid fa-arrow-left"></i> 
+        <span>Back to Home</span>
+    </a>
+</div>
 
     <div class="card form-card">
         <form method="POST" enctype="multipart/form-data">
