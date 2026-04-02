@@ -1,13 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="page-container u-mt-5 dashboard-container">
-    <div class="back-link-wrapper u-mb-4">
-        <a href="{% url 'home' %}" class="back-btn-modern">
-            <i class="fa-solid fa-arrow-left"></i>
-            <span>Back to Home</span>
-        </a>
-    </div>
-
     <div class="photoshoot-detail-grid">
         <div class="detail-image-wrapper card" style="padding: 10px;">
             <img src="https://res.cloudinary.com/drscildms/image/upload/f_auto,q_auto,w_1000/l_text:Verdana_60_bold:Photographer%20Hub,co_rgb:FFFFFF,o_30/fl_layer_apply,g_center/v1/{{ session.image }}"
@@ -40,29 +33,36 @@
                 </div>
             </div>
 
-            {% if user.is_authenticated and user.userprofile.is_photographer %}
-            <button class="btn btn-management w-100" disabled style="opacity: 0.6; padding: 18px;">
-                <i class="fa-solid fa-id-card-clip"></i> Management Mode
-            </button>
-            {% else %}
-            <form action="{% url 'add_to_cart' session.id %}" method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="item_type" value="session"> <input type="hidden" name="redirect_url"
-                    value="{{ request.path }}">
-
-                {% with 's_'|add:session.id|stringformat:'s' as item_key %}
-                {% if item_key in request.session.cart %}
-                <button class="btn btn-disabled w-100" disabled style="padding: 18px;">
-                    <i class="fa-solid fa-check"></i> Already in Cart
-                </button>
+            {% if user.is_authenticated %}
+                {% if user.userprofile.is_photographer %}
+                    <button class="btn btn-management w-100" disabled style="opacity: 0.6; padding: 18px;">
+                        <i class="fa-solid fa-id-card-clip"></i> Management Mode
+                    </button>
                 {% else %}
-                <button type="submit" class="btn btn-primary w-100" style="padding: 18px;">
-                    Join Waitlist — €{{ session.deposit_price }}
-                </button>
+                    <form action="{% url 'add_to_cart' session.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="item_type" value="session"> 
+                        <input type="hidden" name="redirect_url" value="{{ request.path }}">
+
+                        {% with 's_'|add:session.id|stringformat:'s' as item_key %}
+                            {% if item_key in request.session.cart %}
+                                <button class="btn btn-disabled w-100" disabled style="padding: 18px;">
+                                    <i class="fa-solid fa-check"></i> In Cart (Adjust quantity there)
+                                </button>
+                            {% else %}
+                                <button type="submit" class="btn btn-primary w-100" style="padding: 18px;">
+                                    Join Waitlist — €{{ session.deposit_price }}
+                                </button>
+                            {% endif %}
+                        {% endwith %}
+                    </form>
                 {% endif %}
-                {% endwith %}
-            </form>
+            {% else %}
+                <a href="{% url 'account_login' %}?next={{ request.path }}" class="btn btn-primary w-100" style="padding: 18px;">
+                    Login to Join Waitlist
+                </a>
             {% endif %}
+            
             <p class="text-center u-mt-5 small text-muted" style="font-style: italic;">
                 * By paying the deposit, you are automatically added to the priority waitlist for this session.
             </p>

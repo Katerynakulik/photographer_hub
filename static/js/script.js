@@ -1,55 +1,48 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Lightbox ініціалізація з покращеними налаштуваннями
-    const lightbox = GLightbox({
-        selector: '.glightbox',
-        touchNavigation: true,
-        loop: true,
-        zoomable: true // Дозволяє зум для великого перегляду
-    });
+    // 1. Слайдер для фотосесій (Upcoming Photoshoots)
+    const track = document.getElementById('sessionsTrack');
+    const btnPrev = document.getElementById('slidePrev');
+    const btnNext = document.getElementById('slideNext');
 
-    // Slider Logic для кнопок-стрілок
-    const slider = document.getElementById('photo-slider');
-    const btnLeft = document.getElementById('slide-left');
-    const btnRight = document.getElementById('slide-right');
+    if (track && btnPrev && btnNext) {
+        const scrollAmount = 450; // На скільки пікселів прокручувати
 
-    if (slider && btnLeft && btnRight) {
-        btnLeft.onclick = () => {
-            slider.scrollBy({ left: -320, behavior: 'smooth' });
-        };
-        btnRight.onclick = () => {
-            slider.scrollBy({ left: 320, behavior: 'smooth' });
-        };
+        btnNext.addEventListener('click', () => {
+            track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        });
+
+        btnPrev.addEventListener('click', () => {
+            track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        });
+
+        // Перевірка, щоб приховати стрілки, якщо скролити нікуди (опціонально)
+        track.addEventListener('scroll', () => {
+            const maxScroll = track.scrollWidth - track.clientWidth;
+            btnPrev.style.opacity = track.scrollLeft <= 0 ? "0.3" : "1";
+            btnNext.style.opacity = track.scrollLeft >= maxScroll ? "0.3" : "1";
+        });
     }
-});
 
-document.addEventListener('DOMContentLoaded', () => {
+    // 2. Автоматичне зникнення Тостів
     const toasts = document.querySelectorAll('.toast-box');
-
     toasts.forEach(toast => {
+        // Видалення через кнопку X
+        const closeBtn = toast.querySelector('.toast-close');
+        if (closeBtn) {
+            closeBtn.onclick = () => toast.style.opacity = '0';
+        }
+
+        // Автоматичне видалення через 5 секунд
         setTimeout(() => {
             toast.style.opacity = '0';
-            toast.style.transform = 'translateX(20px)';
-            setTimeout(() => {
-                toast.remove();
-            }, 500);
+            toast.style.transform = 'translateY(-10px)';
+            setTimeout(() => toast.remove(), 500);
         }, 5000);
     });
-});
 
-document.addEventListener('DOMContentLoaded', function () {
-    const fileInput = document.getElementById('file-upload');
-    const uploadText = document.getElementById('file-upload-text');
-
-    if (fileInput && uploadText) {
-        fileInput.addEventListener('change', function () {
-            if (this.files && this.files.length > 0) {
-                // Показуємо назву файлу та міняємо іконку на "чек"
-                const fileName = this.files[0].name;
-                uploadText.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${fileName}`;
-            } else {
-                uploadText.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> Choose Session Image`;
-            }
-        });
+    // 3. Ініціалізація GLightbox (якщо є на сторінці)
+    if (typeof GLightbox !== 'undefined') {
+        GLightbox({ selector: '.glightbox' });
     }
 });
 
@@ -58,3 +51,14 @@ function scrollSessions(direction) {
     const scrollAmount = 470; // Ширина картки + gap
     scroller.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
 }
+
+// Product
+
+document.querySelectorAll('input[type="file"]').forEach(input => {
+    input.addEventListener('change', function () {
+        const span = this.parentElement.querySelector('span');
+        if (this.files.length > 0) {
+            span.innerHTML = `<i class="fa-solid fa-check"></i> ${this.files[0].name}`;
+        }
+    });
+});

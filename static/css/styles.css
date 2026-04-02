@@ -1,6 +1,8 @@
-/* --- DESIGN TOKENS & VARIABLES --- */
+/* ==========================================================================
+   1. DESIGN TOKENS & VARIABLES
+   ========================================================================== */
 :root {
-    /* Mentor Note: Used standard hex codes for brand identity consistency */
+    /* Brand Colors */
     --bg-color: #F8F5F2;
     /* Warm Ivory */
     --accent-soft: #E8CFCB;
@@ -16,8 +18,9 @@
     --border-color: #E9E1DC;
 
     /* Layout Tokens */
-    --container-width: 1200px;
+    --container-width: 1400px;
     --section-spacing: 20px;
+    /* Fine Art breathing room */
     --card-padding: 24px;
     --border-radius: 12px;
     --gap: 20px;
@@ -27,376 +30,11 @@
     --shadow-md: 0 10px 40px rgba(0, 0, 0, 0.05);
 }
 
-/* --- RESET & GLOBAL BASE --- */
+/* ==========================================================================
+   2. RESET & GLOBAL BASE
+   ========================================================================== */
 * {
     box-sizing: border-box;
-}
-
-/* --- CUSTOM UTILITIES (Replacing Bootstrap) --- */
-.u-flex-between {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.u-mb-4 {
-    margin-bottom: 30px;
-}
-
-.u-mb-5 {
-    margin-bottom: 50px;
-}
-
-.u-mt-5 {
-    margin-top: 50px;
-}
-
-/* ==========================================================================
-   FORMS & INPUTS (Consolidated)
-   ========================================================================== */
-
-/* Контейнер форми */
-.form-card {
-    max-width: 650px;
-    margin: 40px auto;
-    padding: 40px;
-    background: var(--white);
-    border-radius: var(--border-radius);
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-sm);
-}
-
-/* Загальні стилі для всіх полів (текст, цифри, дати, textarea) */
-.form-card input:not([type="checkbox"]):not([type="radio"]),
-.form-card textarea,
-.form-input {
-    width: 100%;
-    padding: 14px 18px;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    background-color: var(--bg-color);
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-    color: var(--text-color);
-    transition: all 0.3s ease;
-    display: block;
-    outline: none;
-}
-
-.form-card input:focus, 
-.form-card textarea:focus {
-    border-color: var(--primary-color);
-    background-color: var(--white);
-    box-shadow: 0 0 0 4px rgba(168, 187, 163, 0.15);
-}
-
-.form-label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 8px;
-    margin-top: 20px;
-    font-size: 0.95rem;
-    color: var(--text-color);
-}
-
-/* --- КНОПКА ЗАВАНТАЖЕННЯ ФОТО (Custom Design) --- */
-.file-upload-wrapper {
-    position: relative;
-    width: 100%;
-    height: 70px;
-    margin-top: 5px;
-}
-
-/* Справжній інпут - робимо його невидимим, але він зверху для кліку */
-.file-upload-wrapper input[type="file"] {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
-    z-index: 10;
-}
-
-/* Наша красива "фейкова" кнопка */
-.file-upload-trigger {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    background-color: var(--white);
-    border: 2px dashed var(--primary-color);
-    border-radius: 8px;
-    color: var(--primary-color);
-    font-weight: 600;
-    transition: all 0.3s ease;
-    z-index: 1; /* Вона під інпутом */
-}
-
-.file-upload-wrapper:hover .file-upload-trigger {
-    background-color: rgba(168, 187, 163, 0.08);
-    border-color: var(--hover-color);
-    color: var(--hover-color);
-}
-
-.form-help {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    margin-top: 5px;
-}
-.checkbox-row {
-    display: flex;
-    align-items: center;
-    flex-direction: row !important; 
-    gap: 12px;
-    margin-top: 20px;
-    cursor: pointer;
-}
-
-.form-label-inline {
-    margin: 0 !important;
-    font-weight: 500;
-    font-size: 0.95rem;
-    color: var(--text-color);
-    cursor: pointer;
-}
-
-input[type="checkbox"] {
-    cursor: pointer;
-    width: 15px;
-    height: 15px;
-    margin: 0;
-}
-
-/* --- BACK BUTTON STYLING --- */
-
-.back-btn-wrapper {
-    margin-bottom: 25px; /* Spacing below the button */
-}
-
-.back-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 15px;
-    background: transparent;
-    border: 1px solid var(--border-color);
-    border-radius: 50px;
-    color: var(--text-muted);
-    font-size: 0.85rem;
-    text-decoration: none !important;
-    transition: all 0.3s ease;
-}
-
-.back-btn:hover {
-    border-color: var(--hover-color);
-    color: var(--white) !important;
-    background-color: var(--hover-color);
-    transform: translateY(-2px);
-}
-/* --- Photoshoot --- */
-.section-header-flex {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 20px;
-}
-
-.scroller-controls {
-    display: flex;
-    gap: 12px;
-}
-
-.scroller-arrow {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    border: 1px solid var(--border-color);
-    background: var(--white);
-    color: var(--text-color);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-}
-
-.scroller-arrow:hover {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
-    color: var(--white);
-}
-
-/* --- THE SCROLLER TRACK --- */
-.sessions-view-viewport {
-    width: 100%;
-    overflow: hidden;
-    padding: 20px 0;
-}
-
-.sessions-horizontal-track {
-    display: flex;
-    gap: 30px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    scrollbar-width: none; /* Firefox */
-}
-
-.sessions-horizontal-track::-webkit-scrollbar {
-    display: none; 
-}
-
-/* --- THE HORIZONTAL CARD (WIDE) --- */
-.session-wide-card {
-    flex: 0 0 550px; 
-    display: flex;
-    background: var(--white);
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-    overflow: hidden;
-    height: 260px; 
-    transition: transform 0.3s ease;
-    
-}
-
-.session-wide-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-md);
-}
-
-.session-card-visual {
-    flex: 0 0 220px;
-    background-color: var(--bg-color);
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.session-card-visual img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; 
-}
-
-.session-card-details {
-    flex: 1;
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.session-date-tag {
-    color: var(--primary-color);
-    font-size: 0.85rem;
-    font-weight: 600;
-    margin: 8px 0;
-    text-transform: uppercase;
-}
-
-.session-excerpt {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    line-height: 1.5;
-}
-
-.btn-details-link {
-    text-decoration: none;
-    color: var(--text-color);
-    font-weight: 700;
-    font-size: 0.9rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    transition: 0.3s;
-}
-
-.btn-details-link:hover {
-    color: var(--hover-color);
-    gap: 15px; /* Ефект руху стрілочки */
-}
-.back-btn i {
-    font-size: 0.8rem;
-}
-/* --- MODERN BACK BUTTON --- */
-
-.back-link-wrapper {
-    margin-bottom: 30px; /* Відступ від кнопки до заголовка форми/деталей */
-}
-
-.back-btn-modern {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px; /* Відстань між стрілкою та текстом */
-    padding: 10px 20px;
-    background-color: var(--white);
-    border: 1px solid var(--border-color);
-    border-radius: 50px; /* Округла форма "пігулка" */
-    color: var(--text-muted);
-    text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.back-btn-modern:hover {
-    background-color: var(--bg-color); /* Ivory */
-    color: var(--primary-color); /* Sage */
-    border-color: var(--primary-color);
-    transform: translateX(-5px); /* Легкий рух вліво, що підкреслює повернення */
-    box-shadow: var(--shadow-sm);
-}
-
-.back-btn-modern i {
-    font-size: 0.8rem;
-    transition: transform 0.3s ease;
-}
-/* --- DASHBOARD REFINEMENTS --- */
-.dashboard-container {
-    padding: 60px 20px;
-
-}
-
-/* Custom Table Styling without Bootstrap */
-.admin-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-.admin-table th {
-    text-align: left;
-    padding: 15px;
-    border-bottom: 2px solid var(--border-color);
-    color: var(--text-muted);
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.admin-table td {
-    padding: 20px 15px;
-    border-bottom: 1px solid var(--border-color);
-    vertical-align: middle;
-}
-
-/* --- PRODUCT CARD: DISABLE FOR PHOTOGRAPHER --- */
-/* Mentor: Specific style for the management mode button */
-.btn-management {
-    background-color: #f1f1f1 !important;
-    color: #999 !important;
-    cursor: default !important;
-    border: 1px solid var(--border-color);
 }
 
 body {
@@ -417,18 +55,27 @@ h3,
     margin: 0;
 }
 
-/* --- LAYOUT COMPONENTS --- */
+/* Global Link Reset to prevent unwanted styles on UI elements */
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+}
+
+/* ==========================================================================
+   3. LAYOUT COMPONENTS (Used across multiple files)
+   ========================================================================== */
 .page-container {
     max-width: var(--container-width);
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 40px;
+    /* Restored global padding */
 }
 
 section {
     margin-bottom: var(--section-spacing);
 }
 
-/* Unified Card Style for all card components */
 .card {
     background: var(--white);
     border: 1px solid var(--border-color);
@@ -438,101 +85,46 @@ section {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card:hover {
-    box-shadow: var(--shadow-md);
-}
-
-.main-navbar {
-    background-color: #FFFFFF;
-    border-bottom: 1px solid #E9E1DC;
-    padding: 12px 0;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-.nav-menu {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+/* Shared Utilities */
+.u-flex-between {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    /* Base gap for mobile */
-}
-
-@media (min-width: 768px) {
-    .nav-menu {
-        gap: 50px;
-        /* Increased breathing room for desktop */
-    }
-}
-
-/* Mentor: Universal icon link styles */
-.main-navbar .nav-link {
-    text-decoration: none !important;
-    font-size: 1.2rem;
-    /* Comfortable size for touch targets */
-    color: #A8BBA3;
-    /* Uniform Sage color for all icons */
-    transition: all 0.3s ease;
-    display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
-.main-navbar .nav-link:hover {
-    color: #D6A5A1;
-    /* Dusty Rose on hover */
-    transform: translateY(-2px);
+.u-mb-4 {
+    margin-bottom: 30px;
 }
 
-/* FB Circle: Keeping the social icon distinctive */
-.fb-circle {
-    width: 36px;
-    height: 36px;
-    background-color: #A8BBA3;
-    color: #FFFFFF !important;
-    border-radius: 50%;
-    justify-content: center;
-    font-size: 1rem !important;
+.u-mb-5 {
+    margin-bottom: 50px;
 }
 
-/* Register Icon CTA: Mentor note: Adding a subtle background to distinguish the primary action */
-.signup-icon-cta {
-    background-color: #F8F5F2;
-    /* Warm Ivory background */
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    justify-content: center;
-    border: 1px solid #E9E1DC;
+.u-mt-5 {
+    margin-top: 50px;
 }
 
-.signup-icon-cta:hover {
-    background-color: #A8BBA3;
-    color: #FFFFFF !important;
+.text-center {
+    text-align: center;
 }
 
-/* Cart Badge Correction */
-.cart-badge-dot {
-    position: absolute;
-    top: -5px;
-    right: -8px;
-    background-color: #D6A5A1;
-    color: white;
-    font-size: 0.65rem;
-    font-weight: 800;
-    min-width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid #FFFFFF;
+.text-muted {
+    color: var(--text-muted);
 }
 
-/* --- BUTTONS & CTA --- */
+.small {
+    font-size: 0.85rem;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+/* ==========================================================================
+   4. COMMON UI ELEMENTS (Buttons, Navbar)
+   ========================================================================== */
+
+/* Main Buttons */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -542,8 +134,6 @@ section {
     font-weight: 600;
     font-size: 0.95rem;
     cursor: pointer;
-    text-decoration: none;
-    transition: all 0.3s ease;
     border: none;
 }
 
@@ -555,6 +145,7 @@ section {
 .btn-primary:hover {
     background-color: var(--hover-color);
     transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
 }
 
 .btn-outline {
@@ -568,18 +159,230 @@ section {
     color: var(--white) !important;
 }
 
-.btn-disabled {
-    background-color: #F1F1F1 !important;
-    color: var(--text-muted) !important;
-    cursor: not-allowed;
+.btn-disabled,
+.btn-management {
+    background-color: #f1f1f1 !important;
+    color: #999 !important;
+    cursor: not-allowed !important;
     border: 1px solid var(--border-color);
 }
 
-.w-100 {
-    width: 100%;
+/* Modern Pill Back Button */
+.back-link-wrapper {
+    margin-bottom: 30px;
 }
 
-/* --- HERO SECTION --- */
+.back-btn-modern {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 24px;
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 50px;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.back-btn-modern:hover {
+    background-color: var(--bg-color);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    transform: translateX(-5px);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Navigation Bar */
+.main-navbar {
+    background-color: var(--white);
+    border-bottom: 1px solid var(--border-color);
+    padding: 12px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+.nav-link {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+}
+
+.nav-link:hover {
+    color: var(--hover-color);
+    transform: translateY(-2px);
+}
+
+.fb-circle {
+    width: 36px;
+    height: 36px;
+    background-color: var(--primary-color);
+    color: var(--white) !important;
+    border-radius: 50%;
+    justify-content: center;
+}
+
+.signup-icon-cta {
+    background-color: var(--bg-color);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    justify-content: center;
+    border: 1px solid var(--border-color);
+}
+
+.cart-badge-dot {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    background-color: var(--hover-color);
+    color: var(--white);
+    font-size: 0.65rem;
+    font-weight: 800;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--white);
+}
+
+/* ==========================================================================
+   5. FORMS & INPUTS (Global Auth & Dashboard)
+   ========================================================================== */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="url"],
+input[type="date"],
+textarea,
+.form-input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--bg-color); /* Той самий Ivory/Light grey */
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    display: block;
+    outline: none;
+    box-sizing: border-box;
+}
+
+/* Hover & Focus state for ALL inputs */
+input:focus, 
+textarea:focus {
+    border-color: var(--primary-color) !important;
+    background-color: var(--white) !important;
+    box-shadow: 0 0 0 4px rgba(168, 187, 163, 0.15) !important;
+}
+
+/* Placeholder color */
+::placeholder {
+    color: var(--text-muted);
+    opacity: 0.7;
+}
+.form-card {
+    max-width: 650px;
+    margin: 40px auto;
+    padding: 40px;
+}
+
+.form-card input:not([type="checkbox"]):not([type="radio"]),
+.form-card textarea,
+.form-input,
+.auth-wrapper input:not([type="checkbox"]) {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--bg-color);
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    display: block;
+    outline: none;
+}
+
+.form-card input:focus,
+.form-card textarea:focus,
+.auth-wrapper input:focus {
+    border-color: var(--primary-color);
+    background-color: var(--white);
+    box-shadow: 0 0 0 4px rgba(168, 187, 163, 0.15);
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    margin-top: 20px;
+    font-size: 0.95rem;
+}
+
+/* Custom File Upload */
+.file-upload-wrapper {
+    position: relative;
+    width: 100%;
+    height: 70px;
+    margin-top: 5px;
+}
+
+.file-upload-wrapper input[type="file"] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.file-upload-trigger {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background-color: var(--white);
+    border: 2px dashed var(--primary-color);
+    border-radius: 8px;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.checkbox-inline-group,
+.checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+/* ==========================================================================
+   6. HERO SECTION (Restored Aesthetics)
+   ========================================================================== */
+.hero-section {
+    padding: 80px;
+}
+
 .photographer-bio-centered {
     display: flex;
     flex-direction: column;
@@ -595,10 +398,12 @@ section {
     border-radius: 50% / 40%;
     object-fit: cover;
     border: 3px solid var(--accent-soft);
+    box-shadow: var(--shadow-sm);
 }
 
 .h1-large {
-    font-size: 3rem;
+    font-size: 3.5rem;
+    line-height: 1.1;
 }
 
 .tagline-accent {
@@ -606,126 +411,139 @@ section {
     letter-spacing: 2px;
     text-transform: uppercase;
     font-size: 0.85rem;
-    font-weight: 600;
+    font-weight: 700;
 }
 
-/* --- UPCOMING SESSIONS STYLING --- */
-
-/* Section Title Alignment */
-.section-header {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.section-header h2 {
-    font-size: 2.2rem;
-    margin-bottom: 5px;
-}
-
-/* Sessions Grid - Mobile First */
-.sessions-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 30px;
-}
-
-/* Mentor Note: Scaled grid for larger screens */
-@media (min-width: 992px) {
-    .sessions-grid {
-        grid-template-columns: repeat(2, 1fr);
-        /* Two sessions side-by-side for balance */
-    }
-}
-
-/* Session Card Visuals */
-.session-card {
-    padding: 0 !important;
-    /* Mentor Note: Removing card padding to allow image to flush to edges */
-    overflow: hidden;
+/* ==========================================================================
+   7. PHOTOSHOOT MODULE (Home Scroller & Detail)
+   ========================================================================== */
+.section-header-flex {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 20px;
 }
 
-.session-image-wrapper {
-    height: 250px;
-    background-color: #F8F5F2;
-    /* Warm Ivory background */
+/* Scroller Controls */
+.scroller-controls {
+    display: flex;
+    gap: 12px;
+}
+
+.scroller-arrow {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    background: var(--white);
+    color: var(--text-color);
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-bottom: 1px solid #E9E1DC;
+    transition: all 0.3s ease;
 }
 
-/* Placeholder Style (Fine Art Aesthetic) */
-.session-placeholder {
-    color: #A8BBA3;
-    /* Sage Green */
-    font-size: 1.5rem;
-    opacity: 0.6;
-    letter-spacing: 1px;
+.scroller-arrow:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--white);
 }
 
-/* Session Content Layout */
-.session-body {
+/* Scroller Track */
+.sessions-view-viewport {
+    width: 100%;
+    overflow: hidden;
+    padding: 20px 0;
+}
+
+.sessions-horizontal-track {
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+}
+
+.sessions-horizontal-track::-webkit-scrollbar {
+    display: none;
+}
+
+/* Wide Scroller Card */
+.session-wide-card {
+    flex: 0 0 580px;
+    display: flex;
+    background: var(--white);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    height: 280px;
+    transition: 0.3s ease;
+}
+
+.session-wide-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.session-card-visual {
+    flex: 0 0 240px;
+    background-color: var(--bg-color);
+    overflow: hidden;
+}
+
+.session-card-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.session-card-details {
+    flex: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Photoshoot Detail Page */
+.photoshoot-detail-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 50px;
+    align-items: start;
+}
+
+.detail-img {
+    object-fit: cover;
+    width: 100%;
+    max-height: 80vh;
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+}
+
+.price-box {
+    border: 1px solid var(--border-color);
     padding: 25px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    justify-content: space-between;
-    /* Mentor Note: Pushes the CTA button to the bottom */
+    border-radius: 12px;
 }
 
-.session-info h3 {
-    font-size: 1.4rem;
-    margin-bottom: 10px;
-    color: #3A3A3A;
-}
-
-.session-info .description {
-    margin-bottom: 25px;
-}
-
-/* Specific styling for the Waitlist Button */
-.session-cta .btn-primary {
-    font-size: 0.9rem;
-    letter-spacing: 0.5px;
-    box-shadow: 0 4px 15px rgba(168, 187, 163, 0.2);
-    /* Soft Sage glow */
-}
-
-/* --- MY PHOTO SHOP (3 BLOCK HEADER) --- */
-.shop-header {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin-bottom: 10px;
-}
-
-@media (min-width: 768px) {
-
-    /* Mentor Note: Used Flexbox to push button to right edge on one line */
-    .shop-header {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: flex-end;
-        /* Mentor: Aligns button to bottom of text */
-    }
-}
-
+/* ==========================================================================
+   8. SHOP MODULE (Grid, Product Card, Overlays)
+   ========================================================================== */
 .shop-products-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 32px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 40px;
+    margin-top: 30px;
 }
 
-/* --- PRODUCT CARD (Fixed Layout!) --- */
 .product-card {
-    padding: 12px;
+    padding: 15px;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    /* MOBILE FIRST: stacked layout */
-    height: 100%;
-    /* Important for vertical push */
 }
 
 .product-img {
@@ -733,52 +551,17 @@ section {
     aspect-ratio: 4/5;
     object-fit: cover;
     border-radius: 8px;
+    transition: 0.6s ease;
 }
 
-/* Content block pushed down */
-.card-body-bottom {
-    flex-grow: 1;
-    /* Mentor: Takes remaining space */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    /* Pushes button to bottom */
-    padding-top: 15px;
-}
-
-.card-title {
-    font-size: 1.1rem;
-    margin-bottom: 5px;
-    font-weight: 600;
-    font-family: 'Inter', sans-serif;
-}
-
-.price {
-    font-size: 1rem;
-    color: var(--text-muted);
-    margin-bottom: 15px;
-}
-
-/* --- PRODUCT IMAGE HOVER EFFECT --- */
-
-/* Контейнер для зображення */
+/* Hover Overlay Fixes */
 .card-image-top {
     position: relative;
     overflow: hidden;
     border-radius: 8px;
-    /* Відповідає радіусу фото */
+    cursor: pointer;
 }
 
-/* Робимо посилання блочним, щоб воно займало весь простір */
-.card-image-top .glightbox {
-    display: block;
-    width: 100%;
-    height: 100%;
-    position: relative;
-    text-decoration: none;
-}
-
-/* Стиль оверлею (затемнення) */
 .image-overlay {
     position: absolute;
     top: 0;
@@ -786,103 +569,141 @@ section {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.45);
-    /* Колір затемнення */
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 0;
-    /* Приховано за замовчуванням */
-    transition: opacity 0.3s ease;
-    z-index: 2;
+    transition: 0.3s ease;
 }
 
-/* Текст всередині оверлею */
+/* Force White Color for Overlay Text */
 .overlay-text {
-    color: var(--white);
+    color: var(--white) !important;
+    text-decoration: none !important;
     font-size: 1rem;
     letter-spacing: 2px;
     text-transform: uppercase;
-    font-weight: 500;
+    font-weight: 600;
 }
 
-.card-image-top:hover .image-overlay,
-.card-image-top .glightbox:focus .image-overlay {
+.card-image-top:hover .image-overlay {
     opacity: 1;
-    /* Поява затемнення */
-}
-
-.product-img {
-    transition: transform 0.5s ease;
 }
 
 .card-image-top:hover .product-img {
-    transform: scale(1.05);
+    transform: scale(1.08);
 }
 
-.gslide-image img {
-    max-height: 95vh !important;
-    width: auto !important;
+/* ==========================================================================
+   9. MANAGEMENT DASHBOARD
+   ========================================================================== */
+.dashboard-container {
+    padding: 60px 0;
 }
 
-/* --- RE-INJECTED AUTH PAGES STYLING (Fixed!) --- */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.admin-table th {
+    text-align: left;
+    padding: 18px;
+    border-bottom: 2px solid var(--border-color);
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.admin-table td {
+    padding: 20px 18px;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+}
+
+.admin-thumb {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.status-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.status-tag.active {
+    color: var(--primary-color);
+}
+
+.admin-action-btn {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+.admin-action-btn:hover {
+    color: var(--hover-color);
+}
+
+/* ==========================================================================
+   10. CART PAGE (Horizontal Layout)
+   ========================================================================== */
+.cart-img-wrapper img {
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    object-fit: cover;
+}
+
+.remove-btn,
+.remove-link {
+    color: var(--hover-color) !important;
+    text-decoration: underline !important;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.remove-btn:hover {
+    color: #d9534f !important;
+}
+
+.qty-btn {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.qty-btn:hover {
+    background: var(--accent-soft);
+}
+
+.remove-link {
+    color: var(--hover-color);
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   11. AUTH PAGES (Login/Signup)
+   ========================================================================== */
 .auth-wrapper {
     max-width: 500px;
     margin: 60px auto;
     padding: 50px 40px;
     background: var(--white);
-    border-radius: var(--border-radius);
     border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
     box-shadow: var(--shadow-md);
     text-align: center;
 }
 
-.auth-wrapper h2 {
-    font-size: 2.2rem;
-    margin-bottom: 25px;
-    color: var(--text-color);
-}
-
-.auth-wrapper p {
-    margin-bottom: 25px;
-    font-size: 0.95rem;
-    color: var(--text-muted);
-}
-
-.auth-wrapper a {
-    color: var(--primary-color);
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.auth-wrapper a:hover {
-    color: var(--hover-color);
-}
-
-/* Allauth social login style */
-.socialaccount_providers {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 20px 0;
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
-
-.socialaccount_providers a {
-    display: inline-block;
-    padding: 10px 25px;
-    border: 1px solid var(--border-color);
-    border-radius: 50px;
-    background: var(--bg-color);
-    transition: 0.3s;
-}
-
-.socialaccount_providers a:hover {
-    background: white;
-    border-color: var(--primary-color);
-}
-
-/* Form inputs styling */
 .auth-wrapper form p {
     text-align: left;
     margin-bottom: 18px;
@@ -894,303 +715,136 @@ section {
     font-weight: 600;
     margin-bottom: 8px;
     font-size: 0.9rem;
-    color: var(--text-color);
 }
 
-/* Main Inputs */
-.auth-wrapper input:not([type="checkbox"]) {
-    width: 100%;
-    padding: 14px 16px;
+/* Social Auth List */
+.socialaccount_providers {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.socialaccount_providers a {
+    padding: 10px 25px;
     border: 1px solid var(--border-color);
-    border-radius: 8px;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    font-family: 'Inter', sans-serif;
-    outline: none;
-    transition: all 0.3s ease;
+    border-radius: 50px;
+    background: var(--bg-color);
 }
 
-.auth-wrapper input:focus {
-    border-color: var(--primary-color);
-    background-color: white;
-    box-shadow: 0 0 0 4px rgba(168, 187, 163, 0.1);
+/* ==========================================================================
+   12. RESPONSIVE QUERIES
+   ========================================================================== */
+@media (max-width: 992px) {
+    .page-container {
+        padding: 0 20px;
+    }
+
+    .photoshoot-detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .session-wide-card {
+        flex: 0 0 100%;
+        height: auto;
+        flex-direction: column;
+    }
+
+    .session-card-visual {
+        height: 220px;
+    }
+
+    .h1-large {
+        font-size: 2.8rem;
+    }
 }
 
-/* Special styling for checkboxes (Remember Me) */
-.auth-wrapper form p:has(input[type="checkbox"]) {
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
+@media (max-width: 768px) {
+    .nav-menu {
+        gap: 20px;
+    }
+
+    .u-flex-between {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .admin-table thead {
+        display: none;
+    }
+
+    .admin-table tr {
+        display: block;
+        margin-bottom: 20px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 15px;
+    }
+
+    .admin-table td {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border: none;
+    }
 }
 
-.auth-wrapper input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-    accent-color: var(--primary-color);
-}
-
-/* Forgot Password link block */
-.auth-actions {
-    margin-top: 25px;
+/* ==========================================================================
+   TOAST NOTIFICATIONS
+   ========================================================================== */
+.toast-container {
+    position: fixed;
+    top: 100px;
+    right: 30px;
+    z-index: 9999;
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-.secondaryAction {
-    font-size: 0.85rem;
-    color: var(--text-muted) !important;
-    font-weight: 400 !important;
-}
-
-.secondaryAction:hover {
-    color: var(--primary-color) !important;
-}
-
-/* --- TOASTS (Спливаючі повідомлення) --- */
-.toast-container {
-    position: fixed;
-    top: 100px;
-    /* Mentor Note: Standardized placement below sticky navbar */
-    right: 20px;
-    z-index: 1100;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
 .toast-box {
     background: var(--white);
-    min-width: 280px;
-    padding: 16px 20px;
+    min-width: 320px;
+    padding: 18px 25px;
     border-radius: 12px;
-    border-left: 5px solid var(--primary-color);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border-left: 6px solid var(--primary-color); /* Sage */
+    box-shadow: var(--shadow-md);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    animation: slideInRight 0.4s ease-out forwards;
-    transition: opacity 0.5s ease, transform 0.5s ease;
+    animation: toastSlideIn 0.5s ease forwards;
+    transition: all 0.5s ease;
 }
 
-/* Type Colors */
-.toast-box.success {
-    border-left-color: var(--primary-color);
-}
-
-.toast-box.error {
-    border-left-color: var(--hover-color);
-}
-
-.toast-box.info {
-    border-left-color: #A3B8BB;
-}
+/* Success color (Sage) */
+.toast-box.success { border-left-color: var(--primary-color); }
+/* Error color (Dusty Rose) */
+.toast-box.error { border-left-color: var(--hover-color); }
+.toast-box.warning { border-left-color: #f0ad4e; }
 
 .toast-content {
-    font-size: 0.9rem;
-    color: var(--text-color);
+    font-size: 0.95rem;
     font-weight: 500;
+    color: var(--text-color);
 }
 
-/* ROUND CLOSE BUTTON (Fixed!) */
+@keyframes toastSlideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* Close button for toast */
 .toast-close {
-    background-color: #f1f1f1;
-    /* Special background for the circle */
+    background: none;
     border: none;
-    color: #CCC;
-
-    /* Mentor Note: Used perfect aspect-ratio and border-radius for the circle */
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
+    color: var(--text-muted);
     cursor: pointer;
+    font-size: 1.2rem;
+    padding: 0;
     margin-left: 15px;
-    transition: background-color 0.3s, color 0.3s;
 }
 
-.toast-close:hover {
-    background-color: var(--accent-soft);
-    color: var(--white);
-}
-
-@keyframes slideInRight {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-/* --- DASHBOARD & UTILITY CLASSES --- */
-
-/* Padding for the whole management area */
-.dashboard-container {
-    max-width: var(--container-width);
-    margin: 0 auto;
-    padding: 60px 20px;
-}
-
-/* Flexbox utilities */
-.u-flex-between {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-/* Spacing utilities */
-.u-mb-4 {
-    margin-bottom: 30px;
-}
-
-.u-mb-5 {
-    margin-bottom: 50px;
-}
-
-/* Table Styling */
-.admin-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.admin-table th {
-    text-align: left;
-    padding: 15px;
-    border-bottom: 2px solid var(--border-color);
-    color: var(--text-muted);
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.admin-table td {
-    padding: 15px;
-    border-bottom: 1px solid var(--border-color);
-    vertical-align: middle;
-}
-
-/* Thumbnails in Dashboard */
-.admin-thumb {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 6px;
-    display: block;
-}
-
-.admin-thumb-placeholder {
-    width: 50px;
-    height: 50px;
-    background: var(--bg-color);
-    font-size: 0.6rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 6px;
-}
-
-/* Status Tags */
-.status-tag {
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: var(--text-muted);
-}
-
-.status-tag.active {
-    color: var(--primary-color);
-}
-
-/* Edit Icon */
-.admin-action-btn {
-    color: var(--primary-color);
-    font-size: 1.1rem;
-    transition: 0.3s;
-}
-
-.admin-action-btn:hover {
-    color: var(--hover-color);
-}
-
-/* photoshoot_detail */
-.photoshoot-detail-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 50px;
-    align-items: start;
-}
-
-@media (min-width: 992px) {
-    .photoshoot-detail-grid {
-        grid-template-columns: 1.2fr 1fr;
-    }
-}
-
-.detail-img {
-    width: 100%;
-    border-radius: 6px;
-    display: block;
-    box-shadow: var(--shadow-sm);
-}
-
-.price-box {
-    border: 1px solid var(--border-color);
-    box-shadow: none;
-}
-
-.detail-description p {
-    line-height: 1.8;
-}
-/* Wrapper keeps the hidden input and the fake button together */
-.file-upload-wrapper {
-    position: relative;
-    width: 100%;
-    height: 60px; /* Фіксована висота для стабільності */
-}
-
-/* Hidden real input - must cover the whole area to be clickable */
-#file-upload {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
-    z-index: 10; /* Буде зверху, але невидимим */
-}
-
-/* Our "Fake" Button - visual style only */
-.file-upload-trigger {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    background-color: var(--white);
-    border: 2px dashed var(--primary-color);
-    border-radius: 8px;
-    color: var(--primary-color);
-    font-weight: 600;
-    transition: all 0.3s ease;
-    pointer-events: none; /* Клік проходить крізь неї на інпут */
-}
-
-/* Hover effect via the wrapper */
-.file-upload-wrapper:hover .file-upload-trigger {
-    background-color: rgba(168, 187, 163, 0.08);
-    border-color: var(--hover-color);
-    color: var(--hover-color);
-}
+.toast-close:hover { color: var(--hover-color); }

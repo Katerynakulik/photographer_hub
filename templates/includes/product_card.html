@@ -2,12 +2,8 @@
     <div class="card-image-top">
         <a href="https://res.cloudinary.com/drscildms/image/upload/c_scale,w_1200/l_text:Verdana_60_bold:Photographer%20Hub,co_rgb:FFFFFF,o_30/fl_layer_apply,g_south_east,x_20,y_20/v1/{{ product.preview_image }}"
             class="glightbox" data-type="image">
-            
             <img src="https://res.cloudinary.com/drscildms/image/upload/f_auto,q_auto,w_600/v1/{{ product.preview_image }}" 
-                 alt="{{ product.title }}" 
-                 class="product-img" 
-                 loading="lazy">
-
+                 alt="{{ product.title }}" class="product-img" loading="lazy">
             <div class="image-overlay">
                 <span class="overlay-text serif-title">Full View</span>
             </div>
@@ -20,22 +16,25 @@
             <p class="price">€ {{ product.price }}</p>
         </div>
 
-        {% if user.userprofile.is_photographer %}
-            <button class="btn btn-disabled w-100" disabled style="opacity: 0.6;">Management Mode</button>
+        {% if user.is_authenticated %}
+            {% if user.userprofile.is_photographer %}
+                <button class="btn btn-management w-100" disabled>Management Mode</button>
+            {% else %}
+                {% with 'p_'|add:product.id|stringformat:'s' as item_key %}
+                    {% if item_key in request.session.cart %}
+                        <button class="btn btn-disabled w-100" disabled>In Cart ✓</button>
+                    {% else %}
+                        <form action="{% url 'add_to_cart' product.id %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="item_type" value="photo">
+                            <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                            <button type="submit" class="btn btn-primary w-100">Add to Cart</button>
+                        </form>
+                    {% endif %}
+                {% endwith %}
+            {% endif %}
         {% else %}
-            {% with 'p_'|add:product.id|stringformat:'s' as item_key %}
-                {% if item_key in request.session.cart %}
-                    <button class="btn btn-disabled w-100" disabled style="cursor: default;">
-                        In Cart ✓
-                    </button>
-                {% else %}
-                    <form action="{% url 'add_to_cart' product.id %}" method="POST">
-                        {% csrf_token %}
-                        <input type="hidden" name="redirect_url" value="{{ request.path }}">
-                        <button type="submit" class="btn btn-primary w-100">Add to Cart</button>
-                    </form>
-                {% endif %}
-            {% endwith %}
+            <a href="{% url 'account_login' %}?next={{ request.path }}" class="btn btn-primary w-100">Login to Buy</a>
         {% endif %}
     </div>
 </article>

@@ -13,19 +13,27 @@
                 </a>
             </li>
 
-            {% if user.userprofile.is_photographer %}
-                <li>
-                    <a href="{% url 'dashboard' %}" class="nav-link" title="Dashboard">
-                        <i class="fa-solid fa-gauge-high"></i>
-                    </a>
-                </li>
+            {% if user.is_authenticated %}
+                {% if user.userprofile.is_photographer %}
+                    <li>
+                        <a href="{% url 'dashboard' %}" class="nav-link" title="Dashboard">
+                            <i class="fa-solid fa-gauge-high"></i>
+                        </a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{% url 'view_cart' %}" class="nav-link cart-icon-link" title="Cart">
+                            <i class="fa-solid fa-bag-shopping"></i>
+                            {% if product_count > 0 %}
+                                <span class="cart-badge-dot">{{ product_count }}</span>
+                            {% endif %}
+                        </a>
+                    </li>
+                {% endif %}
             {% else %}
                 <li>
-                    <a href="{% url 'view_cart' %}" class="nav-link cart-icon-link" title="Cart">
+                    <a href="{% url 'account_login' %}?next={% url 'view_cart' %}" class="nav-link" title="Login to see Cart">
                         <i class="fa-solid fa-bag-shopping"></i>
-                        {% if product_count > 0 %}
-                            <span class="cart-badge-dot">{{ product_count }}</span>
-                        {% endif %}
                     </a>
                 </li>
             {% endif %}
