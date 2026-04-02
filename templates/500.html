@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="page-container u-flex-center section-spacing">
+    <div class="error-wrapper text-center">
+        <h1 class="serif-title error-code">500</h1>
+        <h2 class="serif-title u-mb-3">Flash Failure</h2>
+        <p class="text-muted u-mb-5">
+            Our sensors encountered an internal error. <br>
+            We're working on fixing the exposure — please try again in a moment.
+        </p>
+        
+        <div class="u-flex-center">
+            <a href="{% url 'home' %}" class="btn btn-primary">Back to Safety</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

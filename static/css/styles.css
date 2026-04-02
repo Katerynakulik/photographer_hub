@@ -911,3 +911,24 @@ textarea:focus {
     border: 2px solid var(--white); 
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
+
+/* ==========================================================================
+   404 and 500 ERROR PAGEs
+   ========================================================================== */
+/* Error Pages Styling */
+.error-wrapper {
+    max-width: 600px;
+    padding: 2rem;
+}
+
+.error-code {
+    font-size: clamp(5rem, 15vw, 10rem); /* Адаптивний розмір тексту */
+    line-height: 1;
+    color: var(--hover-color);
+    opacity: 0.4;
+    margin-bottom: -1rem;
+}
+
+.gap-3 {
+    gap: 1rem;
+}

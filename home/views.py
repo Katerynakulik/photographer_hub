@@ -35,6 +35,8 @@ def contact(request):
     
     return redirect("home")
 
-def custom_404(request, exception):
-    """Кастомна сторінка помилки 404"""
-    return render(request, "errors/404.html", status=404)
+def handle_404(request, exception):
+    return render(request, "404.html", status=404)
+
+def handle_500(request):
+    return render(request, "500.html", status=500)
