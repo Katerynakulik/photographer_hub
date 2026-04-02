@@ -14,47 +14,49 @@
             </li>
 
             {% if user.is_authenticated %}
-                {% if user.userprofile.is_photographer %}
-                    <li>
-                        <a href="{% url 'dashboard' %}" class="nav-link" title="Dashboard">
-                            <i class="fa-solid fa-gauge-high"></i>
-                        </a>
-                    </li>
-                {% else %}
-                    <li>
-                        <a href="{% url 'view_cart' %}" class="nav-link cart-icon-link" title="Cart">
-                            <i class="fa-solid fa-bag-shopping"></i>
-                            {% if product_count > 0 %}
-                                <span class="cart-badge-dot">{{ product_count }}</span>
-                            {% endif %}
-                        </a>
-                    </li>
-                {% endif %}
+            {% if user.userprofile.is_photographer %}
+            <li>
+                <a href="{% url 'dashboard' %}" class="nav-link" title="Dashboard">
+                    <i class="fa-solid fa-gauge-high"></i>
+                </a>
+            </li>
             {% else %}
-                <li>
-                    <a href="{% url 'account_login' %}?next={% url 'view_cart' %}" class="nav-link" title="Login to see Cart">
-                        <i class="fa-solid fa-bag-shopping"></i>
-                    </a>
-                </li>
+            <li>
+                <a href="{% url 'view_cart' %}" class="nav-link cart-icon-link" title="Cart"
+                    style="position: relative;">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    {% if product_count > 0 %}
+                    <span class="cart-badge-dot">{{ product_count }}</span>
+                    {% endif %}
+                </a>
+            </li>
+            {% endif %}
+            {% else %}
+            <li>
+                <a href="{% url 'account_login' %}?next={% url 'view_cart' %}" class="nav-link"
+                    title="Login to see Cart">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                </a>
+            </li>
             {% endif %}
 
             {% if user.is_authenticated %}
-                <li>
-                    <a href="{% url 'account_logout' %}" class="nav-link" title="Logout">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                    </a>
-                </li>
+            <li>
+                <a href="{% url 'account_logout' %}" class="nav-link" title="Logout">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </a>
+            </li>
             {% else %}
-                <li>
-                    <a href="{% url 'account_login' %}" class="nav-link" title="Login">
-                        <i class="fa-solid fa-right-to-bracket"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'account_signup' %}" class="nav-link signup-icon-cta" title="Register">
-                        <i class="fa-solid fa-user-plus"></i>
-                    </a>
-                </li>
+            <li>
+                <a href="{% url 'account_login' %}" class="nav-link" title="Login">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'account_signup' %}" class="nav-link signup-icon-cta" title="Register">
+                    <i class="fa-solid fa-user-plus"></i>
+                </a>
+            </li>
             {% endif %}
         </ul>
     </div>

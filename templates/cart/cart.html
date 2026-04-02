@@ -18,26 +18,29 @@
                 {% for item in cart_items %}
                 <tr>
                     <td>
-                        <img src="https://res.cloudinary.com/drscildms/image/upload/f_auto,q_auto,w_200,c_fill/v1/{{ item.display_image }}" 
-                             class="admin-thumb" style="width: 80px; height: 60px;">
+                        <img src="https://res.cloudinary.com/drscildms/image/upload/f_auto,q_auto,w_200,c_fill/v1/{{ item.display_image }}"
+                            class="admin-thumb" style="width: 80px; height: 60px;">
                     </td>
                     <td>
                         <h3 class="card-title" style="margin: 0; font-size: 1.1rem;">{{ item.display_title }}</h3>
                         <p class="text-muted small" style="margin: 0;">
                             {% if item.type == 'photo' %}Digital License{% else %}Session Deposit{% endif %}
                         </p>
-                        <a href="{% url 'remove_from_cart' item.item_key %}" class="remove-btn">Remove</a>
+                        <a href="{% url 'remove_from_cart' item.item_key %}" class="remove-btn confirm-delete"
+                            data-message="Remove this item from your cart?">
+                            <i class="fa-solid fa-trash-can"></i> Remove
+                        </a>
                     </td>
                     <td style="text-align: center;">
                         {% if item.type == 'photo' %}
-                            <span class="text-muted">1 (Limited)</span>
+                        <span class="text-muted">1 (Limited)</span>
                         {% else %}
-                            <form action="{% url 'adjust_cart' item.item_key %}" method="POST" class="qty-control">
-                                {% csrf_token %}
-                                <button name="action" value="decrease" class="qty-btn">-</button>
-                                <span class="qty-num">{{ item.quantity }}</span>
-                                <button name="action" value="increase" class="qty-btn">+</button>
-                            </form>
+                        <form action="{% url 'adjust_cart' item.item_key %}" method="POST" class="qty-control">
+                            {% csrf_token %}
+                            <button name="action" value="decrease" class="qty-btn">-</button>
+                            <span class="qty-num">{{ item.quantity }}</span>
+                            <button name="action" value="increase" class="qty-btn">+</button>
+                        </form>
                         {% endif %}
                     </td>
                     <td style="text-align: right;">
