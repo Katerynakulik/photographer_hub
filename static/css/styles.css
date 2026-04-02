@@ -1,0 +1,913 @@
+/* ==========================================================================
+   1. DESIGN TOKENS & VARIABLES
+   ========================================================================== */
+:root {
+    /* Brand Colors */
+    --bg-color: #F8F5F2;
+    /* Warm Ivory */
+    --accent-soft: #E8CFCB;
+    /* Soft Blush */
+    --primary-color: #A8BBA3;
+    /* Muted Sage */
+    --text-color: #3A3A3A;
+    /* Charcoal */
+    --text-muted: #767676;
+    --hover-color: #D6A5A1;
+    /* Dusty Rose */
+    --white: #FFFFFF;
+    --border-color: #E9E1DC;
+
+    /* Layout Tokens */
+    --container-width: 1400px;
+    --section-spacing: 20px;
+    /* Fine Art breathing room */
+    --card-padding: 24px;
+    --border-radius: 12px;
+    --gap: 20px;
+
+    /* Box Shadows */
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.03);
+    --shadow-md: 0 10px 40px rgba(0, 0, 0, 0.05);
+}
+
+/* ==========================================================================
+   2. RESET & GLOBAL BASE
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    margin: 0;
+    color: var(--text-color);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+.serif-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* Global Link Reset to prevent unwanted styles on UI elements */
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+}
+
+/* ==========================================================================
+   3. LAYOUT COMPONENTS (Used across multiple files)
+   ========================================================================== */
+.page-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 40px;
+    /* Restored global padding */
+}
+
+section {
+    margin-bottom: var(--section-spacing);
+}
+
+.card {
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--card-padding);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Shared Utilities */
+.u-flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.u-mb-4 {
+    margin-bottom: 30px;
+}
+
+.u-mb-5 {
+    margin-bottom: 50px;
+}
+
+.u-mt-5 {
+    margin-top: 50px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-muted {
+    color: var(--text-muted);
+}
+
+.small {
+    font-size: 0.85rem;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+/* ==========================================================================
+   4. COMMON UI ELEMENTS (Buttons, Navbar)
+   ========================================================================== */
+
+/* Main Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 28px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white) !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--hover-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1.5px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-outline:hover {
+    background: var(--primary-color);
+    color: var(--white) !important;
+}
+
+.btn-disabled,
+.btn-management {
+    background-color: #f1f1f1 !important;
+    color: #999 !important;
+    cursor: not-allowed !important;
+    border: 1px solid var(--border-color);
+}
+
+/* Modern Pill Back Button */
+.back-link-wrapper {
+    margin-bottom: 30px;
+}
+
+.back-btn-modern {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 24px;
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 50px;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.back-btn-modern:hover {
+    background-color: var(--bg-color);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    transform: translateX(-5px);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Navigation Bar */
+.main-navbar {
+    background-color: var(--white);
+    border-bottom: 1px solid var(--border-color);
+    padding: 12px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+.nav-link {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+}
+
+.nav-link:hover {
+    color: var(--hover-color);
+    transform: translateY(-2px);
+}
+
+.fb-circle {
+    width: 36px;
+    height: 36px;
+    background-color: var(--primary-color);
+    color: var(--white) !important;
+    border-radius: 50%;
+    justify-content: center;
+}
+
+.signup-icon-cta {
+    background-color: var(--bg-color);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    justify-content: center;
+    border: 1px solid var(--border-color);
+}
+
+.cart-badge-dot {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    background-color: var(--hover-color);
+    color: var(--white);
+    font-size: 0.65rem;
+    font-weight: 800;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--white);
+}
+
+/* ==========================================================================
+   5. FORMS & INPUTS (Global Auth & Dashboard)
+   ========================================================================== */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="url"],
+input[type="date"],
+textarea,
+.form-input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--bg-color); /* Той самий Ivory/Light grey */
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    display: block;
+    outline: none;
+    box-sizing: border-box;
+}
+
+/* Hover & Focus state for ALL inputs */
+input:focus, 
+textarea:focus {
+    border-color: var(--primary-color) !important;
+    background-color: var(--white) !important;
+    box-shadow: 0 0 0 4px rgba(168, 187, 163, 0.15) !important;
+}
+
+/* Placeholder color */
+::placeholder {
+    color: var(--text-muted);
+    opacity: 0.7;
+}
+.form-card {
+    max-width: 650px;
+    margin: 40px auto;
+    padding: 40px;
+}
+
+.form-card input:not([type="checkbox"]):not([type="radio"]),
+.form-card textarea,
+.form-input,
+.auth-wrapper input:not([type="checkbox"]) {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--bg-color);
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    display: block;
+    outline: none;
+}
+
+.form-card input:focus,
+.form-card textarea:focus,
+.auth-wrapper input:focus {
+    border-color: var(--primary-color);
+    background-color: var(--white);
+    box-shadow: 0 0 0 4px rgba(168, 187, 163, 0.15);
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    margin-top: 20px;
+    font-size: 0.95rem;
+}
+
+/* Custom File Upload */
+.file-upload-wrapper {
+    position: relative;
+    width: 100%;
+    height: 70px;
+    margin-top: 5px;
+}
+
+.file-upload-wrapper input[type="file"] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.file-upload-trigger {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background-color: var(--white);
+    border: 2px dashed var(--primary-color);
+    border-radius: 8px;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.checkbox-inline-group,
+.checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+/* ==========================================================================
+   6. HERO SECTION (Restored Aesthetics)
+   ========================================================================== */
+.hero-section {
+    padding: 80px;
+}
+
+.photographer-bio-centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 25px;
+    width: 100%;
+}
+
+.oval-avatar {
+    width: 180px;
+    height: 240px;
+    border-radius: 50% / 40%;
+    object-fit: cover;
+    border: 3px solid var(--accent-soft);
+    box-shadow: var(--shadow-sm);
+}
+
+.h1-large {
+    font-size: 3.5rem;
+    line-height: 1.1;
+}
+
+.tagline-accent {
+    color: var(--primary-color);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+/* ==========================================================================
+   7. PHOTOSHOOT MODULE (Home Scroller & Detail)
+   ========================================================================== */
+.section-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 20px;
+}
+
+/* Scroller Controls */
+.scroller-controls {
+    display: flex;
+    gap: 12px;
+}
+
+.scroller-arrow {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    background: var(--white);
+    color: var(--text-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.scroller-arrow:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--white);
+}
+
+/* Scroller Track */
+.sessions-view-viewport {
+    width: 100%;
+    overflow: hidden;
+    padding: 20px 0;
+}
+
+.sessions-horizontal-track {
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+}
+
+.sessions-horizontal-track::-webkit-scrollbar {
+    display: none;
+}
+
+/* Wide Scroller Card */
+.session-wide-card {
+    flex: 0 0 580px;
+    display: flex;
+    background: var(--white);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    height: 280px;
+    transition: 0.3s ease;
+}
+
+.session-wide-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.session-card-visual {
+    flex: 0 0 240px;
+    background-color: var(--bg-color);
+    overflow: hidden;
+}
+
+.session-card-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.session-card-details {
+    flex: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Photoshoot Detail Page */
+.photoshoot-detail-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 50px;
+    align-items: start;
+}
+
+.detail-img {
+    object-fit: cover;
+    width: 100%;
+    max-height: 80vh;
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+}
+
+.price-box {
+    border: 1px solid var(--border-color);
+    padding: 25px;
+    border-radius: 12px;
+}
+
+/* ==========================================================================
+   8. SHOP MODULE (Grid, Product Card, Overlays)
+   ========================================================================== */
+.shop-products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 40px;
+    margin-top: 30px;
+}
+
+.product-card {
+    padding: 15px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-img {
+    width: 100%;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: 0.6s ease;
+}
+
+/* Hover Overlay Fixes */
+.card-image-top {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: 0.3s ease;
+}
+
+/* Force White Color for Overlay Text */
+.overlay-text {
+    color: var(--white) !important;
+    text-decoration: none !important;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.card-image-top:hover .image-overlay {
+    opacity: 1;
+}
+
+.card-image-top:hover .product-img {
+    transform: scale(1.08);
+}
+
+/* ==========================================================================
+   MANAGEMENT DASHBOARD
+   ========================================================================== */
+.dashboard-container {
+    padding: 60px 0;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.admin-table th {
+    text-align: left;
+    padding: 18px;
+    border-bottom: 2px solid var(--border-color);
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.admin-table td {
+    padding: 20px 18px;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+}
+
+.admin-thumb {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.status-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.status-tag.active {
+    color: var(--primary-color);
+}
+
+.admin-action-btn {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+.admin-action-btn:hover {
+    color: var(--hover-color);
+}
+
+/* ==========================================================================
+   CART PAGE (Horizontal Layout)
+   ========================================================================== */
+.cart-img-wrapper img {
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    object-fit: cover;
+}
+
+.remove-btn,
+.remove-link {
+    color: var(--hover-color) !important;
+    text-decoration: underline !important;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.remove-btn:hover {
+    color: #d9534f !important;
+}
+
+.qty-btn {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.qty-btn:hover {
+    background: var(--accent-soft);
+}
+
+.remove-link {
+    color: var(--hover-color);
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   AUTH PAGES (Login/Signup)
+   ========================================================================== */
+.auth-wrapper {
+    max-width: 500px;
+    margin: 60px auto;
+    padding: 50px 40px;
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md);
+    text-align: center;
+}
+
+.auth-wrapper form p {
+    text-align: left;
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-wrapper label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+/* Social Auth List */
+.socialaccount_providers {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.socialaccount_providers a {
+    padding: 10px 25px;
+    border: 1px solid var(--border-color);
+    border-radius: 50px;
+    background: var(--bg-color);
+}
+
+/* ==========================================================================
+   RESPONSIVE QUERIES
+   ========================================================================== */
+@media (max-width: 992px) {
+    .page-container {
+        padding: 0 20px;
+    }
+
+    .photoshoot-detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .session-wide-card {
+        flex: 0 0 100%;
+        height: auto;
+        flex-direction: column;
+    }
+
+    .session-card-visual {
+        height: 220px;
+    }
+
+    .h1-large {
+        font-size: 2.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-menu {
+        gap: 20px;
+    }
+
+    .u-flex-between {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .admin-table thead {
+        display: none;
+    }
+
+    .admin-table tr {
+        display: block;
+        margin-bottom: 20px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 15px;
+    }
+
+    .admin-table td {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border: none;
+    }
+}
+
+/* ==========================================================================
+   TOAST NOTIFICATIONS
+   ========================================================================== */
+.toast-container {
+    position: fixed;
+    top: 100px;
+    right: 30px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.toast-box {
+    background: var(--white);
+    min-width: 320px;
+    padding: 18px 25px;
+    border-radius: 12px;
+    border-left: 6px solid var(--primary-color); /* Sage */
+    box-shadow: var(--shadow-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: toastSlideIn 0.5s ease forwards;
+    transition: all 0.5s ease;
+}
+
+/* Success color (Sage) */
+.toast-box.success { border-left-color: var(--primary-color); }
+/* Error color (Dusty Rose) */
+.toast-box.error { border-left-color: var(--hover-color); }
+.toast-box.warning { border-left-color: #f0ad4e; }
+
+.toast-content {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+@keyframes toastSlideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* Close button for toast */
+.toast-close {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 0;
+    margin-left: 15px;
+}
+
+.toast-close:hover { color: var(--hover-color); }
+/* ==========================================================================
+   CUSTOM CONFIRMATION MODAL
+   ========================================================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Напівпрозорий фон */
+    display: flex;
+    align-items: center; justify-content: center;
+    z-index: 2000;
+    backdrop-filter: blur(4px); /* Легке розмиття фону */
+}
+
+.modal-card {
+    background: var(--white);
+    padding: 40px;
+    border-radius: var(--border-radius);
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    animation: modalIn 0.3s ease-out;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+@keyframes modalIn {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* ==========================================================================
+   CART BADGE STYLING
+   ========================================================================== */
+
+.cart-icon-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.cart-badge-dot {
+    position: absolute;
+    top: -8px;      
+    right: -10px;  
+    background-color: var(--hover-color); 
+    color: var(--white);
+    font-size: 0.7rem;
+    font-weight: 800;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--white); 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}

@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="back-link-wrapper u-mb-4">
+        <a href="{% url 'dashboard' %}" class="back-btn-modern">
+            <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+
+    <div class="card form-card">
+        <h1 class="serif-title u-mb-5">{{ title }}</h1>
+
+        {% if edit_mode and product.preview_image %}
+            <div class="edit-preview-header u-mb-5">
+                <p class="form-label">Current Image</p>
+                <div class="current-img-wrapper">
+                    <img src="https://res.cloudinary.com/drscildms/image/upload/f_auto,q_auto,w_300,c_fill/v1/{{ product.preview_image }}" alt="Preview">
+                    <div class="info-badge">
+                        <i class="fa-solid fa-circle-info"></i> To change the image, please delete this item and add a new one.
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            {% for field in form %}
+                {% if edit_mode and field.name == 'preview_image' or edit_mode and field.name == 'digital_file' %}
+                    {% comment %} Скіпаємо ці поля в режимі редагування {% endcomment %}
+                
+                {% elif field.name == 'preview_image' %}
+                    <div class="form-group u-mb-4">
+                        <label class="form-label">{{ field.label }}</label>
+                        <div class="file-upload-wrapper">
+                            <div class="file-upload-trigger">
+                                <i class="fa-solid fa-image"></i>
+                                <span id="preview-text">Choose Product Photo (Max 10MB)</span>
+                            </div>
+                            {{ field }}
+                        </div>
+                    </div>
+
+                {% elif field.name == 'digital_file' %}
+                    <div class="form-group u-mb-4">
+                        <label class="form-label">{{ field.label }}</label>
+                        <div class="file-upload-wrapper">
+                            <div class="file-upload-trigger" style="border-style: solid; background: #fafafa;">
+                                <i class="fa-solid fa-file-zipper"></i>
+                                <span id="file-text">Upload High-Res File (ZIP/JPG)</span>
+                            </div>
+                            {{ field }}
+                        </div>
+                    </div>
+
+                {% elif field.name == 'is_active' %}
+                    <div class="checkbox-inline-group u-mb-4">
+                        {{ field }}
+                        <label class="form-label-inline" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    </div>
+                {% else %}
+                    <div class="form-group u-mb-4">
+                        <label class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                    </div>
+                {% endif %}
+
+                {% if field.errors %}
+                    <div class="form-errors">{{ field.errors }}</div>
+                {% endif %}
+            {% endfor %}
+
+            <div class="form-actions u-mt-5">
+                <button type="submit" class="btn btn-primary w-100">
+                    {% if edit_mode %}Save Changes{% else %}Add Photo to Shop{% endif %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

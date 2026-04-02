@@ -1,0 +1,16 @@
+from django.urls import path  # <--- This was the missing piece!
+from . import views
+
+urlpatterns = [
+    path('all/', views.all_products, name='all_products'),
+    path('dashboard/', views.dashboard, name='dashboard'),
+    path('dashboard/add-photo/', views.add_product, name='add_product'),
+    path('dashboard/edit-photo/<int:pk>/',
+         views.edit_product, name='edit_product'),
+    path('dashboard/delete-photo/<int:pk>/',
+         views.delete_product, name='delete_product'),
+    path('dashboard/add-session/', views.add_session, name='add_session'),
+    path('photoshoot/<int:pk>/', views.photoshoot_detail, name='photoshoot_detail'),
+    path('dashboard/edit-session/<int:pk>/',
+         views.edit_session, name='edit_session'),
+]

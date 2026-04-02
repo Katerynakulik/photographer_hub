@@ -1,0 +1,55 @@
+<article class="card product-card">
+    <div class="card-image-top">
+        <a href="https://res.cloudinary.com/drscildms/image/upload/c_scale,w_1200/l_text:Verdana_60_bold:Photographer%20Hub,co_rgb:FFFFFF,o_30/fl_layer_apply,g_south_east,x_20,y_20/v1/{{ product.preview_image }}"
+            class="glightbox" data-type="image">
+            
+            <img src="https://res.cloudinary.com/drscildms/image/upload/f_auto,q_auto,w_600/v1/{{ product.preview_image }}" 
+                 alt="{{ product.title }}" class="product-img" loading="lazy">
+
+            <div class="image-overlay">
+                <span class="overlay-text serif-title">Full View</span>
+            </div>
+        </a>
+    </div>
+
+    <div class="card-body-bottom">
+        <div class="product-details">
+            <h3 class="card-title">{{ product.title }}</h3>
+            <p class="price">€ {{ product.price }}</p>
+        </div>
+
+        {% if user.is_authenticated %}
+            {% if user.userprofile.is_photographer %}
+                <button class="btn btn-management w-100" disabled>Management Mode</button>
+            {% else %}
+                {% # Конвертуємо ID у рядок, щоб уникнути помилок математичного додавання в шаблоні #}
+                {% with product.id|stringformat:"s" as prod_id %}
+                {% with "p_"|add:prod_id as item_key %}
+                    
+                    {% if item_key in request.session.cart %}
+                        {# Фото вже в корзині — кнопка неактивна #}
+                        <button class="btn btn-disabled w-100" disabled style="cursor: default;">
+                            In Cart ✓
+                        </button>
+                    {% elif purchased_product_ids and product.id in purchased_product_ids %}
+                        {# Фото вже куплене раніше (якщо передаєш purchased_product_ids у контексті) #}
+                        <button class="btn btn-disabled w-100" disabled>Already Owned</button>
+                    {% else %}
+                        {# Фото ще немає в корзині — показуємо форму додавання #}
+                        <form action="{% url 'add_to_cart' product.id %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="item_type" value="photo">
+                            <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                            <button type="submit" class="btn btn-primary w-100">Add to Cart</button>
+                        </form>
+                    {% endif %}
+
+                {% endwith %}
+                {% endwith %}
+            {% endif %}
+        {% else %}
+            {# Логіка для гостей: перенаправлення на логін #}
+            <a href="{% url 'account_login' %}?next={{ request.path }}" class="btn btn-primary w-100">Login to Buy</a>
+        {% endif %}
+    </div>
+</article>

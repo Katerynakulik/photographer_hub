@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="page-container">
+    <section class="hero-section card">
+        {% if photographer %}
+        <div class="hero-content">
+            <div class="photographer-bio-centered">
+
+                {% if photographer.profile_image %}
+                <img src="{{ photographer.profile_image.url }}" alt="{{ photographer.user.get_full_name }}"
+                    class="oval-avatar" fetchpriority="high">
+                {% endif %}
+
+                <div class="bio-text-centered">
+                    <h1 class="h1-large">{{ photographer.user.get_full_name|default:photographer.user.username }}</h1>
+                    <p class="tagline-accent">{{ photographer.tagline }}</p>
+                    <p class="description text-muted small">{{ photographer.bio }}</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </section>
+
+    <section class="page-container u-mb-5">
+        <div class="section-header-flex u-mb-4">
+            <div class="section-title-group">
+                <p class="tagline-accent">Limited Offers</p>
+                <h2 class="serif-title">Upcoming Photoshoots</h2>
+            </div>
+
+            <div class="scroller-controls">
+                <button class="scroller-arrow prev" id="slidePrev" aria-label="Previous">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <button class="scroller-arrow next" id="slideNext" aria-label="Next">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="sessions-view-viewport">
+            <div class="sessions-horizontal-track" id="sessionsTrack">
+                {% for session in sessions %}
+                <div class="session-wide-card">
+                    <div class="session-card-visual">
+                        {% if session.image %}
+                        <img src="{{ session.image.url }}" alt="{{ session.title }}">
+                        {% else %}
+                        <div class="placeholder-bg">Fine Art</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="session-card-details">
+                        <div class="details-top">
+                            <h3 class="serif-title">{{ session.title }}</h3>
+                            <p class="session-date-tag">
+                                <i class="fa-regular fa-calendar"></i> {{ session.expected_dates }}
+                            </p>
+                            <p class="session-excerpt">{{ session.description|truncatechars:120 }}</p>
+                            <a href="{% url 'photoshoot_detail' session.pk %}" class="btn-details-link">
+                                View Details <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <p class="text-muted">New sessions coming soon...</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+
+    <section class="shop-section">
+        <div class="shop-header">
+            <div class="shop-info">
+                <h2 class="serif-title">My Photo Shop</h2>
+                <p class="small text-muted">Purchase high-resolution digital copies.</p>
+            </div>
+            <a href="{% url 'all_products' %}" class="btn btn-outline">See all photos</a>
+        </div>
+
+        <div class="shop-products-grid">
+            {% for product in products|slice:":4" %}
+            {% include "includes/product_card.html" %}
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="newsletter-section card text-center">
+        <h2>Join the Journey</h2>
+        <p class="small text-muted">Get updates on new sessions and special offers.</p>
+        <form action="#" method="POST" class="newsletter-form" style="max-width: 400px; margin: 24px auto 0;">
+            {% csrf_token %}
+            <input type="email" name="email" placeholder="Email address" required>
+            <button type="submit" class="btn btn-primary w-100" style="margin-top: 16px;">Subscribe</button>
+        </form>
+    </section>
+</div>
+{% endblock %}
