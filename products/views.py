@@ -8,9 +8,18 @@ def is_photographer(user):
     return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.is_photographer
 
 def all_products(request):
-    """ View for the full gallery page """
-    products = PhotoProduct.objects.filter(is_active=True).order_by('-created_at')
-    return render(request, 'products/products_list.html', {'products': products})
+    products = PhotoProduct.objects.filter(is_active=True)
+    
+    # Mentor Note: In the future, fetch this from Order/Purchase model
+    owned_photos = [] 
+    if request.user.is_authenticated:
+        # Placeholder: owned_photos = request.user.userprofile.bought_photos.values_list('id', flat=True)
+        pass
+
+    return render(request, 'products/products_list.html', {
+        'products': products,
+        'owned_photos': owned_photos
+    })
 
 @user_passes_test(is_photographer)
 def photographer_dashboard(request):

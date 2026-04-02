@@ -379,6 +379,67 @@ section {
     margin-bottom: 15px;
 }
 
+/* --- PRODUCT IMAGE HOVER EFFECT --- */
+
+/* Контейнер для зображення */
+.card-image-top {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px; /* Відповідає радіусу фото */
+}
+
+/* Робимо посилання блочним, щоб воно займало весь простір */
+.card-image-top .glightbox {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    text-decoration: none;
+}
+
+/* Стиль оверлею (затемнення) */
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.45); /* Колір затемнення */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0; /* Приховано за замовчуванням */
+    transition: opacity 0.3s ease;
+    z-index: 2;
+}
+
+/* Текст всередині оверлею */
+.overlay-text {
+    color: var(--white);
+    font-size: 1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.card-image-top:hover .image-overlay,
+.card-image-top .glightbox:focus .image-overlay {
+    opacity: 1; /* Поява затемнення */
+}
+
+.product-img {
+    transition: transform 0.5s ease;
+}
+
+.card-image-top:hover .product-img {
+    transform: scale(1.05);
+}
+
+.gslide-image img {
+    max-height: 95vh !important;
+    width: auto !important;
+}
+
 /* --- RE-INJECTED AUTH PAGES STYLING (Fixed!) --- */
 .auth-wrapper {
     max-width: 500px;
