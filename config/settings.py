@@ -23,7 +23,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = os.environ.get('DEBUG') == 'True'
 
 # Перетворюємо рядок з .env у список для ALLOWED_HOSTS
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')
+ALLOWED_HOSTS = [
+    'photographer-hub-94aeeeebdb69e.herokuapp.com', 
+    'localhost', 
+    '127.0.0.1'
+]
 
 # Application definition
 
