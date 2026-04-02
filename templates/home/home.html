@@ -23,53 +23,87 @@
         {% endif %}
     </section>
 
-    <section class="shop-section">
-        <div class="shop-header">
-            <div class="shop-info">
-                <h2 class="serif-title">My Photo Shop</h2>
-                <p class="small text-muted">Purchase high-resolution digital copies.</p>
-            </div>
-            <a href="#" class="btn btn-outline">See all photos</a>
+    <section class="sessions-section">
+        <div class="section-header">
+            <h2 class="serif-title">Upcoming Photoshoots</h2>
         </div>
 
-        <div class="shop-products-grid">
-            {% for product in products|slice:":4" %}
-            <article class="card product-card">
-                <div class="card-image-top">
-                    <a href="{{ product.preview_image.url }}" class="glightbox card-image-wrapper">
-                        <img src="{{ product.preview_image.url }}" alt="{{ product.title }}" class="product-img">
-                    </a>
-                </div>
+        <section class="sessions-section">
+            <h2 class="serif-title">Upcoming Photoshoots</h2>
+            <div class="sessions-grid">
+                {% for session in sessions %}
+                <article class="session-card card">
+                    <div class="session-image-wrapper">
+                        <img src="{{ session.image.url }}" alt="{{ session.title }}" class="product-img">
+                    </div>
+                    <div class="session-body">
+                        <h3>{{ session.title }}</h3>
+                        <p class="small text-muted">{{ session.description|truncatechars:80 }}</p>
+                        <p class="small">Expected: {{ session.expected_dates }}</p>
+                        <p class="small">Full Price: €{{ session.total_price }}</p>
 
-                <div class="card-body-bottom">
-                    <div class="product-details">
-                        <h3 class="card-title">{{ product.title }}</h3>
-                        <p class="price">€ {{ product.price }}</p>
+                        <form action="{% url 'add_to_cart' 's_'|add:session.id|stringformat:'s' %}" method="POST">
+                            {% csrf_token %}
+                            <button class="btn btn-primary w-100">Join Waitlist — €10</button>
+                        </form>
+                    </div>
+                </article>
+                {% empty %}
+                <div class="card text-center py-5 w-100" style="background: var(--bg-color);">
+                    <p class="serif-title">New artistic journeys are coming soon.</p>
+                    <p class="text-muted small">Stay tuned for new location announcements.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="shop-section">
+            <div class="shop-header">
+                <div class="shop-info">
+                    <h2 class="serif-title">My Photo Shop</h2>
+                    <p class="small text-muted">Purchase high-resolution digital copies.</p>
+                </div>
+                <a href="#" class="btn btn-outline">See all photos</a>
+            </div>
+
+            <div class="shop-products-grid">
+                {% for product in products|slice:":4" %}
+                <article class="card product-card">
+                    <div class="card-image-top">
+                        <a href="{{ product.preview_image.url }}" class="glightbox card-image-wrapper">
+                            <img src="{{ product.preview_image.url }}" alt="{{ product.title }}" class="product-img">
+                        </a>
                     </div>
 
-                    {% if product.id|stringformat:"s" in request.session.cart %}
-                    <button class="btn btn-disabled w-100" disabled>In Cart ✓</button>
-                    {% else %}
-                    <form action="{% url 'add_to_cart' product.id %}" method="POST">
-                        {% csrf_token %}
-                        <input type="hidden" name="redirect_url" value="{{ request.path }}">
-                        <button type="submit" class="btn btn-primary w-100">Add to Cart</button>
-                    </form>
-                    {% endif %}
-                </div>
-            </article>
-            {% endfor %}
-        </div>
-    </section>
+                    <div class="card-body-bottom">
+                        <div class="product-details">
+                            <h3 class="card-title">{{ product.title }}</h3>
+                            <p class="price">€ {{ product.price }}</p>
+                        </div>
 
-    <section class="newsletter-section card text-center">
-        <h2>Join the Journey</h2>
-        <p class="small text-muted">Get updates on new sessions and special offers.</p>
-        <form action="#" method="POST" class="newsletter-form" style="max-width: 400px; margin: 24px auto 0;">
-            {% csrf_token %}
-            <input type="email" name="email" placeholder="Email address" required>
-            <button type="submit" class="btn btn-primary w-100" style="margin-top: 16px;">Subscribe</button>
-        </form>
-    </section>
+                        {% if product.id|stringformat:"s" in request.session.cart %}
+                        <button class="btn btn-disabled w-100" disabled>In Cart ✓</button>
+                        {% else %}
+                        <form action="{% url 'add_to_cart' product.id %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                            <button type="submit" class="btn btn-primary w-100">Add to Cart</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="newsletter-section card text-center">
+            <h2>Join the Journey</h2>
+            <p class="small text-muted">Get updates on new sessions and special offers.</p>
+            <form action="#" method="POST" class="newsletter-form" style="max-width: 400px; margin: 24px auto 0;">
+                {% csrf_token %}
+                <input type="email" name="email" placeholder="Email address" required>
+                <button type="submit" class="btn btn-primary w-100" style="margin-top: 16px;">Subscribe</button>
+            </form>
+        </section>
 </div>
 {% endblock %}

@@ -4,24 +4,20 @@ from marketing.forms import NewsletterForm
 from home.forms import ContactForm
 from profiles.models import UserProfile
 from products.models import PhotoProduct
+from bookings.models import Photoshoot
 
 def home(request):
-    """
-    Головна сторінка: виводить дані фотографа (адміна) 
-    та перші 4 активні продукти для сітки.
-    """
-    # Знаходимо профілі, де активовано прапорець фотографа
-    # Використовуємо select_related для швидкості завантаження імені User
     photographer = UserProfile.objects.filter(is_photographer=True).select_related('user').first()
-    
-    # Беремо рівно 4 продукти для нашої математично розрахованої сітки
     featured_products = PhotoProduct.objects.filter(is_active=True).order_by('-created_at')[:4]
     
+    # Mentor Note: Fetch active photoshoots for the landing page
+    sessions = Photoshoot.objects.filter(is_active=True).order_by('created_at')
+
     context = {
         "photographer": photographer,
         "products": featured_products,
+        "sessions": sessions,
         "newsletter_form": NewsletterForm(),
-        "contact_form": ContactForm(),
     }
     return render(request, "home/home.html", context)
 
