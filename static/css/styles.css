@@ -103,6 +103,9 @@ section {
 .u-mb-5 {
     margin-bottom: 50px;
 }
+.u-mt-4 {
+    margin-top: 20px;
+}
 
 .u-mt-5 {
     margin-top: 50px;
@@ -123,6 +126,7 @@ section {
 .w-100 {
     width: 100%;
 }
+
 
 /* ==========================================================================
    COMMON UI ELEMENTS (Buttons, Navbar)
@@ -992,4 +996,21 @@ textarea:focus {
 
 .gap-3 {
     gap: 1rem;
+}
+/* ==========================================================================
+   SUBSCRIPTION
+   ========================================================================== */
+.newsletter-form-wrapper {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* ==========================================================================
+   MAIN FOOTER STYLING
+   ========================================================================== */
+.main-footer {
+    background-color: var(--white);
+    border-top: 1px solid var(--border-color);
+    padding: 20px 0;
+   
 }

@@ -90,13 +90,17 @@
     </section>
 
     <section class="newsletter-section card text-center">
-        <h2>Join the Journey</h2>
-        <p class="small text-muted">Get updates on new sessions and special offers.</p>
-        <form action="{% url 'newsletter_subscribe' %}" method="POST" class="newsletter-form">
-            {% csrf_token %}
-            <input type="email" name="email" placeholder="Email address" required>
-            <button type="submit" class="btn btn-primary w-100">Subscribe</button>
-        </form>
+        <h2 class="serif-title">Join the Journey</h2>
+        <p class="small text-muted u-mb-4">Get updates on new sessions and special offers.</p>
+
+        <div class="newsletter-form-wrapper">
+            <form action="{% url 'newsletter_subscribe' %}" method="POST" class="newsletter-form">
+                {% csrf_token %}
+                <input type="email" name="email" placeholder="Email address" required>
+                <div class="u-mt-4"> <button type="submit" class="btn btn-primary w-100">Subscribe</button>
+                </div>
+            </form>
+        </div>
     </section>
 </div>
 {% endblock %}
