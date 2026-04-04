@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-container dashboard-container">
+    <h1 class="serif-title u-mb-5">My Dashboard</h1>
+
+    <section class="u-mb-5">
+        <h2 class="serif-title u-mb-4">Upcoming Photoshoots</h2>
+        {% if my_bookings %}
+        <div class="card">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Session</th>
+                        <th>Expected Date</th>
+                        <th class="text-center">Participants</th>
+                        <th style="text-align: right;">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in my_bookings %}
+                    <tr>
+                        <td><span class="card-title">{{ booking.photoshoot.title }}</span></td>
+                        <td>{{ booking.photoshoot.expected_dates }}</td>
+                        <td class="text-center">{{ booking.quantity }}</td>
+                        <td style="text-align: right;">
+                            <span class="status-tag active">Paid ✓</span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="card text-center">
+            <p class="text-muted">No active bookings found.</p>
+        </div>
+        {% endif %}
+    </section>
+
+    <section>
+        <h2 class="serif-title u-mb-4">Purchased Digital Licenses</h2>
+        {% if purchased_photos %}
+        <div class="shop-products-grid">
+            {% for purchase in purchased_photos %}
+            <article class="card product-card">
+                <div class="card-image-top">
+                    <img src="https://res.cloudinary.com/drscildms/image/upload/f_auto,q_auto,w_600/v1/{{ purchase.product.preview_image }}" 
+                         alt="{{ purchase.product.title }}" class="product-img">
+                </div>
+                <div class="card-body-bottom">
+                    <h3 class="card-title">{{ purchase.product.title }}</h3>
+                    {% if purchase.product.digital_file %}
+                        <a href="{{ purchase.product.digital_file.url }}" class="btn btn-primary w-100 u-mt-5" download>
+                            Download High-Res
+                        </a>
+                    {% else %}
+                        <button class="btn btn-disabled w-100 u-mt-5" disabled>File Pending</button>
+                    {% endif %}
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="card text-center">
+            <p class="text-muted">You haven't purchased any photos yet.</p>
+        </div>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}

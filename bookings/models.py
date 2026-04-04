@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Photoshoot(models.Model):
     # Mentor Note: Basic session info for the waitlist logic
@@ -16,3 +17,14 @@ class Photoshoot(models.Model):
 
     def __str__(self):
         return self.title
+
+class Booking(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='bookings')
+    photoshoot = models.ForeignKey(Photoshoot, on_delete=models.CASCADE, related_name='bookings')
+    # Ми використовуємо рядок 'checkout.Order', щоб уникнути помилки циклічного імпорту
+    order = models.ForeignKey('checkout.Order', on_delete=models.CASCADE, related_name='bookings')
+    quantity = models.PositiveIntegerField(default=1)
+    booked_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.photoshoot.title} ({self.quantity})"
