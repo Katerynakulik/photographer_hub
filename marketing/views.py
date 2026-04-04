@@ -1,13 +1,15 @@
+# marketing/views.py
 import json
 import requests
 from django.conf import settings
 from django.shortcuts import redirect
 from django.contrib import messages
-from mailchimp3 import Mailchimp
+from mailchimp3 import MailChimp # Змінено з Mailchimp на MailChimp (Велика 'C')
 
 def subscribe_email(email):
     """ Helper function to add email to Mailchimp Audience """
-    client = Mailchimp(mc_api=settings.MAILCHIMP_API_KEY, mc_user='photographer_hub')
+    # Тут також міняємо на MailChimp
+    client = MailChimp(mc_api=settings.MAILCHIMP_API_KEY, mc_user='photographer_hub')
     
     try:
         client.lists.members.create(settings.MAILCHIMP_EMAIL_LIST_ID, {
@@ -16,6 +18,7 @@ def subscribe_email(email):
         })
         return True
     except Exception as e:
+        # Mentor Note: Mailchimp returns 400 if user already exists
         return False
 
 def newsletter_subscribe(request):
@@ -27,6 +30,7 @@ def newsletter_subscribe(request):
             if success:
                 messages.success(request, "Success! You are now part of the journey.")
             else:
-                messages.info(request, "You are already subscribed or there was an error.")
+                # Often fails if email is already in the list
+                messages.info(request, "Check your inbox or you might be already subscribed.")
     
     return redirect("home")
