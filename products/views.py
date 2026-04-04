@@ -6,6 +6,7 @@ from .models import PhotoProduct
 from bookings.models import Photoshoot
 from .forms import PhotoProductForm, PhotoshootForm
 from checkout.models import PurchasedPhoto # Required to check photo ownership
+from django.db.models import ProtectedError
 
 def is_photographer(user):
     """ Security check to ensure only the photographer accesses management views """
@@ -124,9 +125,20 @@ def edit_product(request, pk):
 
 @user_passes_test(is_photographer)
 def delete_product(request, pk):
-    """ View to permanently remove a photo from the shop """
+    """
+    Safely handles product deletion. 
+    If purchased, deactivates instead of deleting to preserve records.
+    """
     product = get_object_or_404(PhotoProduct, pk=pk)
+    
     if request.method == 'POST':
-        product.delete()
-        messages.success(request, "Photo deleted successfully.")
+        try:
+            product.delete()
+            messages.success(request, "Photo deleted successfully.")
+        except ProtectedError:
+            # If the photo is already purchased, we just hide it from the shop
+            product.is_active = False
+            product.save()
+            messages.warning(request, "This photo is already owned by a customer. It has been deactivated and hidden from the shop instead of deleted.")
+            
     return redirect('dashboard')

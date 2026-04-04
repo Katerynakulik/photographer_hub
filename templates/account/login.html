@@ -2,30 +2,28 @@
 {% load i18n %}
 {% load account %}
 
-{% block head_title %}{% trans "Sign In" %}{% endblock %}
-
 {% block content %}
-<div class="auth-wrapper">
-    <h2 class="serif-title">{% trans "Sign In" %}</h2>
+<div class="page-container">
+    <div class="auth-wrapper">
+        <h2 class="serif-title u-mb-4">{% trans "Sign In" %}</h2>
 
-    <p>{% blocktrans %}If you have not created an account yet, then please
-    <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+        <p class="u-mb-4">{% blocktrans %}New here? <a href="{{ signup_url }}" class="remove-link">Sign up</a> first.{% endblocktrans %}</p>
 
-    <form class="login" method="POST" action="{% url 'account_login' %}">
-        {% csrf_token %}
-        
-        {{ form.as_p }}
+        <form class="login" method="POST" action="{% url 'account_login' %}">
+            {% csrf_token %}
+            
+            <div class="auth-form-body">
+                {{ form.as_p }}
+            </div>
 
-        {% if redirect_field_value %}
-        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-        {% endif %}
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
 
-        <div class="auth-actions">
-            <a class="button secondaryAction small" href="{% url 'account_reset_password' %}">
-                {% trans "Forgot Password?" %}
-            </a>
-            <button class="primaryAction btn btn-primary w-100" type="submit">{% trans "Sign In" %}</button>
-        </div>
-    </form>
+            <div class="u-mt-5">
+                <button class="btn btn-primary w-100" type="submit">{% trans "Sign In" %}</button>
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock %}
