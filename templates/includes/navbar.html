@@ -22,6 +22,11 @@
             </li>
             {% else %}
             <li>
+                <a href="{% url 'profiles:profile' %}" class="nav-link" title="My Profile">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+            </li>
+            <li>
                 <a href="{% url 'view_cart' %}" class="nav-link cart-icon-link" title="Cart"
                     style="position: relative;">
                     <i class="fa-solid fa-bag-shopping"></i>

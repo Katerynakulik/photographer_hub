@@ -7,8 +7,21 @@
         <div class="card error-wrapper" style="margin: 0 auto;"> 
             <h1 class="serif-title u-mb-4">Order Confirmed!</h1>
             <p class="text-muted u-mb-5">
-                Thank you for your purchase. Your payment was successful and your digital licenses/bookings are now active.
+                Thank you for your purchase. Your payment was successful and your bookings are now active.
             </p>
+            
+            {% if has_photos %}
+            <div class="card u-mb-5" style="border-color: var(--primary-color);">
+                <p class="serif-title" style="color: var(--primary-color); font-size: 1.2rem;">
+                    <i class="fa-solid fa-envelope"></i> Delivery in Progress
+                </p>
+                <p class="small text-muted">
+                    We've sent the high-resolution download links to your registered email address. 
+                    Please check your inbox (and spam folder) shortly.
+                </p>
+            </div>
+            {% endif %}
+
             <div class="u-flex-between" style="justify-content: center; gap: 20px; display: flex;">
                 <a href="{% url 'profiles:profile' %}" class="btn btn-primary">View My Profile</a>
                 <a href="{% url 'home' %}" class="btn btn-outline">Back to Gallery</a>

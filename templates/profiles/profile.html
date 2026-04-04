@@ -38,23 +38,24 @@
     </section>
 
     <section>
-        <h2 class="serif-title u-mb-4">Purchased Digital Licenses</h2>
+        <h2 class="serif-title">Purchased Digital Licenses</h2>
         {% if purchased_photos %}
         <div class="shop-products-grid">
             {% for purchase in purchased_photos %}
             <article class="card product-card">
                 <div class="card-image-top">
-                    <img src="https://res.cloudinary.com/drscildms/image/upload/f_auto,q_auto,w_600/v1/{{ purchase.product.preview_image }}" 
-                         alt="{{ purchase.product.title }}" class="product-img">
+                    <img src="https://res.cloudinary.com/drscildms/image/upload/f_auto,q_auto,w_600/v1/{{ purchase.product.preview_image }}"
+                        alt="{{ purchase.product.title }}" class="product-img">
                 </div>
                 <div class="card-body-bottom">
                     <h3 class="card-title">{{ purchase.product.title }}</h3>
                     {% if purchase.product.digital_file %}
-                        <a href="{{ purchase.product.digital_file.url }}" class="btn btn-primary w-100 u-mt-5" download>
-                            Download High-Res
-                        </a>
+                    <a href="{{ purchase.product.digital_file.url }}" class="btn btn-primary w-100 u-mt-4"
+                        target="_blank" download>
+                        Download High-Res_ <i class="fa-solid fa-download"></i>
+                    </a>
                     {% else %}
-                        <button class="btn btn-disabled w-100 u-mt-5" disabled>File Pending</button>
+                    <p class="small text-muted u-mt-4">Processing high-res file...</p>
                     {% endif %}
                 </div>
             </article>

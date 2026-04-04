@@ -1,26 +1,38 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import user_passes_test
-from django.contrib import messages # <--- Не забудь додати цей імпорт
+from django.contrib import messages
 from django.urls import reverse
 from .models import PhotoProduct
 from bookings.models import Photoshoot
 from .forms import PhotoProductForm, PhotoshootForm
+from checkout.models import PurchasedPhoto # Required to check photo ownership
 
 def is_photographer(user):
+    """ Security check to ensure only the photographer accesses management views """
     return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.is_photographer
 
 def all_products(request):
+    """ 
+    Displays the shop gallery. 
+    Fetches IDs of already purchased photos to disable the 'Add to Cart' button.
+    """
     products = PhotoProduct.objects.filter(is_active=True)
-    owned_photos = [] 
-    # В майбутньому тут буде логіка перевірки куплених фото
+    purchased_product_ids = []
+
+    if request.user.is_authenticated:
+        # Fetch a list of product IDs that the current user has already bought
+        purchased_product_ids = list(PurchasedPhoto.objects.filter(
+            user=request.user
+        ).values_list('product_id', flat=True))
+
     return render(request, 'products/products_list.html', {
         'products': products,
-        'owned_photos': owned_photos
+        'purchased_product_ids': purchased_product_ids # Crucial for the template condition
     })
 
 @user_passes_test(is_photographer) 
 def dashboard(request):
-    """ Головна сторінка кабінету з переліком всього контенту """
+    """ Photographer's main management dashboard """
     products = PhotoProduct.objects.all().order_by('-created_at')
     sessions = Photoshoot.objects.all().order_by('-created_at')
     
@@ -29,25 +41,8 @@ def dashboard(request):
         'sessions': sessions,
     })
 
-@user_passes_test(is_photographer)
-def add_session(request):
-    """ Додавання нової фотосесії через фронтенд """
-    if request.method == 'POST':
-        form = PhotoshootForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Success! New photoshoot is now on the waitlist.")
-            return redirect('dashboard')
-    else:
-        form = PhotoshootForm()
-    
-    return render(request, 'products/manage_item.html', {
-        'form': form, 
-        'title': 'Add New Photoshoot'
-    })
-
 def photoshoot_detail(request, pk):
-    """Сторінка детального перегляду конкретної фотосесії"""
+    """ Public detail view for a specific photoshoot session """
     session = get_object_or_404(Photoshoot, pk=pk)
     return render(request, 'products/photoshoot_detail.html', {
         'session': session
@@ -55,13 +50,13 @@ def photoshoot_detail(request, pk):
 
 @user_passes_test(is_photographer)
 def add_session(request):
-    """View for the photographer to create a new photoshoot session"""
+    """ View for the photographer to create a new photoshoot session """
     if request.method == 'POST':
         form = PhotoshootForm(request.POST, request.FILES)
         if form.is_valid():
             new_session = form.save()
             messages.success(request, f"Success! {new_session.title} has been created.")
-            return redirect('photoshoot_detail', pk=new_session.pk)
+            return redirect('dashboard')
     else:
         form = PhotoshootForm()
     
@@ -72,7 +67,7 @@ def add_session(request):
 
 @user_passes_test(is_photographer)
 def edit_session(request, pk):
-    """Редагування існуючої фотосесії"""
+    """ Photographer view to edit existing session details """
     session = get_object_or_404(Photoshoot, pk=pk)
     
     if request.method == 'POST':
@@ -90,10 +85,9 @@ def edit_session(request, pk):
         'edit_mode': True
     })
 
-
 @user_passes_test(is_photographer)
 def add_product(request):
-    """Додавання нового фото в магазин"""
+    """ Photographer view to add a new digital photo to the shop """
     if request.method == 'POST':
         form = PhotoProductForm(request.POST, request.FILES)
         if form.is_valid():
@@ -110,7 +104,7 @@ def add_product(request):
 
 @user_passes_test(is_photographer)
 def edit_product(request, pk):
-    """Редагування фото: показуємо старе, дозволяємо міняти текст"""
+    """ Photographer view to update photo details and title """
     product = get_object_or_404(PhotoProduct, pk=pk)
     if request.method == 'POST':
         form = PhotoProductForm(request.POST, request.FILES, instance=product)
@@ -123,14 +117,14 @@ def edit_product(request, pk):
     
     return render(request, 'products/product_form.html', {
         'form': form,
-        'product': product, # Передаємо об'єкт для відображення картинки
+        'product': product, 
         'title': 'Edit Photo Details',
         'edit_mode': True
     })
 
 @user_passes_test(is_photographer)
 def delete_product(request, pk):
-    """Видалення фото"""
+    """ View to permanently remove a photo from the shop """
     product = get_object_or_404(PhotoProduct, pk=pk)
     if request.method == 'POST':
         product.delete()

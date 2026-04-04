@@ -201,3 +201,7 @@ ACCOUNT_FORMS = {
 }
 # Skip logout confirmation page
 ACCOUNT_LOGOUT_ON_GET = True
+
+# Use console backend to see emails in the terminal instead of sending them for real
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'hub@example.com'
