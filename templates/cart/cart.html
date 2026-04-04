@@ -1,16 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="dashboard-container">
-    <div class="card form-card" style="max-width: 1000px; margin: 40px auto; padding: 40px;">
-        <h1 class="serif-title u-mb-5">Your Photo Cart</h1>
+    <div class="card form-card" style="max-width: 1000px;"> <h1 class="serif-title u-mb-5">Your Photo Cart</h1>
 
         {% if cart_items %}
         <table class="admin-table">
             <thead>
                 <tr>
-                    <th style="width: 100px;">Item</th>
+                    <th>Item</th>
                     <th>Description</th>
-                    <th style="text-align: center; width: 150px;">Quantity</th>
+                    <th class="text-center">Quantity</th>
                     <th style="text-align: right;">Subtotal</th>
                 </tr>
             </thead>
@@ -19,11 +18,11 @@
                 <tr>
                     <td>
                         <img src="https://res.cloudinary.com/drscildms/image/upload/f_auto,q_auto,w_200,c_fill/v1/{{ item.display_image }}"
-                            class="admin-thumb" style="width: 80px; height: 60px;">
+                            class="admin-thumb" alt="{{ item.display_title }}">
                     </td>
                     <td>
-                        <h3 class="card-title" style="margin: 0; font-size: 1.1rem;">{{ item.display_title }}</h3>
-                        <p class="text-muted small" style="margin: 0;">
+                        <h3 class="card-title">{{ item.display_title }}</h3>
+                        <p class="text-muted small">
                             {% if item.type == 'photo' %}Digital License{% else %}Session Deposit{% endif %}
                         </p>
                         <a href="{% url 'remove_from_cart' item.item_key %}" class="remove-btn confirm-delete"
@@ -31,11 +30,11 @@
                             <i class="fa-solid fa-trash-can"></i> Remove
                         </a>
                     </td>
-                    <td style="text-align: center;">
+                    <td class="text-center">
                         {% if item.type == 'photo' %}
                         <span class="text-muted">1 (Limited)</span>
                         {% else %}
-                        <form action="{% url 'adjust_cart' item.item_key %}" method="POST" class="qty-control">
+                        <form action="{% url 'adjust_cart' item.item_key %}" method="POST" class="u-flex-between" style="justify-content: center; gap: 10px;">
                             {% csrf_token %}
                             <button name="action" value="decrease" class="qty-btn">-</button>
                             <span class="qty-num">{{ item.quantity }}</span>
@@ -44,21 +43,23 @@
                         {% endif %}
                     </td>
                     <td style="text-align: right;">
-                        <span class="serif-title" style="font-size: 1.2rem;">€{{ item.subtotal }}</span>
+                        <span class="serif-title">€{{ item.subtotal }}</span>
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+
         <div class="u-mt-5 u-flex-between" style="border-top: 2px solid var(--border-color); padding-top: 25px;">
             <h2 class="serif-title">Total: <span style="color: var(--primary-color);">€{{ total }}</span></h2>
-            <div class="u-flex" style="gap: 15px;">
+            <div class="u-flex" style="gap: 15px; display: flex;">
                 <a href="{% url 'home' %}" class="btn btn-outline">Back to Gallery</a>
-                <a href="#" class="btn btn-primary">Proceed to Checkout</a>
+                <a href="{% url 'create_checkout_session' %}" class="btn btn-primary">Proceed to Checkout</a>
             </div>
         </div>
+
         {% else %}
-        <div class="text-center py-5">
+        <div class="text-center u-mt-5">
             <p class="text-muted">Your cart is empty.</p>
             <a href="{% url 'home' %}" class="btn btn-primary u-mt-4">Browse Photos</a>
         </div>

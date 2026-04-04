@@ -9,8 +9,9 @@
             <div class="photographer-bio-centered">
 
                 {% if photographer.profile_image %}
-                <img src="{{ photographer.profile_image.url }}" alt="{{ photographer.user.get_full_name }}"
-                    class="oval-avatar" fetchpriority="high">
+                <img src="https://res.cloudinary.com/drscildms/image/upload/f_auto,q_auto,w_400,c_fill,g_face/v1/{{ photographer.profile_image }}"
+                    alt="{{ photographer.user.get_full_name }}" class="oval-avatar" fetchpriority="high" width="400"
+                    height="400">
                 {% endif %}
 
                 <div class="bio-text-centered">
@@ -46,12 +47,12 @@
                 <div class="session-wide-card">
                     <div class="session-card-visual">
                         {% if session.image %}
-                        <img src="{{ session.image.url }}" alt="{{ session.title }}">
+                        <img src="https://res.cloudinary.com/drscildms/image/upload/f_auto,q_auto,w_800/v1/{{ session.image }}"
+                            alt="{{ session.title }}" loading="lazy" width="800" height="500">
                         {% else %}
                         <div class="placeholder-bg">Fine Art</div>
                         {% endif %}
                     </div>
-
                     <div class="session-card-details">
                         <div class="details-top">
                             <h3 class="serif-title">{{ session.title }}</h3>
@@ -72,9 +73,8 @@
         </div>
     </section>
 
-
     <section class="shop-section">
-        <div class="shop-header">
+        <div class="shop-header u-flex-between u-mb-4">
             <div class="shop-info">
                 <h2 class="serif-title">My Photo Shop</h2>
                 <p class="small text-muted">Purchase high-resolution digital copies.</p>
