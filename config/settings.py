@@ -205,3 +205,9 @@ ACCOUNT_LOGOUT_ON_GET = True
 # Use console backend to see emails in the terminal instead of sending them for real
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'hub@example.com'
+
+
+#  Setting up Mailchimp
+MAILCHIMP_API_KEY = os.getenv('MAILCHIMP_API_KEY')
+MAILCHIMP_DATA_CENTER = os.getenv('MAILCHIMP_DATA_CENTER')
+MAILCHIMP_EMAIL_LIST_ID = os.getenv('MAILCHIMP_EMAIL_LIST_ID')

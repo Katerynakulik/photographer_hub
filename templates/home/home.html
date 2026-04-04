@@ -92,10 +92,10 @@
     <section class="newsletter-section card text-center">
         <h2>Join the Journey</h2>
         <p class="small text-muted">Get updates on new sessions and special offers.</p>
-        <form action="#" method="POST" class="newsletter-form" style="max-width: 400px; margin: 24px auto 0;">
+        <form action="{% url 'newsletter_subscribe' %}" method="POST" class="newsletter-form">
             {% csrf_token %}
             <input type="email" name="email" placeholder="Email address" required>
-            <button type="submit" class="btn btn-primary w-100" style="margin-top: 16px;">Subscribe</button>
+            <button type="submit" class="btn btn-primary w-100">Subscribe</button>
         </form>
     </section>
 </div>
