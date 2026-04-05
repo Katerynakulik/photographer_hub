@@ -48,8 +48,14 @@ body {
     font-family: var(--font-sans);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
-}
 
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+main {
+    flex: 1;
+}
 h1,
 h2,
 h3,
@@ -1012,5 +1018,5 @@ textarea:focus {
     background-color: var(--white);
     border-top: 1px solid var(--border-color);
     padding: 20px 0;
-   
+    width: 100%;
 }

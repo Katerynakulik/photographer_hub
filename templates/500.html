@@ -2,18 +2,18 @@
 {% load static %}
 
 {% block content %}
-<section class="page-container section-spacing">
-    <div class="card text-center error-wrapper u-mt-5">
-        <h1 class="serif-title error-code">500</h1>
-        <h2 class="serif-title u-mb-3">Flash Failure</h2>
-        <p class="text-muted u-mb-5">
-            Our sensors encountered an internal error. <br>
-            We're working on fixing the exposure — please try again in a moment.
-        </p>
-        
-        <div class="u-flex-between" style="justify-content: center;"> 
-            <a href="{% url 'home' %}" class="btn btn-primary">Back to Safety</a>
-        </div>
+<section class="page-container text-center">
+
+    <h1 class="serif-title error-code">500</h1>
+    <h2 class="serif-title u-mb-4">Flash Failure</h2>
+    <p class="text-muted u-mb-5">
+        Our sensors encountered an internal error. <br>
+        We're working on fixing the exposure — please try again in a moment.
+    </p>
+
+    <div class="text-center">
+        <a href="{% url 'home' %}" class="btn btn-primary">Back to Safety</a>
     </div>
+
 </section>
 {% endblock %}

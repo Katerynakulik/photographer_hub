@@ -2,19 +2,18 @@
 {% load static %}
 
 {% block content %}
-<section class="page-container u-flex-center section-spacing">
-    <div class="card text-center error-wrapper u-mt-5">
-        <h1 class="serif-title error-code">404</h1>
-        <h2 class="serif-title u-mb-3">Focus Lost</h2>
-        <p class="text-muted u-mb-5">
-            The frame you are looking for doesn't exist. <br>
-            It might have been overexposed or moved to another gallery.
-        </p>
-        
-        <div class="u-flex-center gap-3">
-            <a href="{% url 'home' %}" class="btn btn-primary">Return Home</a>
-            <a href="{% url 'products' %}" class="btn btn-outline">Browse Shop</a>
-        </div>
+<section class="page-container text-center">
+
+    <h1 class="serif-title error-code">404</h1>
+    <h2 class="serif-title u-mb-4">Lost in Frame</h2>
+    <p class="text-muted u-mb-5">
+        This specific moment hasn't been captured yet. <br>
+        The page you are looking for might have been moved or never existed.
+    </p>
+
+    <div class="text-center">
+        <a href="{% url 'home' %}" class="btn btn-primary">Return to Gallery</a>
     </div>
+
 </section>
 {% endblock %}
