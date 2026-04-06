@@ -34,11 +34,13 @@ The application is deployed to Heroku and can be accessed at:
     * [Header & Footer](#header--footer)
     * [Home Page](#home-page)
     * [Authentication (Registration & Login)](#authentication-registration--login)
-    * [Digital Gallery (Shop)](#digital-gallery-shop)
+    * [Digital Card (Shop Gallery)](#digital-card-shop-gallery)
     * [Photoshoot Booking Selection](#photoshoot-booking-selection)
     * [Client Dashboard ("My Profile")](#client-dashboard-my-profile)
     * [Photographer Management Dashboard](#photographer-management-dashboard)
     * [Gallery & Session CRUD Management](#gallery--session-crud-management)
+    * [Toast Notifications](#toast-notifications)
+    * [Custom Error Pages (404 & 500)](#custom-error-pages-404--500)
 9. [Testing Accounts](#testing-accounts)
 10. [Features Overview](#features-overview)
 11. [Validation](#11-validation)
@@ -273,11 +275,100 @@ Integration with MailChimp enables a newsletter subscription system.
 ---
 
 ## 8. Features
-* **Header & Footer:** Minimalist navigation with role-based links.
-* **Newsletter Signup:** Clean, AJAX-ready subscription form linked to MailChimp.
-* **Shopping Cart:** Real-time badge updates and persistent sessions.
-* **Frontend CRUD:** Site owner can Add, Edit, or Delete items directly from the dashboard without using Django Admin.
-* **Custom 404/500:** Branded error pages to improve overall UX.
+
+The **Photographer Hub** platform is designed with a "Fine Art" aesthetic, focusing on high-quality visual presentation and a seamless user experience across different roles (Guest, Client, and Photographer).
+
+## Header & Footer
+The navigation bar is dynamic and changes based on the user's authentication status and role.
+
+* **Guest View:** Minimalist icons for Home, Facebook, and Login/Register. The shopping bag redirects to the login page to encourage conversion.
+* **Client View:** Adds a link to "My Profile" and an active shopping cart with a real-time **badge notification** showing the number of items.
+* **Photographer View:** Replaces commerce links with a **Management Dashboard** icon (gauge), giving the site owner immediate access to administrative tools.
+* **Footer:** A simple, branded footer that stays out of the way of the visual content, featuring the signature: *"Made with passion for photography."*
+
+[<img src="docs/screenshots/header_gest.png" width="300">](docs/screenshots/header_gest.png)
+[<img src="docs/screenshots/header_client.png" width="300">](docs/screenshots/header_client.png)
+[<img src="docs/screenshots/header_ph.png" width="300">](docs/screenshots/header_ph.png)
+[<img src="docs/screenshots/footer.png" width="300">](docs/screenshots/footer.png)
+
+## Home Page
+The landing page serves as an immersive portfolio and sales funnel:
+* **Hero Section:** A centered biography of the photographer featuring a signature **oval-style avatar**, professional tagline, and mission statement.
+* **Photoshoot Scroller:** A "Limited Offers" section with a custom JavaScript-powered horizontal scroller. Users can browse upcoming themes with smooth navigation arrows.
+* **Featured Shop:** Automatically displays the latest 4 digital photo products, utilizing the reusable product card component.
+* **Newsletter:** A "Join the Journey" section with a Mailchimp-integrated form to capture leads and notify users of new drops or sessions.
+
+[<img src="docs/screenshots/home_1.png" width="300">](docs/screenshots/home_1.png)
+[<img src="docs/screenshots/home_2.png" width="300">](docs/screenshots/home_2.png)
+[<img src="docs/screenshots/home_3.png" width="300">](docs/screenshots/home_3.png)
+
+## Authentication (Registration & Login)
+Powered by **Django Allauth**, the system provides a secure and branded experience.
+* **Registration:** A clean form that includes a pre-checked marketing consent for the newsletter.
+* **Login:** Features a "Remember Me" option and intuitive redirects back to the user's previous page (e.g., the Cart).
+
+[<img src="docs/screenshots/sign_in.png" width="300">](docs/screenshots/sign_in.png)
+[<img src="docs/screenshots/sign_up.png" width="300">](docs/screenshots/sign_up.png)
+
+## Digital Card (Shop Gallery)
+The **Product Card** is the most complex UI component, featuring extensive "Defensive Logic" to prevent invalid actions:
+
+* **Defensive States:**
+    1.  **Guest:** Displays "Login to Buy".
+    2.  **Photographer:** Shows "Management Mode" (Disabled) to prevent self-purchasing and preserve data integrity.
+    3.  **In Cart:** If the item is already selected, the button turns into a disabled "In Cart ✓" to prevent duplicate licenses.
+    4.  **Already Owned:** If the user previously purchased the photo, the card identifies the record and shows "Already Owned," protecting the user from redundant costs.
+* **Visual Interaction:** Features a "Full View" overlay that triggers the **GLightbox** for a high-resolution, watermarked preview of the art.
+
+[<img src="docs/screenshots/card_guest.png" width="200">](docs/screenshots/card_guest.png)
+[<img src="docs/screenshots/card_client.png" width="200">](docs/screenshots/card_client.png)
+[<img src="docs/screenshots/card_cart.png" width="200">](docs/screenshots/card_cart.png)
+[<img src="docs/screenshots/card_owned.png" width="200">](docs/screenshots/card_owned.png)
+[<img src="docs/screenshots/card_phot.png" width="200">](docs/screenshots/card_phot.png)
+
+## Photoshoot Booking Selection
+A specialized detail view for service offerings. Users can view the concept description, check the **Expected Dates**, and pay a **Waitlist Deposit** to secure their interest. The UI clearly highlights the deposit vs. the full value for total transparency.
+
+[<img src="docs/screenshots/photoshoot_guest.png" width="300">](docs/screenshots/photoshoot_guest.png)
+[<img src="docs/screenshots/photoshoot_client.png" width="300">](docs/screenshots/photoshoot_client.png)
+[<img src="docs/screenshots/photoshoot_phot.png" width="300">](docs/screenshots/photoshoot_phot.png)
+
+## Client Dashboard ("My Profile")
+A private hub for customers to manage their digital assets and services:
+* **Purchase Library:** Displays all owned digital licenses with direct "Download High-Res" buttons linking to the protected digital files.
+* **Booking History:** A table-based overview of active photoshoot registrations, showing expected dates and payment status.
+
+[<img src="docs/screenshots/profile_1.png" width="300">](docs/screenshots/profile_1.png)
+[<img src="docs/screenshots/profile_2.png" width="300">](docs/screenshots/profile_2.png)
+
+## Photographer Management Dashboard
+An administrative command center with table-based views for all site content.
+* **Session Management:** Monitor all upcoming photoshoots, their status (Active/Draft), and deposit pricing.
+* **Shop Management:** Track and edit prices, status, and details of all gallery photos.
+
+[<img src="docs/screenshots/dash_1.png" width="300">](docs/screenshots/dash_1.png)
+[<img src="docs/screenshots/dash_2.png" width="300">](docs/screenshots/dash_2.png)
+
+## Gallery & Session CRUD Management
+The photographer has full control over the site via custom frontend forms:
+* **Create/Edit Photoshoots:** Manage session images, themes, and dates.
+* **Add/Update Photos:** Separate upload fields for **Preview Images** (optimized for web) and **High-Resolution Files** (for customer delivery).
+* **Soft Deletion Logic:** If a photo has already been purchased, the system intelligently deactivates it (hides it from the shop) instead of deleting it, ensuring existing customers never lose access to their purchases.
+
+[<img src="docs/screenshots/photoshoot_create.png" width="250">](docs/screenshots/photoshoot_create.png)
+[<img src="docs/screenshots/photo_create.png" width="250">](docs/screenshots/photo_create.png)
+[<img src="docs/screenshots/photoshoot_table.png" width="250">](docs/screenshots/photoshoot_table.png)
+[<img src="docs/screenshots/photo_table.png" width="250">](docs/screenshots/photo_table.png)
+
+## Toast Notifications
+To ensure immediate user feedback, the site implements custom-styled **Toast Notifications**. These alerts are color-coded (Sage for success, Dusty Rose for errors) and feature a JavaScript auto-hide logic (5 seconds) with a manual close override.
+
+[<img src="docs/screenshots/toast.png" width="300">](docs/screenshots/toast.png)
+
+## Custom Error Pages (404 & 500)
+To maintain the "Fine Art" aesthetic even during unexpected navigation errors, branded **404 (Not Found)** and **500 (Server Error)** pages were implemented. These pages provide clear feedback and a "Return Home" path, preventing user frustration through a professional design.
+
+[<img src="docs/screenshots/404.png" width="500">](docs/screenshots/404.png)
 
 ---
 
