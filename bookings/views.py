@@ -5,7 +5,11 @@ from .models import Photoshoot
 
 @login_required
 def delete_session(request, pk):
-    # Перевірка, чи це фотограф
+    """
+    Handles the deletion of a photoshoot session.
+    Restricted to users with photographer status.
+    """
+    # Verify the user has photographer permissions
     if not request.user.userprofile.is_photographer:
         messages.error(request, "Only photographers can perform this action.")
         return redirect('home')

@@ -1,4 +1,3 @@
-# checkout/views.py
 import stripe
 from django.conf import settings
 from django.shortcuts import render, redirect, reverse, get_object_or_404
@@ -17,7 +16,10 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 @login_required
 def create_checkout_session(request):
-    """ Creates a Stripe session with cart items and user metadata """
+    """
+    Orchestrates the Stripe Checkout process.
+    Packages cart items into line_items and passes user metadata to the webhook.
+    """
     cart = request.session.get('cart', {})
     if not cart:
         messages.error(request, "Your cart is empty.")
@@ -99,7 +101,11 @@ def checkout_success(request):
 
 @csrf_exempt
 def stripe_webhook(request):
-    """ Stripe Webhook to fulfill orders without sending emails """
+    """
+    Asynchronous listener for Stripe payment events.
+    Fulfills the order by creating database records (PurchasedPhoto/Booking) 
+    only after payment confirmation.
+    """
     payload = request.body
     sig_header = request.META.get('HTTP_STRIPE_SIGNATURE')
     event = None

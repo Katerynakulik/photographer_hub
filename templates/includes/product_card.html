@@ -12,44 +12,46 @@
         </a>
     </div>
 
-    <div class="card-body-bottom">
-        <div class="product-details">
-            <h3 class="card-title">{{ product.title }}</h3>
+
+    <div class="product-details">
+        <h3 class="card-title">{{ product.title }}</h3>
+        <div class="w-100">
             <p class="price">€ {{ product.price }}</p>
+            {% if user.is_authenticated %}
+            {% if user.userprofile.is_photographer %}
+            <button class="btn btn-management w-100" disabled>Management Mode</button>
+            {% else %}
+
+            {% with product.id|stringformat:"s" as prod_id %}
+            {% with "p_"|add:prod_id as item_key %}
+
+            {% if item_key in request.session.cart %}
+            {# Фото вже в корзині — кнопка неактивна #}
+            <button class="btn btn-disabled w-100" disabled style="cursor: default;">
+                In Cart ✓
+            </button>
+            {% elif purchased_product_ids and product.id in purchased_product_ids %}
+
+            <button class="btn btn-disabled w-100" disabled>Already Owned</button>
+            {% else %}
+
+            <form action="{% url 'add_to_cart' product.id %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="item_type" value="photo">
+                <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                <button type="submit" class="btn btn-primary w-100">Add to Cart</button>
+            </form>
+            {% endif %}
+
+            {% endwith %}
+            {% endwith %}
+            {% endif %}
+            {% else %}
+
+            <a href="{% url 'account_login' %}?next={{ request.path }}" class="btn btn-primary">Login to
+                Buy</a>
+            {% endif %}
         </div>
-
-        {% if user.is_authenticated %}
-        {% if user.userprofile.is_photographer %}
-        <button class="btn btn-management w-100" disabled>Management Mode</button>
-        {% else %}
-
-        {% with product.id|stringformat:"s" as prod_id %}
-        {% with "p_"|add:prod_id as item_key %}
-
-        {% if item_key in request.session.cart %}
-        {# Фото вже в корзині — кнопка неактивна #}
-        <button class="btn btn-disabled w-100" disabled style="cursor: default;">
-            In Cart ✓
-        </button>
-        {% elif purchased_product_ids and product.id in purchased_product_ids %}
-
-        <button class="btn btn-disabled w-100" disabled>Already Owned</button>
-        {% else %}
-
-        <form action="{% url 'add_to_cart' product.id %}" method="POST">
-            {% csrf_token %}
-            <input type="hidden" name="item_type" value="photo">
-            <input type="hidden" name="redirect_url" value="{{ request.path }}">
-            <button type="submit" class="btn btn-primary w-100">Add to Cart</button>
-        </form>
-        {% endif %}
-
-        {% endwith %}
-        {% endwith %}
-        {% endif %}
-        {% else %}
-
-        <a href="{% url 'account_login' %}?next={{ request.path }}" class="btn btn-primary w-100">Login to Buy</a>
-        {% endif %}
     </div>
+
 </article>

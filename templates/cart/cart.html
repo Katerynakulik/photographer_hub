@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="dashboard-container">
-    <div class="card form-card" style="max-width: 1000px;"> <h1 class="serif-title u-mb-5">Your Photo Cart</h1>
+    <div class="card form-card"> <h1 class="serif-title u-mb-5">Your Photo Cart</h1>
 
         {% if cart_items %}
         <table class="admin-table">
@@ -34,7 +33,7 @@
                         {% if item.type == 'photo' %}
                         <span class="text-muted">1 (Limited)</span>
                         {% else %}
-                        <form action="{% url 'adjust_cart' item.item_key %}" method="POST" class="u-flex-between" style="justify-content: center; gap: 10px;">
+                        <form action="{% url 'adjust_cart' item.item_key %}" method="POST" style="justify-content: center; gap: 10px;">
                             {% csrf_token %}
                             <button name="action" value="decrease" class="qty-btn">-</button>
                             <span class="qty-num">{{ item.quantity }}</span>
@@ -65,5 +64,5 @@
         </div>
         {% endif %}
     </div>
-</div>
+
 {% endblock %}

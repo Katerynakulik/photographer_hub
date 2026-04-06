@@ -11,7 +11,8 @@ def view_cart(request):
 @login_required
 def add_to_cart(request, item_id):
     """
-    Universal view to add either a Photo or a Photoshoot Deposit to the cart.
+    Handles adding items to the session-based cart.
+    Logic differs between digital products (limit 1) and session deposits (incremental).
     """
     cart = request.session.get('cart', {})
     item_type = request.POST.get('item_type', 'product')
@@ -21,7 +22,7 @@ def add_to_cart(request, item_id):
         item_key = f"s_{item_id}"
         display_name = f"Deposit: {item.title}"
         
-        # Для фотосесій: якщо вже в кошику, можемо збільшити (або просто попередити)
+        # For sessions: increase quantity if already in cart
         if item_key in cart:
             cart[item_key] += 1
             messages.success(request, f"Another spot added for {item.title}.")
@@ -30,7 +31,7 @@ def add_to_cart(request, item_id):
             messages.success(request, f"Success! {display_name} added to your cart.")
     
     else:
-        # Для фото: Тільки 1 штука
+        # For digital photos: limit to exactly 1 license per order
         item = get_object_or_404(PhotoProduct, pk=item_id)
         item_key = f"p_{item_id}"
         display_name = item.title
