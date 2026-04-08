@@ -259,10 +259,26 @@ The following diagram illustrates the relational structure of the database. The 
 A Facebook Business Page mockup was created to demonstrate the brand's social presence and engagement strategy.
 <img src="docs/marketing/facebook_mockup.png" width="400">
 
-### Email Marketing
-Integration with MailChimp enables a newsletter subscription system.
-* Signup form located on the Home Page footer.
-* Automated signals invite registered users to join the marketing list.
+### Email Marketing (Mailchimp Integration)
+
+The platform features a built-in newsletter system integrated with the **Mailchimp API**. This tool is essential for maintaining audience engagement and building a community around the photographer's brand.
+
+* **The Content Strategy:** Subscribers receive exclusive photography tips, early-bird notifications for upcoming thematic photoshoot sets, and a personal look into the photographer’s creative journey.
+* **Subscription Points:**
+    1.  **Global Footer:** A minimalist form available on every page for quick signup.
+    2.  **Registration Opt-in:** A checkbox on the Sign-Up page allowing new users to join the newsletter during account creation.
+* **Implementation:** The system uses the `mailchimp3` library to communicate with the Mailchimp Audience API, ensuring a secure and automated lead generation process.
+
+#### Marketing Implementation Proofs:
+
+[<img src="docs/screenshots/subscribe_form.png" width="600">](docs/screenshots/subscribe_form.png) <br>
+*Figure: Built-in HTML5 validation for the subscription form.*
+
+[<img src="docs/screenshots/toast_success.png" width="300">](docs/screenshots/toast_success.png)<br>
+*Figure: Custom Toast notification confirming successful API synchronization.*
+
+[<img src="docs/screenshots/mailchimp.png" width="600">](docs/screenshots/mailchimp.png)<br>
+*Figure: Mailchimp Audience Dashboard showing real-time subscriber updates via API.*
 
 ---
 
@@ -369,6 +385,37 @@ To ensure immediate user feedback, the site implements custom-styled **Toast Not
 To maintain the "Fine Art" aesthetic even during unexpected navigation errors, branded **404 (Not Found)** and **500 (Server Error)** pages were implemented. These pages provide clear feedback and a "Return Home" path, preventing user frustration through a professional design.
 
 [<img src="docs/screenshots/404.png" width="500">](docs/screenshots/404.png)
+
+---
+
+## 9. Testing Accounts
+
+To facilitate a comprehensive review of the application's role-based access control (RBAC), please use the following pre-configured credentials:
+
+* **Photographer (Site Owner/Admin):**
+    * **Username:** `photograph`
+    * **Password:** `2HL@UCvgvVzD8d3`
+    * *Role Details:* Full access to the Management Dashboard and frontend CRUD operations for products and sessions.
+* **Test Client (Customer):**
+    * **Username:** `elisabeth`
+    * **Email:** `mno6uo9hrfy3@tempmail.ing`
+    * **Password:** `QwErTy098`
+    * *Role Details:* Access to the private "My Profile" dashboard, digital library (purchased photos), and booking history.
+
+---
+
+## 10. Features Overview
+
+The platform is built around a robust set of features categorized by their business value using the MoSCoW method.
+
+| Feature Area | Description | Implementation Detail |
+| :--- | :--- | :--- |
+| **E-Commerce** | Secure digital transactions. | Integrated **Stripe API** for card payments with webhook-based fulfillment. |
+| **RBAC System** | Role-Based Access Control. | Custom logic within `UserProfile` model and `user_passes_test` decorators. |
+| **CRUD Management** | Content administration. | Full frontend management of `PhotoProducts` and `Photoshoots` without Django Admin access. |
+| **Defensive Design** | Prevention of invalid actions. | Logic to disable "Add to Cart" for owned items or restrict quantities for digital licenses. |
+| **Cloud Services** | Media and File handling. | **Cloudinary** for image optimization and Django **FileField** for secure high-res digital downloads. |
+| **Interaction** | Modern web experience. | Custom **Toast Notifications**, **GLightbox** for art viewing, and **Confirmation Modals**. |
 
 ---
 
