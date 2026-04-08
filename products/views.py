@@ -5,8 +5,9 @@ from django.urls import reverse
 from .models import PhotoProduct
 from bookings.models import Photoshoot
 from .forms import PhotoProductForm, PhotoshootForm
-from checkout.models import PurchasedPhoto # Required to check photo ownership
+from checkout.models import PurchasedPhoto 
 from django.db.models import ProtectedError
+from django.db.models import Count
 
 def is_photographer(user):
     """ Security check to ensure only the photographer accesses management views """
@@ -34,8 +35,8 @@ def all_products(request):
 @user_passes_test(is_photographer) 
 def dashboard(request):
     """ Photographer's main management dashboard """
-    products = PhotoProduct.objects.all().order_by('-created_at')
-    sessions = Photoshoot.objects.all().order_by('-created_at')
+    products = PhotoProduct.objects.annotate(purchase_count=Count('purchasedphoto')).order_by('-created_at')
+    sessions = Photoshoot.objects.annotate(booking_count=Count('bookings')).order_by('-created_at')
     
     return render(request, 'products/dashboard.html', {
         'products': products,
