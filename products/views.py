@@ -5,7 +5,7 @@ from django.urls import reverse
 from .models import PhotoProduct
 from bookings.models import Photoshoot
 from .forms import PhotoProductForm, PhotoshootForm
-from checkout.models import PurchasedPhoto 
+from checkout.models import Order, PurchasedPhoto
 from django.db.models import ProtectedError
 from django.db.models import Count
 
@@ -37,10 +37,11 @@ def dashboard(request):
     """ Photographer's main management dashboard """
     products = PhotoProduct.objects.annotate(purchase_count=Count('purchasedphoto')).order_by('-created_at')
     sessions = Photoshoot.objects.annotate(booking_count=Count('bookings')).order_by('-created_at')
-    
+    recent_orders = Order.objects.filter(status="paid").order_by('-created_at')[:5]
     return render(request, 'products/dashboard.html', {
         'products': products,
         'sessions': sessions,
+        'recent_orders': recent_orders,
     })
 
 def photoshoot_detail(request, pk):

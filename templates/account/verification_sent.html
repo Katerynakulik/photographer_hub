@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="page-container">
+    <div class="auth-wrapper">
+        <h1 class="serif-title u-mb-4">{% trans "Verify Your E-mail Address" %}</h1>
+
+        <p class="u-mb-4">
+            {% blocktrans %}We have sent an e-mail to you for verification. Follow the link provided to finalize the signup process.{% endblocktrans %}
+        </p>
+
+        <p class="small text-muted u-mb-5">
+            {% trans "If you do not see the verification e-mail in your main inbox, check your spam folder. Please contact us if you do not receive the verification e-mail within a few minutes." %}
+        </p>
+
+        <a href="{% url 'home' %}" class="btn btn-primary w-100">{% trans "Return to Gallery" %}</a>
+    </div>
+</div>
+{% endblock %}

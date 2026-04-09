@@ -18,6 +18,7 @@
                     <th>Title</th>
                     <th>Expected Date</th>
                     <th>Deposit</th>
+                    <th class="text-center">Total Bookings</th>
                     <th>Status</th>
                     <th style="text-align: right;">Actions</th>
                 </tr>
@@ -29,13 +30,14 @@
                         {% if session.image %}
                         <img src="https://res.cloudinary.com/drscildms/image/upload/f_auto,q_auto,w_100,c_fill/v1/{{ session.image }}"
                             class="admin-thumb">
-                        {% else %}
-                        <div class="admin-thumb-placeholder">No Image</div>
                         {% endif %}
                     </td>
                     <td>{{ session.title }}</td>
                     <td>{{ session.expected_dates }}</td>
                     <td>€{{ session.deposit_price }}</td>
+                    <td class="text-center">
+                        <span class="tagline-accent" style="font-weight: 700;">{{ session.booking_count }}</span>
+                    </td>
                     <td>
                         <span class="status-tag {% if session.is_active %}active{% endif %}">
                             {% if session.is_active %}Active{% else %}Draft{% endif %}
@@ -46,11 +48,10 @@
                             <a href="{% url 'edit_session' session.pk %}" class="admin-action-btn" title="Edit Session">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </a>
-
                             <form action="{% url 'delete_session' session.pk %}" method="POST" style="display:inline;">
                                 {% csrf_token %}
                                 <button type="button" class="admin-action-btn delete-btn confirm-delete"
-                                    data-message="Are you sure you want to delete the '{{ session.title }}' photoshoot? This action cannot be undone."
+                                    data-message="Are you sure you want to delete '{{ session.title }}'?"
                                     style="background:none; border:none; cursor:pointer; color: var(--hover-color); padding: 0;">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </button>
@@ -58,30 +59,25 @@
                         </div>
                     </td>
                 </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="6" class="text-center py-5 text-muted">
-                        <i class="fa-solid fa-calendar-xmark u-mb-4" style="font-size: 2rem; display: block; opacity: 0.3;"></i>
-                        No photoshoots created yet.
-                    </td>
-                </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
+
+
 
     <div class="card u-mb-5">
         <div class="u-flex-between u-mb-4">
             <h3 class="serif-title">Photos in Shop</h3>
             <a href="{% url 'add_product' %}" class="btn btn-primary">+ Add Photo</a>
         </div>
-
         <table class="admin-table">
             <thead>
                 <tr>
                     <th>Image</th>
                     <th>Title</th>
                     <th>Price</th>
+                    <th class="text-center">Sales</th>
                     <th>Status</th>
                     <th style="text-align: right;">Actions</th>
                 </tr>
@@ -95,6 +91,9 @@
                     </td>
                     <td>{{ product.title }}</td>
                     <td>€{{ product.price }}</td>
+                    <td class="text-center">
+                        <span class="tagline-accent">{{ product.purchase_count }}</span>
+                    </td>
                     <td>
                         <span class="status-tag {% if product.is_active %}active{% endif %}">
                             {% if product.is_active %}Active{% else %}Hidden{% endif %}
@@ -102,24 +101,59 @@
                     </td>
                     <td>
                         <div class="u-flex" style="gap: 20px; justify-content: flex-end;">
-                            <a href="{% url 'edit_product' product.pk %}" class="admin-action-btn" title="Edit">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </a>
-
+                            <a href="{% url 'edit_product' product.pk %}" class="admin-action-btn"><i
+                                    class="fa-solid fa-pen-to-square"></i></a>
                             <form action="{% url 'delete_product' product.pk %}" method="POST" style="display:inline;">
                                 {% csrf_token %}
                                 <button type="button" class="admin-action-btn delete-btn confirm-delete"
-                                    data-message="Are you sure you want to delete this photo?"
-                                    style="background:none; border:none; cursor:pointer; color: var(--hover-color); padding: 0;">
+                                    style="background:none; border:none; color: var(--hover-color); padding: 0;">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </button>
                             </form>
                         </div>
                     </td>
                 </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="card u-mb-5">
+        <h3 class="serif-title u-mb-4">Recent Activity (Bookings & Sales)</h3>
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Customer</th>
+                    <th>Item / Photoshoot Name</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th style="text-align: right;">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in recent_orders %}
+                {% for booking in order.bookings.all %}
+                <tr>
+                    <td><strong>{{ order.user.userprofile.user.get_full_name|default:order.user.username }}</strong>
+                    </td>
+                    <td>{{ booking.photoshoot.title }}</td>
+                    <td><span class="status-tag active">Booking</span></td>
+                    <td>€{{ booking.photoshoot.deposit_price }}</td>
+                    <td style="text-align: right;" class="text-muted">{{ order.created_at|date:"d M Y" }}</td>
+                </tr>
+                {% endfor %}
+
+                {% for purchase in order.purchasedphoto_set.all %}
+                <tr>
+                    <td>{{ order.user.username }}</td>
+                    <td>{{ purchase.product.title }}</td>
+                    <td><span class="status-tag">Photo License</span></td>
+                    <td>€{{ purchase.product.price }}</td>
+                    <td style="text-align: right;" class="text-muted">{{ order.created_at|date:"d M Y" }}</td>
+                </tr>
+                {% endfor %}
                 {% empty %}
                 <tr>
-                    <td colspan="5" class="text-center py-5 text-muted">No photos in shop yet.</td>
+                    <td colspan="5" class="text-center py-4 text-muted">No activity yet.</td>
                 </tr>
                 {% endfor %}
             </tbody>
