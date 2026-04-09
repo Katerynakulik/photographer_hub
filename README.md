@@ -2,13 +2,15 @@
 
 **Photographer Hub** is a professional full-stack e-commerce application built with Python (Django), designed to provide a "Fine Art" digital marketplace for photography enthusiasts and a booking management system for exclusive photoshoot sessions. The platform operates on a B2C (Business to Consumer) business model, selling high-resolution digital art licenses and professional photography services directly to clients.
 
-<img src="docs/screenshots/hero.png" width="800">
+<img src="docs/mockups/multi_device.png" width="800"> <br>
+*Figure: The mockup was created with [Techsini](https://techsini.com/multi-mockup/)*
 
 The application is deployed to Heroku and can be accessed at:
 * **[Link to Live Site](https://photographer-hub-94aeeeedb69e.herokuapp.com/)**
-* **[Link to GitHub Repository](https://github.com/your-username/photographer_hub)** ---
+* **[Link to GitHub Repository](https://github.com/Katerynakulik/photographer_hub)** 
+---
 
-# 1. Project Overview
+# Project Overview
 
 ## Business Model (B2C)
 **Photographer Hub** operates as a **Business-to-Consumer (B2C)** e-commerce platform. The site owner (a professional photographer) manages a centrally-owned dataset of artistic works and service offerings. The platform provides value through two primary revenue streams:
@@ -43,7 +45,7 @@ The application is deployed to Heroku and can be accessed at:
 * **Instant Feedback:** Clear notifications for cart updates, form submissions, and payment status.
 ---
 
-## 2. Agile Methodology
+## Agile Methodology
 
 The development of **Photographer Hub** followed an Agile workflow, utilizing **GitHub Projects** to manage a Kanban board and prioritize tasks using the **MoSCoW method**. This ensured a structured development process where core e-commerce features were delivered first, followed by specialized booking services and final quality assurance.
 
@@ -110,7 +112,7 @@ Currently, the contact form provides immediate feedback to the user.
 
 ---
 
-## 3. Design
+## Design
 
 The design of **Photographer Hub** is rooted in a "Fine Art" aesthetic, emphasizing minimalism, sophisticated proportions, and a serene atmosphere that complements high-end photography without over-powering it.
 
@@ -130,6 +132,33 @@ The project uses a muted, earthy colour palette to evoke a sense of professional
 | `--accent-soft` | `#E8CFCB` | **Soft Blush** | Decorative accents (e.g., the oval avatar border). |
 | `--text-color` | `#3A3A3A` | **Charcoal** | Primary body and heading text for high readability. |
 | `--border-color` | `#E9E1DC` | **Taupe** | Subtle dividers, card borders, and input outlines. |
+
+### **Project Planning & Wireframes**
+
+The structural foundation of the project was planned using **Balsamiq**. This phase was crucial for mapping out the user journey and ensuring that the integration of the Django cart logic and Stripe payments remained intuitive.
+
+#### **User Experience (UX) - Public Pages**
+The focus was on creating a distraction-free environment to showcase digital art.
+
+| Home Page | Complete Gallery | Shopping Cart |
+|:---:|:---:|:---:|
+| ![Home Wireframe](docs/wireframes/wireframe-home.png) | ![Gallery Wireframe](docs/wireframes/wireframe-photos.png) | ![Cart Wireframe](docs/wireframes/wireframe-cart.png) |
+
+#### **Checkout & Error Handling**
+The checkout process was designed as a focused, secure flow, while the 404 page was styled to maintain brand consistency even during navigation errors.
+
+| Stripe Checkout | 404 "Lost in Frame" |
+|:---:|:---:|
+| ![Checkout Wireframe](docs/wireframes/wireframe-checkout.png) | ![404 Wireframe](docs/wireframes/wireframe-404.png) |
+
+#### **Photographer Management (Dashboard)**
+For administrative tasks, the layout emphasizes high functionality, allowing the owner to manage the entire shop and photoshoot schedule from a centralized hub.
+
+| Management Dashboard | Add Photo Form |
+|:---:|:---:|
+| ![Dashboard Wireframe](docs/wireframes/wireframe-dashboard.png) | ![Add Photo Wireframe](docs/wireframes/wireframe-addphoto.png) |
+
+---
 
 ### **Typography**
 
@@ -158,7 +187,7 @@ To elevate the user experience beyond static HTML/CSS, several custom JavaScript
 
 ---
 
-# 4. Structure
+# Structure
 
 ## Website Pages
 The application is structured to provide a seamless transition between public content and private user areas. The following table outlines the primary pages, their purpose, and the logic governing their access.
@@ -172,30 +201,97 @@ The application is structured to provide a seamless transition between public co
 | **User Profile** | Personal dashboard showing the digital library of purchased photos and active bookings. | ![<img src="docs/screenshots/profile_1.png" width="300">](docs/screenshots/profile_1.png) ![<img src="docs/screenshots/profile_2.png" width="300">](docs/screenshots/profile_2.png)| ![<img src="docs/screenshots/profile-t_1.png" width="300">](docs/screenshots/profile-t_1.png) ![<img src="docs/screenshots/profile-t_2.png" width="300">](docs/screenshots/profile-t_2.png)| ![<img src="docs/screenshots/profile-m_1.png" width="300">](docs/screenshots/profile-m_1.png) ![<img src="docs/screenshots/profile-m_2.png" width="300">](docs/screenshots/profile-m_2.png) |
 | **Admin Dashboard** | Central management hub for the photographer to perform full CRUD on products and sessions. | ![<img src="docs/screenshots/dash_1.png" width="300">](docs/screenshots/dash_1.png) ![<img src="docs/screenshots/dash_2.png" width="300">](docs/screenshots/dash_2.png)| ![<img src="docs/screenshots/dash-t_1.png" width="300">](docs/screenshots/dash-t_1.png) ![<img src="docs/screenshots/dash-t_2.png" width="300">](docs/screenshots/dash-t_2.png) ![<img src="docs/screenshots/dash-t_3.png" width="300">](docs/screenshots/dash-t_3.png)| ![<img src="docs/screenshots/dash-m_1.png" width="300">](docs/screenshots/dash-m_1.png) ![<img src="docs/screenshots/dash-m_2.png" width="300">](docs/screenshots/dash-m_2.png)| ![<img src="docs/screenshots/dash-m_3.png" width="300">](docs/screenshots/dash-m_3.png)|
 
+---
+
 ## Database Design
 
-### Logical Schema (ERD)
-The following diagram illustrates the relational structure of the database. The system relies on a central **User** model connected to specific profiles, orders, and ownership records to ensure high data integrity.
+### Data Model
 
-<img src="docs/screenshots/models.png" width="600" alt="Models">
+Entity Relationship Diagrams (ERD) help to visualize database architecture before creating models. Understanding the relationships between different tables ensures data integrity and a smooth development process.
 
-**Data Modeling Architecture**
-- User & UserProfile: Utilizes a One-to-One relationship to extend the base Django User. It includes an is_photographer flag which acts as the gatekeeper for administrative frontend CRUD operations.
-- Order & Stripe Integration: The Order model serves as the transaction header. Metadata passed to Stripe ensures that upon a successful webhook signal, the system knows exactly which PurchasedPhoto or Booking records to create.
-- Defensive Deletion (Protected Records): The relationship between PhotoProduct and PurchasedPhoto uses models.PROTECT. This prevents the photographer from deleting a file that a customer has already paid for, automatically triggering a "deactivation" instead of a hard delete.
-- Session Management: The Cart is stored in the Django Session, allowing users to build an order without immediate database writes, optimizing performance and reducing database clutter from abandoned carts.
+![ERD Mockup](docs/screenshots/models.png)
+
+I have used `Mermaid` to generate an interactive ERD that represents the relational structure of the **Photographer Hub** database.
+
+```mermaid
+erDiagram
+    User {
+        int id PK
+        varchar username
+        varchar email
+    }
+
+    UserProfile {
+        int id PK
+        int user_id FK
+        bool is_photographer
+        varchar default_phone_number
+    }
+
+    User ||--|| UserProfile : extends
+
+    PhotoProduct {
+        int id PK
+        varchar title
+        text description
+        decimal price
+        bool is_active
+    }
+
+    Photoshoot {
+        int id PK
+        varchar title
+        decimal deposit_price
+        decimal total_price
+    }
+
+    Order {
+        int id PK
+        int user_id FK
+        decimal total
+        varchar status
+        varchar stripe_session_id
+    }
+
+    PurchasedPhoto {
+        int id PK
+        int user_id FK
+        int product_id FK
+        int order_id FK
+    }
+
+    Booking {
+        int id PK
+        int user_id FK
+        int photoshoot_id FK
+        int order_id FK
+    }
+
+    User ||--o{ Order : places
+    Order ||--o{ PurchasedPhoto : contains
+    Order ||--o{ Booking : contains
+    PurchasedPhoto ||--|| PhotoProduct : references
+    Booking ||--|| Photoshoot : references
+```
+Source: [Interactive Mermaid Diagram](https://mermaid.ai/live/edit#pako:eNqlVNtu4jAQ_RXLz4By4dLmbRfoUnW1QVxeVkiRGw-JJSfO2s4uXeDf6yQECFBUqXnKzJyZcyYzky0OBQXsYZAjRiJJklWKzLOcj2dot2u3d7vyfTrzn55_jpGHVjgmaoUvYGKL_NnIGAUg4ySEm5jpcjacfJuPR9OJv_BLsPiX3oR-9_2X518_SoyEiCkNsgRW0LJA28gaLYeLO-U5CyFVQNFJdBmcT3x_cYtLhTHQnB8zqpyquY9p1jlfM86PHA18ozyEuYSzymXP2-q9eFiqEaNo-nJyKS1ZGqFcgUxJAlcBSAjjlXd_KlqP7KJ2USUwBE9nBK9CcMRUkMVCC7MEWQzyLCshEaBMCtMhBKV1CmrYaPTKRIO-OZxPNaeZ5mdlKYSGiBtWM7-Tu1CAKIuYJjwojOseSKjZX7iWUw38K1ooZEIxHVxoqsNaFKIugvWENhmEGmhAiTbDPxdXbcp9XQ2Kq-JKE52rG27JMggUKMVEakbe_CbNHb7P_9HeFH6zFzQP9a2QkLSZc-Cu7-ELpMWiqliIz_HWgT85Sc1w3w5qcAtHklHsaZlDCycgzSEZE5fCVljHYK4NF2dLYU1yrouzLdIykv4WIqkzpcijGHtrwpWx8qyY8uF3eoRAakQNRZ5q7NmuVdbA3hZvsOc4Vqc7cF2r7zz2BvZjt4XfDMixO67r9G2nZ_Ut1-k97Fv4f8lqdQaOa3etnvvwOLBcyx7s3wHrmLN9)
+
+### Data Modeling Architecture
+
+* **User & UserProfile:** Utilizes a **One-to-One** relationship to extend the base Django User. The `is_photographer` flag acts as the gatekeeper, controlling access to administrative CRUD operations on the frontend.
+* **Order & Stripe Integration:** The `Order` model serves as the transaction header. Metadata passed to Stripe ensures that upon a successful webhook signal, the system automatically generates the corresponding `PurchasedPhoto` or `Booking` records.
+* **Defensive Deletion (Protected Records):** The relationship between `PhotoProduct` and `PurchasedPhoto` uses `models.PROTECT`. This prevents the deletion of a product that a customer has already purchased; instead, the system triggers a "deactivation" (hiding it from the shop) to preserve historical records.
+* **Session-Based Cart:** The shopping cart logic is managed via **Django Sessions**. This allows users to build an order without immediate database writes, optimizing performance and keeping the database clean from abandoned carts.
+
 
 ---
 
-## 5. Technologies Used
+## Technologies Used
 * **Languages:** HTML5, CSS3, JavaScript, Python.
 * **Framework:** Django (5.2).
 * **Database:** PostgreSQL.
 * **Payments:** Stripe API.
 * **Media Storage:** Cloudinary.
 * **Email/Newsletter:** MailChimp.
-
----
 
 ---
 
@@ -263,11 +359,31 @@ To ensure the platform's integrity and protect user data, the project implements
 ---
 
 ## SEO Implementation
-* **Robots.txt:** Configured to allow crawling of products while blocking admin areas.
-* **Sitemap.xml:** Dynamically generated to help search engines index active products and sessions.
-* **Meta Tags:** Descriptive keywords and site descriptions included in the base template.
-* **Rel Attributes:** Used `rel="noopener noreferrer"` for all external links.
 
+The marketing strategy for **Photographer Hub** focuses on visual storytelling, high search engine visibility, and building a loyal community through direct communication.
+
+### Keywords
+I have identified a targeted list of keywords to improve organic search rankings. These keywords focus on the photographer's niche and location-based searches.
+
+* **Short-tail keywords:** Photography, Portfolio, Wedding, Family, Lifestyle, Digital Art.
+* **Long-tail keywords:** Lifestyle family photography sessions, professional wedding photographer, children's emotive portraits, buy high-resolution digital photography.
+
+I utilized [Word Tracker](https://www.wordtracker.com) during the research phase to ensure the chosen terms have a high relevance to my target audience.
+
+### Sitemap
+To ensure efficient indexing by search engines, a `sitemap.xml` file was generated using [XML-Sitemaps](https://www.xml-sitemaps.com). 
+* **Live Link:** [https://photographer-hub-94aeeeedb69e.herokuapp.com/sitemap.xml](https://photographer-hub-94aeeeedb69e.herokuapp.com/sitemap.xml)
+* The sitemap is included in the root directory of the repository.
+
+### Robots.txt
+A `robots.txt` file was created to manage crawler access. It allows search engines to index product and session pages while protecting sensitive areas like the management dashboard.
+
+```txt
+User-agent: *
+Disallow: /accounts/
+Disallow: /photos/dashboard/
+Sitemap: [https://photographer-hub-94aeeeedb69e.herokuapp.com/sitemap.xml](https://photographer-hub-94aeeeedb69e.herokuapp.com/sitemap.xml)
+```
 ---
 
 ## Features
@@ -391,7 +507,23 @@ The platform is built around a robust set of features categorized by their busin
 * **Python:** 100% PEP8 compliance across all apps.
 * **Lighthouse:** High scores (90+) in Accessibility and Best Practices.
 
+### HTML Validation
 
+I have used the recommended [HTML W3C Validator](https://validator.w3.org) to validate all of my HTML files. Every page has been tested by URL to ensure that dynamic Django content also adheres to HTML5 standards.
+
+| Directory | File | Validation Link | Screenshot | Notes |
+| --- | --- | --- | --- | --- |
+| home | [home.html](https://github.com/Katerynakulik/photographer_hub/blob/main/home/templates/home/index.html) | [W3C Link](https://validator.w3.org/nu/?doc=https%3A%2F%2Fphotographer-hub-94aeeeedb69e.herokuapp.com%2F) | ![screenshot](docs/validation/val_html_home.png) | **Pass** - No errors |
+| products | [products_list.html](https://github.com/Katerynakulik/photographer_hub/blob/main/products/templates/products/products_list.html) | [W3C Link](https://validator.w3.org/nu/?doc=https%3A%2F%2Fphotographer-hub-94aeeeedb69e.herokuapp.com%2Fphotos%2Fall%2F) | ![screenshot](docs/validation/val_html_gallery.png) | **Pass** - Fixed unclosed div |
+| products | [photoshoot_detail.html](https://github.com/Katerynakulik/photographer_hub/blob/main/products/templates/products/photoshoot_detail.html) | [W3C Link](https://validator.w3.org/nu/?doc=https%3A%2F%2Fphotographer-hub-94aeeeedb69e.herokuapp.com%2Fphotos%2Fphotoshoot%2F1%2F) | ![screenshot](docs/validation/val_html_photoshoot.png) | **Pass** - Fixed nested p tags |
+| cart | [cart.html](https://github.com/Katerynakulik/photographer_hub/blob/main/cart/templates/cart/cart.html) | [W3C Link](https://validator.w3.org/nu/?doc=https%3A%2F%2Fphotographer-hub-94aeeeedb69e.herokuapp.com%2Fcart%2F) | ![screenshot](docs/validation/val) | **Pass** - No errors |
+| profiles | [profile.html](https://github.com/Katerynakulik/photographer_hub/blob/main/profiles/templates/profiles/profile.html) | [W3C Link](https://validator.w3.org/nu/?doc=https%3A%2F%2Fphotographer-hub-94aeeeedb69e.herokuapp.com%2Fprofile%2F) | ![screenshot](docs/validation/val_html_profile.png) | **Pass** - No errors |
+| products | [dashboard.html](https://github.com/Katerynakulik/photographer_hub/blob/main/products/templates/products/dashboard.html) | [W3C Link](https://validator.w3.org/nu/?doc=https%3A%2F%2Fphotographer-hub-94aeeeedb69e.herokuapp.com%2Fphotos%2Fdashboard%2F) | ![screenshot](docs/validation/val_html_dashboard.png) | **Pass** - No errors |
+| products | [photoshoot_form.html](https://github.com/Katerynakulik/photographer_hub/blob/main/products/templates/products/photoshoot_form.html) | [W3C Link](https://validator.w3.org/nu/?doc=https%3A%2F%2Fphotographer-hub-94aeeeedb69e.herokuapp.com%2Fphotos%2Fdashboard%2Fadd-session%2F) | ![screenshot](docs/validation/val_html_add_ps.png) | **Pass** - Management mode |
+| products | [product_form.html](https://github.com/Katerynakulik/photographer_hub/blob/main/products/templates/products/product_form.html) | [W3C Link](https://validator.w3.org/nu/?doc=https%3A%2F%2Fphotographer-hub-94aeeeedb69e.herokuapp.com%2Fphotos%2Fdashboard%2Fadd-photo%2F) | ![screenshot](docs/validation/val_html_add_p.png) | **Pass** - Management mode |
+| account | [login.html](https://github.com/Katerynakulik/photographer_hub/blob/main/templates/account/login.html) | [W3C Link](https://validator.w3.org/nu/?doc=https%3A%2F%2Fphotographer-hub-94aeeeedb69e.herokuapp.com%2Faccounts%2Flogin%2F) | ![screenshot](docs/validation/val_html_login.png) | **Pass** - No errors |
+| checkout | [success.html](https://github.com/Katerynakulik/photographer_hub/blob/main/checkout/templates/checkout/success.html) | [W3C Link](https://validator.w3.org/nu/?doc=https%3A%2F%2Fphotographer-hub-94aeeeedb69e.herokuapp.com%2Fcheckout%2Fsuccess%2F%3Fsession_id%3Dcs_test_a1gNjzHdAfTvtu6WvwgdSJp9GGlKasGu2svQHDnDseThLhfriTmuD4AOpj) | ![screenshot](docs/validation/val_html_success.png)
+| 404 Error | [404.html](https://github.com/Katerynakulik/photographer_hub/blob/main/templates/404.html) | N/A | ![screenshot](docs/validation/val_html_404.png) | **Pass** - Custom error page |
 
 ---
 
@@ -410,7 +542,6 @@ The project's visual identity is managed through a single, comprehensive stylesh
 *Figure: Official W3C CSS Validation result showing 0 errors for the main stylesheet.*
 
 ---
-
 
 ### JavaScript Validation (JSHint)
 
@@ -440,24 +571,115 @@ The custom JavaScript logic responsible for UI interactions (scrollers, modals, 
 ---
 
 
+---
+
 ### Python (PEP8) Validation
 
-All custom Python logic was strictly validated using the **Flake8** linting tool. To ensure the audit focused exclusively on original code, a `.flake8` configuration was used to exclude the virtual environment (`.venv`) and auto-generated Django files (`migrations`).
+All custom Python logic was strictly validated using the **Flake8** linting tool. To ensure the audit focused exclusively on original code, a `.flake8` configuration was used to exclude the virtual environment (`.venv`), auto-generated Django files (`migrations`), and the main `settings.py`.
 
-* **Outcome:** **Pass** (0 PEP8 violations found).
-* **Code Refactoring Highlights:**
-    - **Logic Integrity:** Fixed a critical missing `ValidationError` import in `products/forms.py`.
-    - **Clean Workspace:** Removed several unused imports (`F401`) and redundant redefinitions (`F811`) in `checkout` and `marketing` apps to optimize performance.
-    - **Resource Optimization:** Eliminated unused local variables (`F841`) in `cart/contexts.py` and `webhooks.py`.
-    - **Formatting Standards:** Standardized all file terminations (`W292`, `W391`) and resolved trailing whitespaces (`W291`) for a professional code finish.
-    - **Readability:** Refactored long strings (`E501`) in `products/views.py` and widgets in `forms.py` into readable multiline segments.
+#### Modern Coding Standards (Line Length Policy)
+While the original PEP8 style guide suggests a strict limit of 79 characters per line, this project follows the **modern industry standard of 120 characters**. 
+- **Readability:** Modern high-resolution monitors allow for wider code blocks without sacrificing legibility. 
+- **Django Specifics:** Django’s descriptive naming conventions for model fields, long import paths, and nested dictionary structures within form widgets (e.g., `forms.py`) often make the 79-character limit counter-productive, leading to awkward and fragmented code. 
+- **Efficiency:** Setting the limit to 120 characters allows the code to maintain its logical flow while remaining concise and accessible.
+
+#### Outcome
+- **Status:** **Pass** (0 PEP8 violations found in custom apps).
+
+#### Code Refactoring Highlights
+- **Logic Integrity:** Fixed a critical missing `ValidationError` import in `products/forms.py` that was identified during the linting process.
+- **Clean Workspace:** Removed multiple unused imports (`F401`) and redundant redefinitions (`F811`) across the `checkout`, `cart`, and `marketing` apps to optimize performance and readability.
+- **Resource Optimization:** Eliminated unused local variables (`F841`) in `cart/contexts.py` and exception handlers in `webhooks.py`.
+- **Formatting Standards:** Standardized all file terminations (`W292`, `W391`) and resolved trailing whitespaces (`W291`) for a professional, clean code finish.
+- **Readability:** Refactored logic segments that exceeded even the 120-character limit, such as long success messages in `views.py` and complex widget attributes in `forms.py`.
 
 | Tool | Purpose | Result |
 | :--- | :--- | :--- |
-| **Flake8** | Style guide enforcement | **Pass** |
-| **Autopep8** | Automated formatting | Applied to ensure consistent structure |
-[<img src="docs/validation/pep8_val.png" width="500">](docs/validation/pep8_val.png)
+| **Flake8** | Style guide enforcement (Max Line: 120) | **Pass** |
+| **Autopep8** | Automated formatting & Indentation | Applied |
+
+[<img src="docs/validation/pep8_val.png" width="800">](docs/validation/pep8_val.png)
+*Figure: Terminal output confirming zero PEP8 violations across custom Python modules.*
+
 ---
+
+### Lighthouse Audit
+
+I have tested the deployed project using the Google Lighthouse Audit tool to ensure high standards of performance, accessibility, and SEO. While Heroku's dynamic hosting can occasionally impact performance scores, the overall results demonstrate a fast and accessible user experience.
+
+| Page | Mobile | Desktop |
+| :--- | :---: | :---: |
+| **Home** | ![screenshot](docs/validation/lh_home_mobile.png) | ![screenshot](docs/validation/lh_home_desktop.png) |
+| **Gallery (All Products)** | ![screenshot](docs/validation/lh_gallery_mobile.png) | ![screenshot](docs/validation/lh_gallery_desktop.png) |
+| **Photoshoot Details** | ![screenshot](docs/validation/lh_photoshoot_mobile.png) | ![screenshot](docs/validation/lh_photoshoot_desktop.png) |
+| **Shopping Cart (Bag)** | ![screenshot](docs/validation/lh_cart_mobile.png) | ![screenshot](docs/validation/lh_cart_desktop.png) |
+| **Register (Sign Up)** | ![screenshot](docs/validation/lh_signup_mobile.png) | ![screenshot](docs/validation/lh_signup_desktop.png) |
+| **Login** | ![screenshot](docs/validation/lh_login_mobile.png) | ![screenshot](docs/validation/lh_login_desktop.png) |
+| **User Profile** | ![screenshot](docs/validation/lh_profile_mobile.png) | ![screenshot](docs/validation/lh_profile_desktop.png) |
+| **Management Dashboard** | ![screenshot](docs/validation/lh_dashboard_mobile.png) | ![screenshot](docs/validation/lh_dashboard_desktop.png) |
+| **Checkout Success** | ![screenshot](docs/validation/lh_success_mobile.png) | ![screenshot](docs/validation/lh_success_desktop.png) |
+
+
+#### Key Audit Insights:
+* **Accessibility:** Most pages achieved scores above 90, thanks to the use of semantic HTML5 elements and high contrast ratios.
+* **Performance:** Desktop scores are exceptionally high (up to 99). Mobile scores reflect standard Heroku latency but remain in the "Good" range.
+* **Best Practices:** Secured scores of 100 on multiple pages, confirming proper HTTPS usage and secure API connections (Stripe/Cloudinary).
+* **SEO:** Consistent scores of 90+ achieved through proper meta tags and a logical heading hierarchy.
+
+---
+
+## Testing
+
+### Manual Testing
+
+I have performed extensive manual testing across the entire platform to ensure that every feature, from user authentication to complex Stripe transactions and management tools, functions as intended.
+---
+#### Authentication & Profile Management
+| Feature | Action | Expected Result | Actual Result | Visual Reference |
+| :--- | :--- | :--- | :---: | :--- |
+| **User Registration** | Fill out the Sign-Up form and submit. | Account created, unique confirmation link sent to email. | Pass | <img src="docs/screenshots/sign_up.png" width="300"> |
+| **Email Verification** | Click the link received in the inbox. | User redirected to login with a "Verified" success toast. | Pass | <img src="docs/screenshots/confirm_email.png" width="300"> |
+| **Login Logic** | Enter valid credentials. | User logged in, redirected to home/profile page. | Pass | <img src="docs/screenshots/sign_in.png" width="300"> |
+| **Profile View** | Navigate to the Profile page. | Displays user-specific details and history of purchased photos. | Pass | <img src="docs/screenshots/profile_1.png" width="300"> |
+| **Role-Based Access** | Log in as a Photographer. | "Management Mode" button and Dashboard link become visible. | Pass | <img src="docs/screenshots/header_ph.png" width="300"> |
+| **Logout** | Click the Logout button. | User session ended, redirected to home with success toast. | Pass | <img src="docs/screenshots/toast_success.png" width="300"> |
+---
+#### Public Browsing & User Experience
+| Feature | Action | Expected Result | Actual Result | Visual Reference |
+| :--- | :--- | :--- | :---: | :--- |
+| **Horizontal Scroller** | Click arrows on the "Upcoming Sessions" track. | Smooth scroll through upcoming photoshoots. | Pass | <img src="docs/screenshots/home_1.png" width="300"> |
+| **Gallery Filtering** | Navigate to "Complete Gallery". | Displays only active `PhotoProduct` items. | Pass | <img src="docs/screenshots/shop_1.png" width="300"> |
+| **Lightbox View** | Click on a gallery image. | GLightbox opens image in high resolution with zoom tools. | Pass | <img src="docs/screenshots/lightbox.png" width="300"> |
+| **404 Custom Page** | Enter a non-existent URL. | Custom branded "Lost in Frame" page is displayed. | Pass | <img src="docs/screenshots/404.png" width="300"> |
+| **Toast Alerts** | Any CRUD action or state change. | Modern, non-intrusive notification appears for 5 seconds. | Pass | <img src="docs/screenshots/toast.png" width="300"> |
+---
+#### Shopping Cart & Stripe Payments
+| Feature | Action | Expected Result | Actual Result | Visual Reference |
+| :--- | :--- | :--- | :---: | :--- |
+| **Add Photo to Cart** | Click "Add to Cart" on a digital product. | Item added to session-based cart, badge updates. | Pass | <img src="docs/screenshots/card_cart.png" width="300"> |
+| **Waitlist Deposit** | Click "Join Waitlist" for a photoshoot. | Deposit amount added to cart as a "Session" type. | Pass | <img src="docs/screenshots/photoshoot_client.png" width="300"> |
+| **Duplicate Prevention** | Try to add an already purchased photo. | Button is disabled; text says "Already Owned". | Pass | <img src="docs/screenshots/card_owned.png" width="300"> |
+| **Cart Management** | Click "Remove" in the cart view. | Bespoke Modal asks for confirmation before removal. | Pass | <img src="docs/screenshots/cart.png" width="300"> <img src="docs/screenshots/delete.png" width="300">|
+| **Stripe Checkout** | Proceed to payment and enter test card. | Redirected to Stripe Sandbox; payment processed securely. | Pass | <img src="docs/screenshots/wireframe-checkout.png" width="300"> |
+| **Post-Purchase Logic** | View gallery after a successful payment. | Purchased photo now has a "Download" button instead of "Buy". | Pass | <img src="docs/screenshots/card_owned.png" width="300"> |
+---
+#### Management Dashboard (Photographer Role)
+| Feature | Action | Expected Result | Actual Result | Visual Reference |
+| :--- | :--- | :--- | :---: | :--- |
+| **Dashboard Stats** | Open Dashboard as Photographer. | Real-time counts for bookings and product sales are visible. | Pass | <img src="docs/screenshots/dash_1.png" width="300"> |
+| **Add Product** | Submit "Add New Photo" form. | Photo uploaded to Cloudinary, appears in gallery immediately. | Pass | <img src="docs/screenshots/photo_create.png" width="300">  <img src="docs/screenshots/cloud.png" width="300">|
+| **Edit Session** | Modify date or price of a Photoshoot. | Changes saved and reflected on the public detail page. | Pass | <img src="docs/screenshots/photoshoot_table.png" width="300"> |
+| **Defensive Deletion** | Delete a product already sold to a user. | System prevents hard delete; item is deactivated instead. | Pass | <img src="docs/screenshots/photo_table.png" width="300"> |
+---
+#### Marketing & Communication
+| Feature | Action | Expected Result | Actual Result | Visual Reference |
+| :--- | :--- | :--- | :---: | :--- |
+| **Newsletter Signup** | Enter email in footer form. | API call to Mailchimp successful; user added to audience. | Pass | <img src="docs/screenshots/mailchimp.png" width="100"> |
+| **Social Integration** | Click Facebook link in Header. | Directs to the Facebook official page. Photographer's Hub Page was generated in Balsamiq.| Pass | <img src="docs/mockups/facebook_1.png" width="100"> |
+| **Responsive Check** | View Dashboard on a smartphone. | Layout adjusts using CSS Grid/Flex for mobile usability. | Pass | <img src="docs/screenshots/dash-m_1.png" width="100"> |
+
+---
+
 ### **Automated Testing**
 The application employs automated testing via the Django `TestCase` framework to ensure high code reliability, security, and consistent business logic performance.
 #### **Testing Strategy**
@@ -478,39 +700,116 @@ To run the automated test suite, ensure your virtual environment is active and e
 ```bash
 python3 manage.py test
 
-
 ```
-[<img src="docs//testing/auto_tests.png" width="800">](docs/testing/auto_tests.png)
+[<img src="docs/testing/auto_tests.png" width="800">](docs/testing/auto_tests.png)
 
 ---
 
-## 12. Bugs
+## Resolved Bugs & Known Issues
 
-### Fixed Bugs
-* **Static Manifest Error:** Resolved ValueError where Whitenoise could not find the logo file by disabling strict manifest mode.
-* **Import Errors:** Corrected circular imports in sitemaps.py by using application-specific models.
+During the development and validation phases, several technical challenges and bugs were identified and resolved to ensure platform stability and adherence to coding standards.
+
+### Key Resolved Issues
+
+| # | File / Area | Issue Identified | Resolution |
+| :--- | :--- | :--- | :--- |
+| **1** | `photoshoot_detail.html` | **HTML Nesting Error:** Stray `</p>` tags caused by wrapping the Django `|linebreaks` filter inside manual `<p>` tags. | Replaced the outer `<p>` container with a `<div>`, allowing Django to handle semantic paragraph spacing. |
+| **2** | `all_products.html` | **Unclosed Container:** The `page-container` div was missing its closing tag, causing layout shifts. | Identified the missing `</div>` during W3C validation and closed it before the final block. |
+| **3** | `product_card.html` | **Heading Hierarchy:** Skipping heading levels ($H1 \rightarrow H3$) which impacted accessibility. | Changed the product title heading from `<h3>` to `<h2>` to maintain a logical document structure. |
+| **4** | `products/forms.py` | **Missing Import:** `ValidationError` was used in the `clean_image` method but not imported from `django.core.exceptions`. | Added the missing import to ensure server-side file size validation works correctly. |
+| **5** | `checkout/views.py` | **Namespace Conflict:** Redefinition of `User` and `Booking` models inside functions while they were already imported globally (`F811`). | Consolidated imports to the top of the file to improve memory efficiency and code clarity. |
+| **6** | `cart/contexts.py` | **Unused Variables:** The `img_url` variable was assigned but never utilized in the final dictionary (`F841`). | Removed the redundant assignment to keep the context processor lean and PEP8 compliant. |
+| **7** | `webhooks.py` | **Unused Exception Logic:** The exception variable `e` in try/except blocks was not being logged or used. | Refactored to `except Exception:` to satisfy linter requirements while maintaining error catching. |
+| **8** | `products/views.py` | **Line Length violations:** Several success messages and logic blocks exceeded the project's 120-character limit. | Refactored long strings into multiline segments using parentheses for better readability. |
+| **9** | `cart/contexts.py` | **File Termination (W292):** File ended without a newline character, which is required by POSIX standards. | Standardized file endings across all Python modules by adding a single trailing newline. |
+| **10** | `marketing/apps.py` | **Signal Registration:** `marketing.signals` reported as "imported but unused" despite being critical for functionality. | Added the `# noqa` flag to the import within the `ready()` method to inform the linter of its intentional use. |
 
 ### Known Issues
-* Manual cache clearing (Ctrl+F5) may be required after CSS updates due to aggressive browser caching.
+* **Stripe Webhooks in Development:** Webhooks require the Stripe CLI or a tool like Ngrok to be tested locally. While fully functional on the live Heroku site, local testing depends on a stable tunnel connection.
+* **Mailchimp API Latency:** Occasionally, there is a slight delay (1-2 seconds) when adding a new subscriber via the footer form as the server waits for the Mailchimp API response. This is mitigated by a loading state in the browser.
 
 ---
+## Deployment
 
-## 13. Deployment
+The live application is deployed on **Heroku** and can be accessed here:  
+[Photographer Hub - Live Site](https://photographer-hub-94aeeeedb69e.herokuapp.com)
 
 ### Heroku Deployment
-1. Connect GitHub repo to Heroku app.
-2. Set `DEBUG = False`.
-3. Add Config Vars: `DATABASE_URL`, `STRIPE_SECRET_KEY`, `CLOUDINARY_URL`, `MAILCHIMP_API_KEY`.
-4. Run `python manage.py collectstatic`.
+
+This project uses Heroku for cloud hosting. The following steps were taken for deployment:
+
+1.  **App Creation:** A new app was created on the Heroku Dashboard with a unique name and the region set to Europe.
+2.  **Config Vars:** To protect sensitive data and connect APIs, environment variables were configured in the **Settings > Reveal Config Vars** section. 
+
+> [!IMPORTANT]
+> To ensure the application functions correctly, the following keys must be set exactly as shown in the project configuration (values are private and should be replaced with your own keys if forking).
+
+
+| Key | Purpose |
+| :--- | :--- |
+| `CLOUDINARY_URL` | Cloudinary API environment variable (includes Name, Key, Secret). |
+| `DATABASE_URL` | PostgreSQL connection string from Code Institute. |
+| `SECRET_KEY` | Django's unique secret key for security. |
+| `STRIPE_PUBLIC_KEY` | Public key from the Stripe Dashboard. |
+| `STRIPE_SECRET_KEY` | Private secret key from the Stripe Dashboard. |
+| `STRIPE_WH_SECRET` | Signing secret for Stripe Webhooks (crucial for order processing). |
+| `EMAIL_HOST_USER` | Gmail address for SMTP services. |
+| `EMAIL_HOST_PASS` | 16-character App Password generated from Google Account. |
+| `MAILCHIMP_API_KEY` | API Key from Mailchimp marketing dashboard. |
+| `MAILCHIMP_EMAIL_LIST_ID` | Unique Audience ID for the newsletter. |
+| `MAILCHIMP_DATA_CENTER` | The prefix of your API key (e.g., `us2`). |
+| `DISABLE_COLLECTSTATIC` | Set to `1` during development (remove for final production). |
+
+3.  **Deployment Files:** - `requirements.txt` contains all Python dependencies.
+    - `Procfile` tells Heroku how to run the web process (`web: gunicorn photographer_hub.wsgi`).
+    - `.python-version` specifies the environment (Python 3.12).
+4.  **Static Files:** **WhiteNoise** is used to serve static files directly from Heroku, while **Cloudinary** handles all user-uploaded media (photoshoots and product previews).
+5.  **GitHub Connection:** The Heroku app is connected to the GitHub repository with **Automatic Deploys** enabled for the `main` branch.
+
+### Local Development
+
+To run this project locally:
+1. Clone the repository: `git clone https://github.com/Katerynakulik/photographer_hub.git`
+2. Create an `env.py` file in the root directory and add the environment variables listed in the table above.
+3. Install dependencies: `pip3 install -r requirements.txt`
+4. Run migrations: `python3 manage.py migrate`
+5. Start the server: `python3 manage.py runserver`
 
 ---
 
-## 14. Credits
-* **Images:** Professional photography sourced from Unsplash and Pexels.
-* **Icons:** FontAwesome.
-* **Logic:** Inspired by the Code Institute Boutique Ado walkthrough.
+## Credits
 
----
+### Content & Tools
 
-## 15. Conclusion
-Photographer Hub is a comprehensive e-commerce solution that bridges fine art appreciation with modern service management, delivering a secure and aesthetically pleasing user experience.
+This project was built as part of the Full Stack Software Development program.
+
+| Source | Usage / Notes |
+| :--- | :--- |
+| [Balsamiq Cloud](https://balsamiq.cloud/) | Used for planning wireframes and prototyping the Facebook identity. |
+| [Mailchimp](https://mailchimp.com/) | Integrated for automated email marketing and audience management. |
+| [Image Online](https://crop-circle.imageonline.co/) | Used to crop profile and avatar images into professional circles. |
+| [Font Awesome](https://fontawesome.com/) | Icons used for the UI (cart, user, calendar, etc.). |
+| [Django Documentation](https://docs.djangoproject.com/) | Primary resource for logic and model relationships. |
+| [Gemini](https://gemini.google.com/) | Assisted with code logic explanations and README structure optimization. |
+
+### Media (Prototype Portfolio)
+
+The images used in this project are high-quality placeholder assets intended to showcase the "Fine Art" aesthetic of a future professional site. All rights belong to the respective photographers.
+
+| Image Theme | Photographer / Source | Link |
+| :--- | :--- | :--- |
+| **Main Brand Image** | **ShareGrid** (Unsplash) | [Hand holding camera](https://unsplash.com/photos/a-hand-holding-a-camera-ahNR0vCP_60) |
+| **Hero/Background** | **Phil Hearing** (Unsplash) | [White house under trees](https://unsplash.com/photos/white-house-under-maple-trees-1ddol8rgUH8) |
+| **Family Lifestyle** | **Freepik** | [Young family at home](https://www.freepik.com/free-photo/young-family-with-their-sons-home-having-fun_7435531.htm) |
+| **Autumn Portraits** | **Freepik** | [Family in autumnal weather](https://www.freepik.com/free-photo/family-with-little-daughter-together-autumnal-weather-having-fun_19754602.htm) |
+| **Sunset Silhouettes**| **Freepik** | [Happy family silhouette](https://www.freepik.com/free-photo/happy-family-silhouette-sunset_8380524.htm) |
+| **Christmas Session** | **Freepik** | [Family by Christmas tree](https://www.freepik.com/free-photo/family-with-little-daughter-together-by-christmas-tree_21795010.htm) |
+| **Wedding Couple** | **Pixabay** | [Marriage couple love](https://pixabay.com/photos/marriage-couple-wedding-love-4226896/) |
+| **Beach Family** | **Pixabay** | [Family at the ocean](https://pixabay.com/photos/family-beach-people-ocean-6398107/) |
+| **Man & Dog** | **Matthew Henry** (Unsplash)| [Man hugging tan dog](https://unsplash.com/photos/photo-of-man-hugging-tan-dog-ISg37AI2A-s) |
+| **Kids Portrait** | **Jooinn** | [Kids Portrait - 14](https://jooinn.com/images/kids-14.jpg) |
+
+### Acknowledgements
+
+- I would like to thank the **Code Institute** tutors and Slack community for their continuous support.
+- Special thanks to my mentor Tim Nelson for providing strategic feedback, help and support.
