@@ -17,12 +17,16 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Booking',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('quantity', models.PositiveIntegerField(default=1)),
                 ('booked_at', models.DateTimeField(auto_now_add=True)),
-                ('order', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='bookings', to='checkout.order')),
-                ('photoshoot', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='bookings', to='bookings.photoshoot')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='bookings', to=settings.AUTH_USER_MODEL)),
+                ('order', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                 related_name='bookings', to='checkout.order')),
+                ('photoshoot', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                 related_name='bookings', to='bookings.photoshoot')),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                 related_name='bookings', to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]

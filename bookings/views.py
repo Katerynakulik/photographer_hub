@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
 from .models import Photoshoot
 
+
 @login_required
 def delete_session(request, pk):
     """
@@ -18,5 +19,5 @@ def delete_session(request, pk):
         session = get_object_or_404(Photoshoot, pk=pk)
         session.delete()
         messages.success(request, "Photoshoot deleted successfully.")
-    
+
     return redirect('dashboard')

@@ -8,15 +8,17 @@
     <title>Photographer Hub | Fine Art Photography & Bookings</title>
     <meta name="description"
         content="Explore exclusive fine art photography and book unique photoshoot sessions. High-resolution digital licenses and professional service.">
-    <meta name="keywords" content="photography, fine art, digital photos, photoshoot booking, professional photographer">
+    <meta name="keywords"
+        content="photography, fine art, digital photos, photoshoot booking, professional photographer">
 
     <meta property="og:title" content="Photographer Hub | Fine Art Moments">
-    <meta property="og:description" content="Capture your story with a professional touch. Buy digital prints and book sessions.">
+    <meta property="og:description"
+        content="Capture your story with a professional touch. Buy digital prints and book sessions.">
 
     <link rel="preconnect" href="https://res.cloudinary.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-     <link
+    <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Montserrat:wght@300;400;600&display=swap"
         rel="stylesheet">
 
@@ -31,12 +33,13 @@
     <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
 
 
-   
+
 </head>
 
 <body>
-    {% include "includes/navbar.html" %}
-
+    <header>
+        {% include "includes/navbar.html" %}
+    </header>
     <div class="toast-container">
         {% if messages %}
         {% for message in messages %}

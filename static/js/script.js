@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- 1. PHOTOSHOOT SCROLLER (Upcoming Sessions) ---
-    const track = document.getElementById('sessionsTrack'); 
+    const track = document.getElementById('sessionsTrack');
     const btnPrev = document.getElementById('slidePrev');
     const btnNext = document.getElementById('slideNext');
 
     if (track && btnPrev && btnNext) {
-        const scrollAmount = 450; 
+        const scrollAmount = 450;
 
         btnNext.addEventListener('click', () => {
             track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         track.addEventListener('scroll', () => {
             const maxScroll = track.scrollWidth - track.clientWidth;
-            // Додаємо невеликий запас (1px) для точності рендерингу
+
             btnPrev.style.opacity = track.scrollLeft <= 1 ? "0.3" : "1";
             btnNext.style.opacity = track.scrollLeft >= maxScroll - 1 ? "0.3" : "1";
         });
@@ -29,18 +29,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalConfirm = document.getElementById('modalConfirm');
     const modalCancel = document.getElementById('modalCancel');
     const modalMessage = document.getElementById('modalMessage');
-    
+
     let activeTrigger = null;
 
-    // Використовуємо делегування подій для всіх кнопок видалення
     document.addEventListener('click', (e) => {
         const trigger = e.target.closest('.confirm-delete');
         if (!trigger) return;
 
-        e.preventDefault(); // Зупиняємо миттєве видалення
+        e.preventDefault();
         activeTrigger = trigger;
 
-        // Отримуємо кастомне повідомлення з атрибута data-message
         const message = trigger.getAttribute('data-message') || "Are you sure you want to delete this item?";
         if (modalMessage) modalMessage.textContent = message;
 
@@ -58,8 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (modalConfirm) {
         modalConfirm.onclick = () => {
             if (activeTrigger) {
-                // ЛОГІКА CRUD: 
-                // 1. Якщо кнопка всередині форми (для POST видалення в Dashboard)
                 const form = activeTrigger.closest('form');
                 if (form) {
                     form.submit();
@@ -73,7 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    // Закриття модалки при кліку поза карткою
     window.addEventListener('click', (e) => {
         if (e.target === modal) {
             modal.style.display = 'none';
@@ -94,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }, 5000);
 
-        // Ручне закриття по кнопці X
+
         const closeBtn = toast.querySelector('.toast-close');
         if (closeBtn) {
             closeBtn.addEventListener('click', () => {
@@ -105,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 4. GLIGHTBOX (Single Initialization) ---
     if (typeof GLightbox !== 'undefined') {
-        GLightbox({ 
+        GLightbox({
             selector: '.glightbox',
             touchNavigation: true,
             loop: true,
@@ -116,11 +111,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 5. FILE INPUT STYLING (Custom Upload Buttons) ---
     document.querySelectorAll('input[type="file"]').forEach(input => {
         input.addEventListener('change', function () {
-            const uploadText = this.parentElement.querySelector('#file-upload-text') || 
-                               this.parentElement.querySelector('#preview-text') ||
-                               this.parentElement.querySelector('#file-text') ||
-                               this.parentElement.querySelector('span');
-            
+            const uploadText = this.parentElement.querySelector('#file-upload-text') ||
+                this.parentElement.querySelector('#preview-text') ||
+                this.parentElement.querySelector('#file-text') ||
+                this.parentElement.querySelector('span');
+
             if (uploadText && this.files.length > 0) {
                 const fileName = this.files[0].name;
                 uploadText.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${fileName}`;

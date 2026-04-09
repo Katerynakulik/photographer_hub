@@ -25,7 +25,7 @@ DEBUG = os.environ.get('DEBUG') == 'True'
 
 ALLOWED_HOSTS = [
     'photographer-hub-94aeeeedb69e.herokuapp.com',
-    'localhost', 
+    'localhost',
     '127.0.0.1'
 ]
 
@@ -111,7 +111,7 @@ DATABASES = {
     'default': dj_database_url.config(
         default=os.environ.get('DATABASE_URL'),
         conn_max_age=600,
-        ssl_require=True # Якщо використовуєш dj_database_url
+        ssl_require=True  # Якщо використовуєш dj_database_url
     )
 }
 
@@ -197,8 +197,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 
 
-
-LOGIN_REDIRECT_URL = '/'  
+LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 ACCOUNT_FORMS = {

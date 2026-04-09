@@ -2,6 +2,7 @@ from django.dispatch import receiver
 from allauth.account.signals import user_signed_up
 from .views import subscribe_email
 
+
 @receiver(user_signed_up)
 def subscribe_on_signup(sender, request, user, **kwargs):
     # Check if the user ticked the 'subscribe' checkbox in CustomSignupForm

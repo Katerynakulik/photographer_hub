@@ -2,12 +2,14 @@ from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 
+
 class UserProfile(models.Model):
     """
     Extended user data. Centralizes the 'is_photographer' flag
     which controls administrative dashboard access.
     """
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='userprofile')
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name='userprofile')
     is_photographer = models.BooleanField(default=False)
     profile_image = CloudinaryField('image', null=True, blank=True)
     bio = models.TextField(null=True, blank=True)

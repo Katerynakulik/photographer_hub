@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 
+
 class PhotoProduct(models.Model):
     """
     Catalog of digital photography available for purchase.
@@ -11,7 +12,8 @@ class PhotoProduct(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=7, decimal_places=2)
     preview_image = models.ImageField(upload_to="products/previews/")
-    digital_file = models.FileField(upload_to="products/files/", blank=True, null=True)
+    digital_file = models.FileField(
+        upload_to="products/files/", blank=True, null=True)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

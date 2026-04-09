@@ -18,12 +18,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='UserProfile',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('is_photographer', models.BooleanField(default=False)),
-                ('profile_image', cloudinary.models.CloudinaryField(blank=True, max_length=255, null=True, verbose_name='image')),
+                ('profile_image', cloudinary.models.CloudinaryField(
+                    blank=True, max_length=255, null=True, verbose_name='image')),
                 ('bio', models.TextField(blank=True, null=True)),
                 ('tagline', models.CharField(blank=True, max_length=255, null=True)),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='userprofile', to=settings.AUTH_USER_MODEL)),
+                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE,
+                 related_name='userprofile', to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]

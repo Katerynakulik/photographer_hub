@@ -17,7 +17,7 @@ def stripe_webhook(request):
         event = stripe.Webhook.construct_event(
             payload, sig_header, settings.STRIPE_WH_SECRET
         )
-    except Exception as e:
+    except Exception:
         return HttpResponse(status=400)
 
     if event['type'] == 'checkout.session.completed':
@@ -43,5 +43,5 @@ def stripe_webhook(request):
                     product=product,
                     order=order
                 )
-                
+
     return HttpResponse(status=200)

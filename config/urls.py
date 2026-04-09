@@ -2,7 +2,6 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from django.views.generic import RedirectView
 from django.views.generic import RedirectView, TemplateView
 from django.contrib.sitemaps.views import sitemap
 from products.sitemaps import StaticViewSitemap, SessionSitemap
@@ -27,7 +26,9 @@ urlpatterns = [
     path("bookings/", include("bookings.urls")),
     path("marketing/", include("marketing.urls")),
     # SEO Files
-    path("robots.txt", TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
-    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    path("robots.txt", TemplateView.as_view(
+        template_name="robots.txt", content_type="text/plain")),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
+         name='django.contrib.sitemaps.views.sitemap'),
     path('favicon.ico', RedirectView.as_view(url='/static/favicon.ico')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

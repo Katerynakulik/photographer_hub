@@ -4,21 +4,26 @@ from django.contrib.auth.models import User
 from .models import PhotoProduct
 from bookings.models import Photoshoot
 
+
 class ProductTests(TestCase):
     def setUp(self):
         self.client = Client()
         # Creating users
-        self.photographer = User.objects.create_user(username='pro', password='password123')
-        self.client_user = User.objects.create_user(username='customer', password='password123')
-        
-        # Configuring the profile 
+        self.photographer = User.objects.create_user(
+            username='pro', password='password123')
+        self.client_user = User.objects.create_user(
+            username='customer', password='password123')
+
+        # Configuring the profile
         if hasattr(self.photographer, 'userprofile'):
             self.photographer.userprofile.is_photographer = True
             self.photographer.userprofile.save()
 
         # Creating test data
-        self.product = PhotoProduct.objects.create(title="Art Photo", price=15.00, is_active=True)
-        self.session = Photoshoot.objects.create(title="Portrait Session", total_price=100.00, is_active=True)
+        self.product = PhotoProduct.objects.create(
+            title="Art Photo", price=15.00, is_active=True)
+        self.session = Photoshoot.objects.create(
+            title="Portrait Session", total_price=100.00, is_active=True)
 
     # US #1:Checking the home page
     def test_home_page_status_code(self):

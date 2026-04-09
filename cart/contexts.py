@@ -2,10 +2,11 @@ from decimal import Decimal
 from products.models import PhotoProduct
 from bookings.models import Photoshoot
 
+
 def cart_contents(request):
     cart_items = []
     total = Decimal('0.00')
-    product_count = 0 
+    product_count = 0
     cart = request.session.get('cart', {})
 
     for item_key, quantity in cart.items():
@@ -18,9 +19,6 @@ def cart_contents(request):
             item_id = item_key.split('_')[1]
             try:
                 product = PhotoProduct.objects.get(pk=item_id)
-                # Безпечно отримуємо URL. Якщо фото немає - повертаємо None
-                img_url = product.preview_image.url if product.preview_image else None
-                
                 cart_items.append({
                     'item_key': item_key,
                     'display_title': product.title,
@@ -31,23 +29,22 @@ def cart_contents(request):
                     'type': 'photo'
                 })
                 total += product.price
-                product_count += 1 
+                product_count += 1
             except (PhotoProduct.DoesNotExist, Exception):
                 continue
-        
+
         elif item_key.startswith('s_'):
             item_id = item_key.split('_')[1]
             try:
                 session = Photoshoot.objects.get(pk=item_id)
-                img_url = session.image.url if session.image else None
                 subtotal = session.deposit_price * qty
-                
+
                 cart_items.append({
                     'item_key': item_key,
                     'display_title': session.title,
                     'display_price': session.deposit_price,
                     'subtotal': subtotal,
-                    'display_image': session.image if session.image else "" ,
+                    'display_image': session.image if session.image else "",
                     'quantity': qty,
                     'type': 'session'
                 })
@@ -59,5 +56,5 @@ def cart_contents(request):
     return {
         'cart_items': cart_items,
         'total': total,
-        'product_count': product_count, 
+        'product_count': product_count,
     }

@@ -390,9 +390,76 @@ The platform is built around a robust set of features categorized by their busin
 * **JavaScript:** ES6 compliant, checked via JSHint.
 * **Python:** 100% PEP8 compliance across all apps.
 * **Lighthouse:** High scores (90+) in Accessibility and Best Practices.
+
+
+
+---
+
+### CSS Validation
+
+The project's visual identity is managed through a single, comprehensive stylesheet (`style.css`). This file was validated using the [W3C Jigsaw CSS Validation Service](https://jigsaw.w3.org/css-validator/) to ensure full compatibility with modern browsers and CSS3 standards.
+
+* **Status:** **Pass** (No errors found).
+* **Validation Method:** Validation by URI (Heroku production static file).
+* **Key Observations:**
+    * The validator confirmed that the custom CSS variables (`:root` tokens) and Flexbox/Grid layouts are correctly implemented.
+    * A few warnings were noted regarding vendor prefixes (e.g., `-webkit-user-drag`), which are necessary for cross-browser consistency and do not impact the code's validity.
+    * The use of a single CSS file allowed for better optimization and faster loading times, as confirmed by Lighthouse metrics.
+
+[<img src="docs/validation/css_val.png" width="800">](docs/validation/css_val.png)
+*Figure: Official W3C CSS Validation result showing 0 errors for the main stylesheet.*
+
+---
+
+
+### JavaScript Validation (JSHint)
+
+The custom JavaScript logic responsible for UI interactions (scrollers, modals, toasts) was validated using [JSHint](https://jshint.com/).
+
+* **Status:** **Pass** (with ES6 configuration).
+* **Notes on Warnings:** The initial validation reported several warnings regarding ES6 syntax (`const`, `let`, arrow functions). These were confirmed as intentional, as the project targets modern browsers. To align the validator, the `/* jshint esversion: 6 */` flag was used.
+* **External Libraries:** The warning for `GLightbox` being undefined is expected, as this library is loaded via a CDN in the base template and is globally available at runtime.
+
+#### Code Metrics Summary:
+| Metric | Value |
+| :--- | :--- |
+| **Total Functions** | 14 |
+| **Largest Function** | 24 statements |
+| **Max Cyclomatic Complexity** | 7 (Custom Deletion Modal logic) |
+| **Undefined Variables** | 1 (`GLightbox` - External Library) |
+
+#### JS Features Implemented:
+1.  **Upcoming Sessions Scroller:** Smooth horizontal scrolling with dynamic button opacity based on scroll position.
+2.  **Custom Deletion Modal:** A reusable, accessible modal that intercepts delete actions for both forms (Dashboard) and links (Cart).
+3.  **Toast System:** Automated notifications with a 5-second auto-hide timer and manual "close" override.
+4.  **File Input Enhancement:** Real-time feedback for file uploads, displaying the selected filename in custom-styled buttons.
+5.  **Gallery Lightbox:** High-performance image viewing via the GLightbox library.
+
+[<img src="docs/validation/js_val_1.png" width="500">](docs/validation/js_val_1.png)
+[<img src="docs/validation/js_val_2.png" width="500">](docs/validation/js_val_2.png)
+---
+
+
+### Python (PEP8) Validation
+
+All custom Python logic was strictly validated using the **Flake8** linting tool. To ensure the audit focused exclusively on original code, a `.flake8` configuration was used to exclude the virtual environment (`.venv`) and auto-generated Django files (`migrations`).
+
+* **Outcome:** **Pass** (0 PEP8 violations found).
+* **Code Refactoring Highlights:**
+    - **Logic Integrity:** Fixed a critical missing `ValidationError` import in `products/forms.py`.
+    - **Clean Workspace:** Removed several unused imports (`F401`) and redundant redefinitions (`F811`) in `checkout` and `marketing` apps to optimize performance.
+    - **Resource Optimization:** Eliminated unused local variables (`F841`) in `cart/contexts.py` and `webhooks.py`.
+    - **Formatting Standards:** Standardized all file terminations (`W292`, `W391`) and resolved trailing whitespaces (`W291`) for a professional code finish.
+    - **Readability:** Refactored long strings (`E501`) in `products/views.py` and widgets in `forms.py` into readable multiline segments.
+
+| Tool | Purpose | Result |
+| :--- | :--- | :--- |
+| **Flake8** | Style guide enforcement | **Pass** |
+| **Autopep8** | Automated formatting | Applied to ensure consistent structure |
+[<img src="docs/validation/pep8_val.png" width="500">](docs/validation/pep8_val.png)
+---
 ### **Automated Testing**
 The application employs automated testing via the Django `TestCase` framework to ensure high code reliability, security, and consistent business logic performance.
-
 #### **Testing Strategy**
 Following a robust testing approach, every User Story is supported by at least two automated test cases covering both "Happy Path" (success) and "Defensive" (failure/security) scenarios.
 

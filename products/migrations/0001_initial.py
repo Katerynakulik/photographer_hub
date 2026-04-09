@@ -14,13 +14,16 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='PhotoProduct',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=120)),
                 ('slug', models.SlugField(blank=True, max_length=140, unique=True)),
                 ('description', models.TextField()),
                 ('price', models.DecimalField(decimal_places=2, max_digits=7)),
-                ('preview_image', models.ImageField(upload_to='products/previews/')),
-                ('digital_file', models.FileField(blank=True, null=True, upload_to='products/files/')),
+                ('preview_image', models.ImageField(
+                    upload_to='products/previews/')),
+                ('digital_file', models.FileField(
+                    blank=True, null=True, upload_to='products/files/')),
                 ('is_active', models.BooleanField(default=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
             ],

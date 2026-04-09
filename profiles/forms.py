@@ -1,9 +1,12 @@
 from django import forms
 from allauth.account.forms import SignupForm
 
+
 class CustomSignupForm(SignupForm):
-    first_name = forms.CharField(max_length=30, label='First Name', widget=forms.TextInput(attrs={'placeholder': 'Your First Name'}))
-    last_name = forms.CharField(max_length=30, label='Last Name', widget=forms.TextInput(attrs={'placeholder': 'Your Last Name'}))
+    first_name = forms.CharField(max_length=30, label='First Name', widget=forms.TextInput(
+        attrs={'placeholder': 'Your First Name'}))
+    last_name = forms.CharField(max_length=30, label='Last Name', widget=forms.TextInput(
+        attrs={'placeholder': 'Your Last Name'}))
     # Наша "галочка" для розсилки
     subscribe_newsletter = forms.BooleanField(
         label='I want to receive updates on new sessions and special offers',

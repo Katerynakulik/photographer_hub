@@ -14,13 +14,17 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Photoshoot',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=200)),
                 ('description', models.TextField()),
                 ('image', models.ImageField(upload_to='sessions/')),
-                ('expected_dates', models.CharField(help_text='Example: Late May 2026', max_length=100)),
-                ('deposit_price', models.DecimalField(decimal_places=2, default=10.0, max_digits=5)),
-                ('total_price', models.DecimalField(decimal_places=2, max_digits=7)),
+                ('expected_dates', models.CharField(
+                    help_text='Example: Late May 2026', max_length=100)),
+                ('deposit_price', models.DecimalField(
+                    decimal_places=2, default=10.0, max_digits=5)),
+                ('total_price', models.DecimalField(
+                    decimal_places=2, max_digits=7)),
                 ('is_active', models.BooleanField(default=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
             ],
