@@ -197,21 +197,57 @@ The following diagram illustrates the relational structure of the database. The 
 
 ---
 
+---
+
 ## 6. Marketing Strategy
 
+To ensure a steady flow of clients and brand recognition, the platform employs a strategic marketing approach focusing on visual storytelling and community engagement.
+
 ### Social Media Marketing
-A Facebook Business Page mockup was created to demonstrate the brand's social presence and engagement strategy.
-<img src="docs/marketing/facebook_mockup.png" width="400">
 
-### Email Marketing (Mailchimp Integration)
+Facebook is the cornerstone of the project's social media presence. It is chosen for its strong community features and its popularity among the target audience (families, couples, and wedding planners). 
 
-The platform features a built-in newsletter system integrated with the **Mailchimp API**. This tool is essential for maintaining audience engagement and building a community around the photographer's brand.
+#### Conceptual Design & Prototyping
+The visual identity on social media was prototyped using **Balsamiq Cloud** (based on the Code Institute mockup template). This ensured that the photographer's brand message is delivered clearly through a cohesive layout.
 
-* **The Content Strategy:** Subscribers receive exclusive photography tips, early-bird notifications for upcoming thematic photoshoot sets, and a personal look into the photographer’s creative journey.
+* **Visual Consistency:** The profile uses a signature "camera-in-hand" avatar to establish a professional yet personal connection.
+* **Clear Value Proposition:** The bio emphasizes the photographer's niche: *Specializing in lifestyle family, children, and wedding photography.*
+* **Portfolio Showcasing:** Strategic use of the "Photos" grid and "Posts" allows for immediate exposure to recent works, emphasizing soft light and genuine emotive connections.
+
+[<img src="docs/mockups/facebook_1.png" width="600">](docs/mockups/facebook_1.png)
+*Figure: Facebook Page Mockup - Profile and Cover overview.*
+
+[<img src="docs/mockups/facebook_2.png" width="600">](docs/mockups/facebook_2.png)
+*Figure: Facebook Page Mockup - Post engagement and community links.*
+
+#### Brand Message
+> "I am dedicated to preserving your life's greatest milestones. Inspired by soft light and genuine connection, my goal is to create authentic, emotive, and timeless imagery that speaks to your heart for generations to come." — **Oksana Key**
+
+---
+
+Email Marketing (Mailchimp Integration)
+To build a loyal community, the site features a built-in newsletter system integrated with the **Mailchimp API**.
+
+* **Content Strategy:** Subscribers receive exclusive photography tips, early-bird notifications for upcoming thematic photoshoot sets, and "behind-the-scenes" insights.
 * **Subscription Points:**
-    1.  **Global Footer:** A minimalist form available on every page for quick signup.
-    2.  **Registration Opt-in:** A checkbox on the Sign-Up page allowing new users to join the newsletter during account creation.
-* **Implementation:** The system uses the `mailchimp3` library to communicate with the Mailchimp Audience API, ensuring a secure and automated lead generation process.
+    1.  **Global Footer:** A minimalist AJAX-ready form available on every page.
+    2.  **Registration Opt-in:** A checkbox on the Sign-Up page allowing new users to join the marketing list during account creation.
+* **Implementation:** The system uses the `mailchimp3` library to synchronize user data with the Mailchimp Audience API, ensuring automated lead generation.
+
+### Account Verification & Security (Django SMTP)
+To ensure the platform's integrity and protect user data, the project implements a mandatory email verification process.
+
+* **Process:** Upon registration, Django (via `django-allauth`) generates a unique, time-sensitive confirmation link. 
+* **Access Control:** Users are restricted from accessing private dashboard features until their email address is verified, preventing bot registrations and ensuring a valid point of contact for digital photo delivery.
+* **Configuration:** The system is configured with a secure SMTP backend, utilizing environment variables for credentials to ensure maximum security on the production server (Heroku).
+
+#### Communication Implementation Proofs:
+
+[<img src="docs/screenshots/confirm_email.png" width="600">](docs/screenshots/confirm_email.png)
+*Figure: Automated transactional email sent via Gmail SMTP for account verification.*
+
+[<img src="docs/screenshots/mailchimp.png" width="600">](docs/screenshots/mailchimp.png)
+*Figure: Mailchimp Audience Dashboard showing real-time subscriber updates synchronized via API.*
 
 #### Marketing Implementation Proofs:
 
@@ -226,7 +262,7 @@ The platform features a built-in newsletter system integrated with the **Mailchi
 
 ---
 
-## 7. SEO Implementation
+## SEO Implementation
 * **Robots.txt:** Configured to allow crawling of products while blocking admin areas.
 * **Sitemap.xml:** Dynamically generated to help search engines index active products and sessions.
 * **Meta Tags:** Descriptive keywords and site descriptions included in the base template.
@@ -234,7 +270,7 @@ The platform features a built-in newsletter system integrated with the **Mailchi
 
 ---
 
-## 8. Features
+## Features
 
 The **Photographer Hub** platform is designed with a "Fine Art" aesthetic, focusing on high-quality visual presentation and a seamless user experience across different roles (Guest, Client, and Photographer).
 
@@ -332,23 +368,7 @@ To maintain the "Fine Art" aesthetic even during unexpected navigation errors, b
 
 ---
 
-## 9. Testing Accounts
-
-To facilitate a comprehensive review of the application's role-based access control (RBAC), please use the following pre-configured credentials:
-
-* **Photographer (Site Owner/Admin):**
-    * **Username:** `photograph`
-    * **Password:** `2HL@UCvgvVzD8d3`
-    * *Role Details:* Full access to the Management Dashboard and frontend CRUD operations for products and sessions.
-* **Test Client (Customer):**
-    * **Username:** `elisabeth`
-    * **Email:** `mno6uo9hrfy3@tempmail.ing`
-    * **Password:** `QwErTy098`
-    * *Role Details:* Access to the private "My Profile" dashboard, digital library (purchased photos), and booking history.
-
----
-
-## 10. Features Overview
+## Features Overview
 
 The platform is built around a robust set of features categorized by their business value using the MoSCoW method.
 
@@ -363,7 +383,7 @@ The platform is built around a robust set of features categorized by their busin
 
 ---
 
-## 11. Validation
+## Validation
 
 * **HTML:** Checked via W3C Markup Validator.
 * **CSS:** Validated via Jigsaw Service.
